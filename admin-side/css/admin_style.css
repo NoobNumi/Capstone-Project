@@ -1,0 +1,970 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,500&family=Roboto:wght@400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Prompt:wght@400;500&display=swap');
+
+:root {
+    --blue: #235789;
+    --white: #ffffff;
+    --yellow: #f7f585;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #ededed;
+}
+
+
+/*----------------------------------------------------- ADMIN DASHBOARD ------------------------------------------------------*/
+.admin-sidebar .admin-logo-details a {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    gap: 10px;
+}
+
+.admin-sidebar .admin-logo-details {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.menu {
+    position: absolute;
+    cursor: pointer;
+    right: 0;
+    transform: translateX(-24px);
+    font-size: 22px;
+    transition: all 0.4s ease;
+    text-align: center;
+    padding: 4px;
+    border-radius: 10px;
+}
+
+.menu:hover {
+    background-color: #f4f5f5;
+    transition: all 0.5s ease;
+}
+
+.admin-sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: 78px;
+    background: #ffff;
+    padding: 6px 14px;
+    z-index: 99;
+    transition: all 0.5s ease;
+    overflow-y: hidden;
+}
+
+.admin-sidebar.open {
+    width: 250px;
+}
+
+.menu-name {
+    font-size: 14px;
+    margin-top: 20px;
+    font-weight: 400;
+    color: #b3b5b9;
+}
+
+.admin-sidebar .logo-img {
+    height: 50px;
+    opacity: 0;
+    transition: all 0.5s ease;
+}
+
+.admin-sidebar span.admin-name {
+    font-weight: 700;
+    letter-spacing: 14px;
+    transition: all 0.5s ease;
+    color: #cccccc;
+    opacity: 0;
+}
+
+.admin-sidebar .logo-name {
+    margin-top: 10px;
+    font-weight: 900;
+    margin-bottom: -8px;
+    background: linear-gradient(to right, #235789 0%, #ffcc5f 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    border: none;
+    opacity: 0;
+    font-size: 27px;
+    transition: all 0.5s ease;
+}
+
+.admin-sidebar.open .logo-img,
+.admin-sidebar.open .logo-name,
+.admin-sidebar.open span.admin-name {
+    opacity: 1;
+}
+
+
+ul.admin-navbar {
+    list-style: none;
+    margin-top: 0px;
+    padding-left: 7px;
+}
+
+ul.admin-navbar li a {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    padding: 10px;
+    text-decoration: none;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+
+.admin-sidebar .admin-navbar li.active {
+    background-color: #f4f5f5;
+    border-radius: 10px;
+}
+
+.admin-sidebar .admin-navbar li.active a .link-names,
+.admin-sidebar .admin-navbar li.active a .fa-regular {
+    font-weight: 800;
+}
+
+
+
+ul.admin-navbar li a:hover {
+    background-color: #f4f5f5;
+    transition: all 0.5s ease;
+}
+
+.links-names {
+    font-weight: 450;
+    opacity: 0;
+}
+
+
+.fa-regular,
+.links-names {
+    color: #35435e;
+}
+
+
+ul.admin-navbar li a:hover .links-names,
+ul.admin-navbar li a:hover .fa-regular {
+    transition: all 0.5s ease;
+    font-weight: 800;
+}
+
+.admin-sidebar.open li a .links-names {
+    opacity: 1;
+    pointer-events: auto;
+    transition: all 0.5s ease;
+}
+
+.admin-sidebar.open .admin-profile {
+    width: 250px;
+}
+
+.admin-profile-details {
+    display: flex;
+    align-items: center;
+}
+
+.admin-profile-details img {
+    height: 45px;
+    width: 45px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.admin-profile-details .guest-name {
+    font-size: 15px;
+    font-weight: 600;
+    white-space: nowrap;
+    opacity: 0;
+}
+
+.logout {
+    right: 0;
+    cursor: pointer;
+    transform: translateX(84px);
+}
+
+.admin-sidebar.open .admin-profile-details .guest-name,
+.admin-sidebar.open .admin-profile .logout {
+    opacity: 1;
+    transition: all 0.5s ease;
+}
+
+.admin-profile {
+    display: flex;
+    align-items: center;
+    position: fixed;
+    height: 60px;
+    width: 78px;
+    left: 0;
+    bottom: 10px;
+    padding: 10px 14px;
+    transition: all 0.5s ease;
+    overflow: hidden;
+}
+
+@media screen and (max-width: 756px) {
+    .admin-sidebar{
+        width: 65px;
+    }
+
+    .menu{
+        padding: 0;
+    }
+
+    ul.admin-navbar {
+        padding-left: 0px;
+    }
+
+    .count-color {
+        left: 34px;
+    }
+}
+
+
+/* ---------------------------------------------- ADMIN DASHBOARD --------------------------------------------------------------- */
+
+section.admin-dashboard {
+    position: relative;
+    min-height: 100vh;
+    top: 50%;
+    left: 70px;
+    width: calc(100% - 78px);
+    z-index: 2;
+    padding: 10px;
+    margin: auto 15px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: scroll;
+}
+
+:is(.admin-dashboard)::-webkit-scrollbar {
+    width: 0px;
+}
+
+
+.row .col {
+    background-color: #fff;
+    margin: 20px;
+    width: 200px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+    cursor: pointer;
+}
+
+.col .container-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.container-header span.container-name {
+    font-weight: 500;
+}
+
+.container-header .cancel-icon img {
+    height: 25px;
+    margin-right: -7px;
+}
+
+.col .total-number {
+    margin-top: 10px;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.sub-number {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    font-size: 15px;
+    width: 34px;
+    height: 34px;
+    padding: 10px;
+    border-radius: 50%;
+    background-color: #80a577;
+    color: #ffff;
+}
+
+span.notif-count{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    width: 20px;
+    height: 20px;
+    padding: 14px;
+    border-radius: 50%;
+    background-color: #F76C6C;
+    color: #ffff;
+    font-weight: 600;
+    transition: all 0.5s ease;
+}
+
+.count-color{
+    padding: 5px;
+    border-radius: 50%;
+    width: 10px;
+    background-color: #F76C6C;
+    position: fixed;
+    left: 40px;
+    top: calc(27% + (202px - 27%));
+}
+
+.admin-sidebar.open .count-color{
+    display: none;
+    transition: all 0.5s ease;
+}
+@media (max-width: 767px) {
+section.admin-dashboard{
+    padding: 0;
+    width: calc(100% - 50px);
+    left: 48px;
+}
+.admin-dashboard .row {
+    flex-direction: column;
+    align-items: stretch;
+    width: inherit;
+}
+
+.admin-dashboard .col {
+    width: 100%;
+    margin: 0;
+    padding: 10px;
+    box-shadow: none;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border-bottom: 1px solid #e0e0e0;
+    transition: background-color 0.3s ease;
+}
+
+.admin-dashboard .col:hover {
+    background-color: #f5f5f5;
+}
+
+.col .container-header {
+    gap: 10px;
+    display: inherit;
+    justify-content: space-between;
+}
+
+.col .total-number {
+    display: none;
+}
+
+.sub-number {
+    width: 24px;
+    height: 24px;
+    font-size: 12px;
+    padding: 5px;
+    margin-top: 9px;
+}
+
+.col.first-col{
+    border-bottom-left-radius: 0; 
+    border-bottom-right-radius: 0;
+}
+
+.col.middle-col{
+    border-radius: 0;
+}
+
+.col.last-col{
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+
+}
+}
+
+/* ------------------------------------------------------ CHARTS IN DASHBOARD ADMIN ---------------------------------------------- */
+.charts{
+    width: calc(100% - 78px);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 10px;
+    gap: 20px;
+}
+.charts .col{
+    border-radius: 5%;
+    padding: 30px;
+    width: 100%;
+    height: 100%;
+    background-color: #ffff;
+}   
+
+
+@media screen and (max-width: 768px) {
+    .charts{
+        display: flex;
+        flex-direction: column;
+    }
+}   
+
+/* ------------------------------------------------------------ ADMIN MESSAGE GUEST SECTION ----------------------------------------------------- */
+.admin-messages {
+    position: relative;
+    min-height: 100vh;
+    top: 50%;
+    left: 70px;
+    width: calc(100% - 100px);
+    z-index: 2;
+    margin: auto 15px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: scroll;
+}
+
+.search-main-container{
+    display: flex;
+    justify-content: center;
+}
+
+.admin-search-bar{
+    width: 92%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5px;
+    padding: 10px;
+    background-color: #eeeeee;
+    border-radius: 20px;
+}
+
+.admin-search-bar input[type="text"]{
+    width: inherit;
+    border: none;
+    outline: none;
+    background: transparent;
+    margin: 0 10px 0 10px;
+}
+
+.admin-search-bar i{
+    margin-right: 10px;
+}
+
+
+.message-container {
+    background-color: #fff;
+    width: 50%;
+    border-radius: 10px;
+    height: 630px;
+}
+
+.message-container .admin-msg-title{
+    text-align: start;
+    padding: 30px;
+    margin-bottom: -20px;
+}
+
+:is(.admin-sidebar, .chat-people)::-webkit-scrollbar {
+    width: 0px;
+}
+
+.chat-people {
+    height: 510px;
+    list-style: none;
+    padding: 0;
+    overflow: auto;
+}
+
+.chat-people li a{
+    display: flex;     
+    gap: 10px;
+    text-decoration: none;
+    overflow: hidden;
+    width: 90%;
+    margin: 20px;
+    padding: 10px;
+    word-wrap: break-word;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 14px;
+}
+
+.chat-people li:hover{
+    background-color: #c6c6c6;
+    transition: all 0.5s ease;
+}
+
+.chat-people li img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+
+li a .msg-allText {
+    display: flex;
+    flex-direction: column;
+  
+}
+
+.msg-allText .guest-name{
+    font-size: 1rem;
+    font-weight: 600 !important;
+    color: #303030;
+}
+
+
+.msg-allText .msg{
+    word-wrap: break-word;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 14px;
+    color: #595959;
+}
+
+@media screen and (max-width: 768px) {
+    .admin-messages{
+        margin: 0 15px;
+        top: 0;
+        align-items: stretch;
+        height: 100%;
+    }
+    .chat-people{
+        margin-left: -18px;
+    }
+
+    .message-container{
+        max-height: 100%;
+        width: 100%;
+        padding-left: -2px;
+    }
+}
+
+/* ------------------------------------------------------- ADMIN OPEN MESSAGE ------------------------------------------------------- */
+section.messages {
+    position: relative;
+    min-height: 100vh;
+    top: 50%;
+    left: 70px;
+    width: calc(100% - 100px);
+    z-index: 2;
+    margin: auto 15px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: scroll;
+}
+
+section.messages .message-container {
+    background-color: #ffff;
+    padding: 10px;
+    border-radius: 10px;
+    width: 50%;
+    height: 100%;
+}
+.message-container .messaging-guest-header {
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: rgba(27, 31, 35, 0.04) 0px 1px 0px, rgba(255, 255, 255, 0.25) 0px 1px 0px inset;
+}
+
+.message-container .messaging-guest-header .user-info-adminSide{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-info-adminSide img{
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+}
+
+.chat-box {
+    height: 500px;
+    padding: 10px 30px 20px 30px;
+    overflow: auto;
+}
+
+.chat-box span.time-stamp{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+    font-size: 12px;
+    color: #7d7d7d;
+    font-weight: 500;
+}
+
+.chat-box .chat p {
+    padding: 8px 16px;
+    word-wrap: break-word;
+    text-align: start;
+    font-size: 13px;
+}
+
+.chat-box .outgoing {
+    display: flex;
+}
+
+:is(.guest-sidebar, section.reservation-section, .messages, .chat-box)::-webkit-scrollbar {
+    width: 0px;
+}
+
+.outgoing .details {
+    margin-left: auto;
+    max-width: calc(100% - 130px);
+}
+
+.outgoing .details p {
+    background-color: #497faa;
+    color: #ffff;
+    border-radius: 18px 18px 0 18px;
+    box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+}
+
+.chat-box .incoming {
+    display: flex;
+    align-items: center;
+}
+
+.chat-box .incoming img {
+    height: 35px;
+    width: 35px;
+    margin-left: -20px;
+    border-radius: 50%;
+}
+
+.incoming .details {
+    margin-left: 10px;
+    max-width: calc(100% - 130px);
+}
+
+.incoming .details p {
+    background-color: #f2f2f2;
+    border-radius: 18px 18px 18px 0;
+    box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+}
+
+form.typing-area {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 20px 0 0 0;
+}
+
+.select-img,
+button.send {
+    border: none;
+    background-color: #ffff;
+    color: #497faa;
+}
+
+.select-img>input {
+    display: none;
+}
+
+.select-img i,
+.send i {
+    cursor: pointer;
+    font-size: 25px;
+}
+
+form.typing-area input[type="text"] {
+    width: 100%;
+    border: none;
+    outline: none;
+    padding: 10px;
+    background-color: #f2f2f2;
+    border-radius: 10px;
+}
+
+@media screen and (max-width: 900px) {
+
+    .incoming .details,
+    .outgoing .details {
+        max-width: 100%;
+    }
+
+    section.messages{
+        margin: 15px;
+    }
+    section.messages .message-container {
+        width: 90%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .message-container {
+        width: 100%;
+        height: 100%;
+    }
+
+
+    section.messages{
+        min-height: 100%;
+        left: 53px;
+        width: calc(100% - 72px);
+    }
+
+
+    section.messages .message-container {
+        width: 100%;
+        min-height: auto;
+    }
+
+}
+
+/* ------------------------------------------------------------ LOGOUT MODAL ------------------------------------------------------ */
+.logout-modal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.4);
+    overflow: none;
+}
+
+.logout-modal-main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.logout-container {
+    text-align: center;
+    border-radius: 20px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    padding: 20px;
+    width: 25%;
+    overflow: hidden;
+}
+
+.logout-container .logout-q {
+    margin-bottom: 10px;
+}
+
+.logout-container .logout-buttons .btn-logout {
+    padding: 10px;
+    outline: none;
+    border: none;
+    border-radius: 10px;
+}
+
+.logout-container .logout-buttons #btn_confirm {
+    background-color: #336085;
+    color: #ffff;
+    font-weight: 500;
+}
+
+@media screen and (max-width: 847px) {
+    .logout-container {
+        width: 50%;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .logout-container {
+        width: 70%;
+    }
+}
+
+/* ---------------------------------------------------- LOGIN SECTION ------------------------------------------------------ */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+}
+
+.main-container-login {
+    margin: auto;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    background-color: #ffff;
+    width: 60%;
+    height: 500px;
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    border-radius: 10px; 
+}
+
+.main-container-login .side-photo {
+    background-image:
+    linear-gradient(rgba(0, 87, 169, 0.5), rgba(0, 87, 169, 0.5)),
+    url('/images/img_from_net.jpg');
+    object-fit: cover;
+    background-size: cover;
+    width: 50%;
+    height: 100%;
+    position: relative;
+    right: 83px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    display: flex;
+    align-items: start;
+    justify-content: center;
+}
+
+.main-container-login form{
+    margin-left: -10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+}
+
+.main-container-login form .admin-photo-login{
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    top: -30px;
+    position: relative;
+}
+
+.main-container-login form .logo-main{
+    width: 50px;
+}
+
+.main-container-login form .admin-photo-title{
+    width: 150px;
+}
+
+.main-container-login .login-text{
+    margin-bottom: 20px;
+    font-size: 13px;
+    color: #717171;
+}
+.main-container-login form .inputs-login{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 10px 10px 10px;
+    background-color: #f4f4f4;
+    padding: 10px;
+    border-radius: 10px;
+    width: 100%;
+}
+
+.inputs-login input[type="email"],
+.inputs-login input[type="password"]{
+    border: none;
+    outline: none;
+    background-color: transparent;
+    width: inherit;
+    font-size: 15px;
+}
+
+.inputs-login i{
+    color: #f99830;
+}
+
+.inputs-login .fa-eye{
+    cursor: pointer;
+}
+
+form .admin-theme{
+    color: rgb(249, 152, 48);
+    font-weight: 600;
+}
+
+button.btn-admin-login{
+    margin-top: 10px;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #ffff;
+    background-color: rgb(35, 87, 137);
+}
+
+button.btn-admin-login:hover{
+    transition: all 0.5s ease;
+    background-color: #3485d0;
+}
+@media screen and (max-width: 1280px) {
+    .main-container-login form{
+        right: 32px;
+    }
+
+}
+
+@media screen and (max-width: 1050px) {
+    .main-container-login form{
+        right: 39px;
+    }
+
+}
+
+@media screen and (max-width: 900px) {
+    .main-container-login {
+        flex-direction: column;
+        height: 100%;
+        width: 100%;
+    }
+
+    .main-container-login .side-photo {
+        border-top-right-radius: 10px;
+        border-bottom-left-radius: 0;
+        margin-top: -130px;
+        width: 100%;
+        height: 60%;
+        right: 0;
+    }
+
+    .main-container-login form{
+        height: 330px;
+        right: 0;
+        width: auto;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .main-container-login .side-photo {
+        height: 40%;
+    }
+
+    .main-container-login form{
+        height: 350px;
+        right: 0;
+        width: 80%;
+    }
+}
