@@ -1,3 +1,78 @@
+<?php 
+    session_name("user_session");
+    session_start();
+    require_once("../connection.php");
+    $already_filed = 0;
+    $success = 0;
+
+    if (!isset($_SESSION['user_id'])) {
+        header("location: login.php");
+    }
+
+    if (isset($_POST['submit'])){
+        $user_id = $_POST['user_id'];
+        $first_name = $_POST['first_name'];
+        $last_name = $_POST['last_name'];
+        $street_add = $_POST['street_add'];
+        $city_municipality = $_POST['city_municipality'];
+        $province = $_POST['province'];
+        $postal_code = $_POST['postal_code'];
+        $contact_no = $_POST['contact_no'];
+        $appoint_sched = $_POST['appoint_sched'];
+        $appoint_description = $_POST['appoint_description'];
+    
+    
+        $query = $conn->prepare("SELECT * FROM `appoinment_record` WHERE user_id = ?");
+        $query->bindValue(1, $user_id);
+        $query->execute();
+        $row = $query->fetch(PDO::FETCH_ASSOC);
+    
+        if ($query->rowCount() > 0) {
+            $already_filed = 1;
+        } else {
+            $query = "INSERT INTO appoinment_record (user_id, first_name, last_name, street_add, city_municipality, province, postal_code, contact_no, appoint_sched, appoint_description) VALUES (:user_id, :first_name, :last_name, :street_add, :city_municipality, :province, :postal_code, :contact_no, :appoint_sched, :appoint_description)";
+            $run_query = $conn->prepare($query);
+    
+            $data = [
+                ':user_id' => $user_id,
+                ':first_name' => $first_name,
+                ':last_name' => $last_name,
+                ':street_add' => $street_add,
+                ':city_municipality' => $city_municipality,
+                ':province' => $province,
+                ':postal_code' => $postal_code,
+                ':contact_no' => $contact_no,
+                ':appoint_sched' => $appoint_sched,
+                ':appoint_description' => $appoint_description
+            ];
+    
+            $query_execute = $run_query->execute($data);
+            if ($query_execute) {
+                $success = 1;
+            }
+        }
+    }
+    
+?>
+<!-- sweet alert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<?php
+if ($already_filed) {
+    echo '<div class="alert alert-danger" style="text-align:center; font-size: 1.2rem;">
+            <strong><i class="fa-solid fa-triangle-exclamation" style="margin-right: 12px";></i>You already filed an appointment!</strong>
+            </div>';
+}
+if ($success) { ?>
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Appointment successful',
+            showConfirmButton: false,
+            timer: 2500
+        })
+    </script>
+<?php } ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,7 +99,7 @@
     <!--APPOINTMENT FORM STARTS-->
     <section class="main-appointment">
         <div class="appointment-container">
-            <form action="" method="post" class="appointment-form">
+            <form action="" method="POST" class="appointment-form">
                 <p class="appointment-title">Appointment Form</p>
                 <p class="message">Input details about your appointment</p>
                 <div class="appoint-flex">
@@ -69,7 +144,7 @@
                     </label>
                     <label class="select-date">
                         <input required="" placeholder="Schedule" id="schedule-input" type="text"
-                            class="input flatpickr" readonly style="cursor: auto;" name="appoint-sched">
+                            class="input flatpickr" readonly style="cursor: auto;" name="appoint_sched">
                         <div class="sched-buttons">
                             <span class="material-symbols-rounded calendar" title="toggle" id="calendar-icon"
                                 data-toggle>
@@ -84,12 +159,25 @@
                             cols="30" rows="5" class="app-description"></textarea>
                     </label>
                 </div>
-                <button class=" btn-login-signup" style="height: 50px; cursor:pointer;">Make an Appointment</button>
+                <?php
+                    $select_query = 'SELECT * FROM `users` WHERE user_id = :user_id';
+                    $stmt = $conn->prepare($select_query);
+                    $stmt->bindParam(':user_id', $_SESSION['user_id']);
+                    $stmt->execute();
+                    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                    if ($stmt->rowCount() > 0) {
+                    ?>
+                        <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
+                    <?php
+                    }
+                    ?>
+                <button class="btn-login-signup" type="submit" name="submit" style="height: 50px; cursor:pointer;">Make an Appointment</button>
             </form>
 
         </div>
+        <?php require("logout_modal.php"); ?>
     </section>
-
     <?php include("guest_footer.php");?>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>

@@ -82,6 +82,36 @@ session_start();
         gap: 10px;
     }
 
+    .image-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        z-index: 999;
+        text-align: center;
+    }
+
+    .image-modal .modal-content {
+        max-width: 80%;
+        max-height: 80%;
+        margin: auto;
+        display: block;
+        margin-top: 10%;
+    }
+
+    .image-modal .close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        color: white;
+        font-size: 30px;
+        cursor: pointer;
+    }
+
+
 
     .share-tool-res {
         cursor: pointer;
@@ -125,6 +155,26 @@ session_start();
         flex-direction: column;
         align-items: center;
         padding: 10px 14px;
+    }
+
+    .slide-container {
+        flex-direction: column;
+        position: relative;
+        display: flex;
+
+    }
+
+    .buttons-carousel {
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+    }
+
+    .buttons-carousel .btn-carousel i {
+        font-size: 30px;
+        margin: 10px;
+        cursor: pointer;
+        color: #235789;
     }
 </style>
 
@@ -172,6 +222,10 @@ session_start();
                 <img src="../images/img3.jpg">
             </div>
         </div>
+        <div class="image-modal" id="imageModal">
+            <span class="close" id="closeModal">&times;</span>
+            <img class="modal-content" id="modalImage">
+        </div>
         <h5 class="package-title">Packages to choose from</h5>
         <div class="carousel-main">
             <div class="slide-container">
@@ -201,15 +255,39 @@ session_start();
                                 </span>
                             </div>
                         </div>
+                        <div class="card-carousel">
+                            <div class="card-content">
+                                <h4 class="package-name">Package1</h4>
+                                <span class="offers">
+                                    this are the amenities
+                                </span>
+                            </div>
+                        </div>
+                        <div class="card-carousel">
+                            <div class="card-content">
+                                <h4 class="package-name">Package1</h4>
+                                <span class="offers">
+                                    this are the amenities
+                                </span>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                <div class="buttons-carousel">
+                    <div class="btn-carousel back">
+                        <i class="fa-solid fa-caret-left"></i>
+                    </div>
+                    <div class="btn-carousel next">
+                        <i class="fa-solid fa-caret-right"></i>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
 
     <?php include("guest_footer.php"); ?>
-
-
+    <script src="./js/services_photos.js"></script>
     <script>
         const carousel = document.querySelector(".package-carousel");
         const prevButton = document.getElementById("prev");
