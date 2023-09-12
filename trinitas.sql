@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 10, 2023 at 10:33 AM
+-- Generation Time: Sep 12, 2023 at 02:12 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -56,7 +56,8 @@ CREATE TABLE `appoinment_record` (
   `province` varchar(255) NOT NULL,
   `postal_code` int(4) NOT NULL,
   `contact_no` varchar(255) NOT NULL,
-  `appoint_sched` datetime NOT NULL,
+  `appoint_sched_date` varchar(100) NOT NULL,
+  `appoint_sched_time` varchar(1000) NOT NULL,
   `appoint_description` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -64,9 +65,14 @@ CREATE TABLE `appoinment_record` (
 -- Dumping data for table `appoinment_record`
 --
 
-INSERT INTO `appoinment_record` (`appoint_id`, `user_id`, `first_name`, `last_name`, `street_add`, `city_municipality`, `province`, `postal_code`, `contact_no`, `appoint_sched`, `appoint_description`) VALUES
-(1, 1, 'Niña Gillian', 'Villamin', 'National Road St.', 'Dimasalang', 'Masbate', 5407, '0912343434', '2023-05-30 03:47:00', 'Test'),
-(2, 3, 'Joana', 'Lomerio', 'P1', 'Pilar', 'Sorsogon', 2121, '091234578604', '2023-05-25 07:59:00', 'Appointment purpose');
+INSERT INTO `appoinment_record` (`appoint_id`, `user_id`, `first_name`, `last_name`, `street_add`, `city_municipality`, `province`, `postal_code`, `contact_no`, `appoint_sched_date`, `appoint_sched_time`, `appoint_description`) VALUES
+(1, 1, 'testing_only', 'terrerte', 'Street di matirhan', 'Legazpi', 'Albay', 212123, '09123456789', '', '', 'rerewrw'),
+(2, 1, 'Juan', 'Dela Cruz', 'Street di matirhan', 'Legazpi', 'Albay', 5403, '09123456789', 'September 27 2023', '09:00 AM', 'hehje'),
+(3, 1, 'Nina Gillian', 'Villamin', 'Street di matirhan', 'Legazpi', 'Albay', 1234, '09123456789', 'September 13 2023', '09:00 AM', 'fdfsd'),
+(4, 1, 'new', 'test', 'ewqeq', 'ewwqe', 'ewqeqw', 0, 'eqweqw', 'September 27 2023', '09:00 AM', 'erwerwe'),
+(5, 1, 'Hello ', 'World', 'Batungbakal Street', '12123', '2331', 3231, '09123456789', 'September 25 2023', '09:00 AM', 'dsfggd'),
+(6, 1, 'Ed', 'Sheeran', 'New York Street', 'New York', 'New York', 213314, '09123456789', 'September 19 2023', '03:00 PM', 'hello world'),
+(7, 1, 'Taylor', 'Sheesh', 'Cornelia Street', 'New York City', 'New York', 3231, '42344', 'September 21 2023', '09:00 AM', 'Hello');
 
 -- --------------------------------------------------------
 
@@ -78,6 +84,19 @@ CREATE TABLE `appoinment_report` (
   `appoint_report_id` int(11) NOT NULL,
   `appoint_id` int(11) NOT NULL,
   `appointt_report_date` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `appointment_availability`
+--
+
+CREATE TABLE `appointment_availability` (
+  `avalable_appoint_id` int(11) NOT NULL,
+  `day_of_week` varchar(15) DEFAULT NULL,
+  `time_slot` varchar(15) DEFAULT NULL,
+  `availability_status` enum('available','booked') DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -147,7 +166,15 @@ INSERT INTO `messages` (`message_id`, `sender_id`, `receiver_id`, `message`, `ti
 (14, 1, 1, 'Yep?', '2023-09-10 04:30:59', 1, 0),
 (15, 1, 1, 'Opo sis', '2023-09-10 04:34:40', 1, 0),
 (16, 1, 2, 'HAHAHAH', '2023-09-10 05:46:53', 1, 1),
-(17, 1, 3, 'yes p', '2023-09-10 05:47:16', 1, 1);
+(17, 1, 3, 'yes p', '2023-09-10 05:47:16', 1, 1),
+(18, 1, 1, 'gdgdgfgf', '2023-09-11 08:15:51', 1, 0),
+(19, 1, 1, 'gfgdfg', '2023-09-11 08:15:53', 1, 0),
+(20, 1, 1, 'gfggf', '2023-09-11 08:15:55', 1, 0),
+(21, 1, 1, 'dsdfdsf', '2023-09-11 08:16:36', 1, 1),
+(22, 1, 1, 'ddsdfsd', '2023-09-11 08:16:47', 1, 0),
+(23, 1, 1, 'fdfsf', '2023-09-11 08:16:50', 1, 1),
+(24, 1, 1, 'Hrllo', '2023-09-11 08:16:53', 1, 1),
+(25, 1, 1, 'Hii', '2023-09-11 08:16:57', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -420,6 +447,12 @@ ALTER TABLE `appoinment_report`
   ADD KEY `appoint_id` (`appoint_id`);
 
 --
+-- Indexes for table `appointment_availability`
+--
+ALTER TABLE `appointment_availability`
+  ADD PRIMARY KEY (`avalable_appoint_id`);
+
+--
 -- Indexes for table `cancellation_report`
 --
 ALTER TABLE `cancellation_report`
@@ -524,13 +557,19 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `appoinment_record`
 --
 ALTER TABLE `appoinment_record`
-  MODIFY `appoint_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `appoint_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `appoinment_report`
 --
 ALTER TABLE `appoinment_report`
   MODIFY `appoint_report_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `appointment_availability`
+--
+ALTER TABLE `appointment_availability`
+  MODIFY `avalable_appoint_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `cancellation_report`
@@ -548,7 +587,7 @@ ALTER TABLE `feedback`
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `product_details`
