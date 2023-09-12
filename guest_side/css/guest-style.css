@@ -2081,7 +2081,7 @@ form .d-grid {
     cursor: pointer;
 }
 
-.calendar {
+.calendar-icon {
     color: #8d99a2;
 }
 
@@ -2461,6 +2461,251 @@ h1#content-title{
     'opsz' 24
 }
 
+/* ------------------------------------------------------ DATE TIME SELECTOR SECTION -------------------------------------------- */
+.dateTime-modal-trigger {
+    display: none;
+    z-index: 999;
+    top: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    height: 100vh;
+}
+
+
+.close-button-header{
+    display: flex;
+    justify-content: flex-end;
+    position: fixed;
+    height: 40px;
+    width: 100%;
+    padding: 10px;
+}
+
+.dateTime-modal-trigger .fa-x{
+    height: 35px;
+    width: 35px;
+    color: black;
+    border-radius: 50%;
+    cursor: pointer;
+    background-color: #ffff;
+    padding: 11px;
+} 
+
+.dateTime-modal-trigger .fa-x:hover{
+    background-color: #a1a1a1;
+    color: #ffff;
+    transition: all 0.5s ease;
+}
+
+.date-time-section{
+    width: 100%;
+    height: 100vh;
+    justify-content: space-around;
+    align-items: center;
+    display: flex;
+}
+
+.date-and-time-container {
+    display: flex;
+    width: auto;
+    justify-content: center;
+    align-items: baseline;
+}
+
+
+.time-select-option {
+    right: 0;
+    top: 0;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+}
+
+.time-selector-container {
+    height: auto;
+    padding: 20px;
+    margin: 10px;
+    background-color: #ffff;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+    display: flex;
+    flex-direction: column;
+}
+
+.time-selector-container .title{
+    font-weight: 600;
+}
+
+.time-selector-container i {
+    margin-right: 10px;
+    color: #235789;
+}
+
+.selection {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+}
+
+.selection .time-options {
+    cursor: pointer;
+    padding: 10px 20px;
+}
+
+.time-options .meridian {
+    font-size: 13px;
+}
+
+.selection .time-options:hover {
+    background-color: #235789;
+    transition: all 0.5s ease;
+    border-radius: 5px;
+    color: #fff;
+}
+
+.selection .time-options::after {
+    background-color: #235789;
+    color: #fff;
+}
+
+.wrapper {
+    width: 400px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+    height: 50%;
+}
+
+.wrapper header {
+    display: flex;
+    align-items: center;
+    padding: 25px 30px 10px;
+    justify-content: space-between;
+}
+
+header .icons {
+    display: flex;
+}
+
+header .icons span {
+    height: 38px;
+    width: 38px;
+    margin: 0 1px;
+    cursor: pointer;
+    color: #878787;
+    text-align: center;
+    line-height: 38px;
+    font-size: 1.9rem;
+    user-select: none;
+    border-radius: 50%;
+}
+
+.icons span:last-child {
+    margin-right: -10px;
+}
+
+header .icons span:hover {
+    background: #f2f2f2;
+}
+
+header .current-date {
+    font-size: 1.45rem;
+    font-weight: 500;
+    margin-bottom: 0;
+}
+
+.calendar {
+    padding: 10px 20px 20px 20px;
+}
+
+.calendar ul {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    text-align: center;
+}
+
+
+.calendar li {
+    color: #333;
+    width: calc(100% / 7);
+    font-size: 1.07rem;
+}
+
+.calendar .weeks li {
+    font-weight: 500;
+    cursor: default;
+}
+
+.calendar .days li {
+    z-index: 1;
+    cursor: pointer;
+    position: relative;
+    margin-top: 20px;
+}
+
+.days li.inactive {
+    color: #aaa;
+}
+
+.days{
+    margin: 0;
+}
+
+.days,
+.weeks{
+    padding-left: 0;
+}
+.days li::before {
+    position: absolute;
+    content: "";
+    left: 50%;
+    top: 50%;
+    height: 40px;
+    width: 40px;
+    z-index: -1;
+    color: #ffff;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+.days li:not(.inactive):hover::before {
+    background: #539de2;
+    transition: all 0.5s ease;
+    color: #ffff;
+}
+
+@media screen and (max-width: 780px) {
+    .date-time-section{
+        height: 109vh;
+    }
+}
+
+@media screen and (max-width: 768px) {
+
+    .wrapper{
+        width: 360px;
+
+    }
+    .time-selector-container {
+        max-width: 100%;
+    }
+    .selection {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .date-and-time-container {
+        flex-direction: column;
+        align-items: center;
+        margin: auto 15px;
+    }
+    .dateTime-modal-trigger{
+        overflow: auto;
+    }
+}
+
 
 /* ------------------------------------------------------ RESPONSIVE SECTION -------------------------------------------- */
 
@@ -2486,9 +2731,6 @@ h1#content-title{
     }
 }
 
-@media screen and (max-width: 1064px) {
-    
-}
 
 @media screen and (max-width: 1300px) {
     .share-button-container {

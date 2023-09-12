@@ -15,7 +15,6 @@
         $row = $query->fetch(PDO::FETCH_ASSOC);
     
         if ($query->rowCount() > 0) {
-    
             if ($row && password_verify($admin_password, $row['admin_password'])) {
                 $_SESSION['admin_id'] = $row['admin_id'];
                 header('location:admin_home.php');
