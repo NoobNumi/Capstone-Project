@@ -186,6 +186,10 @@ if (isset($_POST['submit'])) {
         <?php include("logout_modal.php"); ?>
     </section>
     <?php include("guest_footer.php"); ?>
+    <script>
+        let selectedDate = null;
+        let selectedTime = null;
+    </script>
     <script src="./js/date-time-selector.js"></script>
     <script src="./js/insert_date_time.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>

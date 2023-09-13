@@ -13,6 +13,7 @@
     <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/material_blue.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 </head>
+
 <body>
     <div class="dateTime-modal-trigger">
         <div class="close-button-header">
@@ -101,7 +102,8 @@
             for (let i = 1; i <= lastDateofMonth; i++) {
                 let isToday = i === date.getDate() && currMonth === new Date().getMonth() &&
                     currYear === new Date().getFullYear() ? "active" : "";
-                liTag += `<li class="${isToday}">${i}</li>`;
+
+                liTag += `<li class="date ${isToday}" data-day="${i}">${i}</li>`;
             }
 
             for (let i = lastDayofMonth; i < 6; i++) {
@@ -109,8 +111,33 @@
             }
             currentDate.innerText = `${months[currMonth]} ${currYear}`;
             daysTag.innerHTML = liTag;
+
+            document.querySelectorAll('.date').forEach((dayElement) => {
+                dayElement.addEventListener('click', () => {
+                    if (!dayElement.classList.contains('inactive')) {
+                        const selectedDay = dayElement.dataset.day; // Get the selected day
+                        const formattedDay = selectedDay.length === 1 ? `0${selectedDay}` : selectedDay;
+                        const formattedMonth = months[currMonth];
+                        const selectedYear = currYear;
+
+                        selectedDate = `${formattedMonth} ${formattedDay} ${selectedYear}`;
+                        updateAppointSched();
+                    }
+                });
+            });
         }
-        renderCalendar();
+
+        const updateAppointSched = () => {
+            const appointSchedInput = document.getElementById('schedule-input');
+            const appointSchedDateInput = document.getElementById('appoint_sched_date');
+            const appointSchedTimeInput = document.getElementById('appoint_sched_time');
+
+            if (selectedDate) {
+                appointSchedInput.value = `${selectedDate} ${selectedTime || ''}`;
+                appointSchedDateInput.value = selectedDate;
+                appointSchedTimeInput.value = selectedTime;
+            }
+        }
 
         prevNextIcon.forEach(icon => {
             icon.addEventListener("click", () => {
@@ -118,16 +145,19 @@
 
                 if (currMonth < 0) {
                     currYear--;
-                    currMonth = 11; // December
+                    currMonth = 11;
                 } else if (currMonth > 11) {
                     currYear++;
-                    currMonth = 0; // January
+                    currMonth = 0;
                 }
 
                 renderCalendar();
             });
         });
+
+        renderCalendar();
     </script>
+    <script src="./js/insert_date_time.js"></script>
 </body>
 
 </html>

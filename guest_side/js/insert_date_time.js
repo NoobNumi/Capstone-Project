@@ -1,28 +1,15 @@
-let selectedDate = null;
-let selectedTime = null;
-
-function updateAppointSched() {
-    const appointSchedInput = document.getElementById('schedule-input');
-    const appointSchedDateInput = document.getElementById('appoint_sched_date');
-    const appointSchedTimeInput = document.getElementById('appoint_sched_time');
-
-    if (selectedDate) {
-        appointSchedInput.value = `${selectedDate} ${selectedTime || ''}`;
-        appointSchedDateInput.value = selectedDate;
-        appointSchedTimeInput.value = selectedTime;
-    }
-}
-
-document.querySelectorAll('.days li').forEach((dayElement) => {
+ document.querySelectorAll('.days li').forEach((dayElement) => {
     dayElement.addEventListener('click', () => {
-        const selectedDay = dayElement.textContent.trim();
-        const currentDateText = document.querySelector('.current-date').textContent.trim();
-        const [selectedMonth, selectedYear] = currentDateText.split(' ');
+        if (!dayElement.classList.contains('inactive')) {
+            const selectedDay = dayElement.textContent.trim();
+            const formattedDay = selectedDay.length === 1 ? `0${selectedDay}` : selectedDay;
+            const currentDateText = document.querySelector('.current-date').textContent.trim();
+            const [selectedMonth, selectedYear] = currentDateText.split(' ');
+            const formattedMonth = selectedMonth.charAt(0).toUpperCase() + selectedMonth.slice(1);
 
-        const formattedMonth = selectedMonth.charAt(0).toUpperCase() + selectedMonth.slice(1);
-
-        selectedDate = `${formattedMonth} ${selectedDay} ${selectedYear}`;
-        updateAppointSched();
+            selectedDate = `${formattedMonth} ${formattedDay} ${selectedYear}`;
+            updateAppointSched();
+        }
     });
 });
 
