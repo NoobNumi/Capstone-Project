@@ -1,14 +1,13 @@
 <?php
-    session_name("admin_session");
-    session_start();
-    require_once("../connection.php");
-    if (!isset($_SESSION['admin_id'])) {
-        header("location: admin_login.php");
-    }
+session_name("admin_session");
+session_start();
+require_once("../connection.php");
+if (!isset($_SESSION['admin_id'])) {
+    header("location: admin_login.php");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -38,13 +37,13 @@
         <ul class="admin-navbar">
             <p class="menu-name">Menu</p>
             <li class="active">
-                <a href="admin_home.php?admin_id=<?php echo $_SESSION['admin_id'];?>">
+                <a href="admin_home.php?admin_id=<?php echo $_SESSION['admin_id']; ?>">
                     <i class="fa-regular fa-compass"></i>
                     <span class="links-names" style="margin-left: -4px;">Dashboard</span>
                 </a>
             </li>
             <li>
-                <a href="admin_messages.php?admin_id=<?php echo $_SESSION['admin_id'];?>">
+                <a href="admin_messages.php?admin_id=<?php echo $_SESSION['admin_id']; ?>">
                     <i class="fa-regular fa-message"></i>
                     <span class="count-color"> </span>
                     <span class="links-names">Messages</span>
@@ -81,76 +80,86 @@
         </div>
         <div class="row row-cols-2">
             <div class="col first-col">
-                <div class="container-header">
-                    <span class="container-name">
-                        Users
+                <a href="#">
+                    <div class="container-header">
+                        <span class="container-name">
+                            Users
+                        </span>
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <p class="total-number">
+                        50
+                    </p>
+                    <span class="sub-number">
+                        5
                     </span>
-                    <i class="fa-solid fa-users"></i>
-                </div>
-                <p class="total-number">
-                    50
-                </p>
-                <span class="sub-number">
-                    5
-                </span>
+                </a>
             </div>
             <div class="col middle-col">
-                <div class="container-header">
-                    <span class="container-name">
-                        Reservations
+                <a href="#">
+                    <div class="container-header">
+                        <span class="container-name">
+                            Reservations
+                        </span>
+                        <i class="fa-solid fa-clipboard-list"></i>
+                    </div>
+                    <p class="total-number">
+                        18
+                    </p>
+                    <span class="sub-number">
+                        3
                     </span>
-                    <i class="fa-solid fa-clipboard-list"></i>
-                </div>
-                <p class="total-number">
-                    18
-                </p>
-                <span class="sub-number">
-                    3
-                </span>
+                </a>
             </div>
             <div class="col middle-col">
-                <div class="container-header">
-                    <span class="container-name">
-                        Appointments
+                <a href="appointment_view.php">
+                    <div class="container-header">
+                        <span class="container-name">
+                            Appointments
+                        </span>
+                        <i class="fa-solid fa-calendar-check"></i>
+                    </div>
+                    <p class="total-number">
+                        18
+                    </p>
+                    <span class="sub-number">
+                        3
                     </span>
-                    <i class="fa-solid fa-calendar-check"></i>
-                </div>
-                <p class="total-number">
-                    18
-                </p>
-                <span class="sub-number">
-                    3
-                </span>
+                </a>
             </div>
             <div class="col middle-col">
-                <div class="container-header">
-                    <span class="container-name">
-                        Cancellations
+                <a href="#">
+                    <div class="container-header">
+                        <span class="container-name">
+                            Cancellations
+                        </span>
+                        <span class="cancel-icon">
+                            <img src="../images/cancelbookingicon.svg">
+                        </span>
+                    </div>
+                    <p class="total-number">
+                        18
+                    </p>
+                    <span class="sub-number">
+                        18
                     </span>
-                    <span class="cancel-icon">
-                        <img src="../images/cancelbookingicon.svg">
-                    </span>
-                </div>
-                <p class="total-number">
-                    18
-                </p>
-                <span class="sub-number">
-                    18
-                </span>
+                </a>
             </div>
             <div class="col last-col">
-                <div class="container-header">
-                    <span class="container-name">
-                        Reports
+                <a href="#">
+                    <div class="container-header">
+                        <span class="container-name">
+                            Reports
+                        </span>
+                        <i class="fa-solid fa-flag"></i>
+                    </div>
+                    <p class="total-number">
+                        18
+                    </p>
+                    <span class="sub-number">
+                        10
                     </span>
-                    <i class="fa-solid fa-flag"></i>
-                </div>
-                <p class="total-number">
-                    18
-                </p>
-                <span class="sub-number">
-                    10
-                </span>
+                </a>
             </div>
         </div>
     </section>
@@ -158,18 +167,9 @@
 </body>
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script src="./js/charts.js"></script>
+<script src="./js/sidebar-animation.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
-<script>
-    // ------------------------- Admin sidebar -------------------------------- //
 
-    let guestSidebar = document.querySelector(".admin-sidebar");
-    let closeBtn = document.querySelector("#guestMenu");
-
-    closeBtn.addEventListener("click", () => {
-        guestSidebar.classList.toggle("open");
-        menuBtnchange();
-    })
-</script>
 
 </html>

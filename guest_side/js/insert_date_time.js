@@ -15,11 +15,15 @@
 
 document.querySelectorAll('.time-options').forEach((timeOption) => {
     timeOption.addEventListener('click', () => {
-        selectedTime = timeOption.textContent.trim();
-        updateAppointSched();
-        closeDateTimeModal();
+        console.log('Clicked on time slot');
+        if (!timeOption.classList.contains('disabled')) {
+            selectedTime = timeOption.textContent.trim();
+            updateAppointSched();
+            closeDateTimeModal();
+        }
     });
 });
+
 
 function closeDateTimeModal() {
     const dateTimeModal = document.querySelector('.dateTime-modal-trigger');

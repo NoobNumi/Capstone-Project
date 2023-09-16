@@ -221,11 +221,11 @@ ul.admin-navbar li a:hover .fa-regular {
 }
 
 @media screen and (max-width: 756px) {
-    .admin-sidebar{
+    .admin-sidebar {
         width: 65px;
     }
 
-    .menu{
+    .menu {
         padding: 0;
     }
 
@@ -278,6 +278,10 @@ section.admin-dashboard {
     align-items: center;
 }
 
+.col a {
+    text-decoration: none;
+    color: #303030;
+}
 
 .container-header span.container-name {
     font-weight: 500;
@@ -292,6 +296,7 @@ section.admin-dashboard {
     margin-top: 10px;
     font-size: 24px;
     font-weight: 600;
+    color: #235789;
 }
 
 .sub-number {
@@ -308,7 +313,7 @@ section.admin-dashboard {
     color: #ffff;
 }
 
-span.notif-count{
+span.notif-count {
     display: flex;
     text-align: center;
     justify-content: center;
@@ -324,7 +329,7 @@ span.notif-count{
     transition: all 0.5s ease;
 }
 
-.count-color{
+.count-color {
     padding: 5px;
     border-radius: 50%;
     width: 10px;
@@ -334,95 +339,98 @@ span.notif-count{
     top: calc(27% + (202px - 27%));
 }
 
-.admin-sidebar.open .count-color{
+.admin-sidebar.open .count-color {
     display: none;
     transition: all 0.5s ease;
 }
+
 @media (max-width: 767px) {
-section.admin-dashboard{
-    padding: 0;
-    width: calc(100% - 50px);
-    left: 48px;
-}
-.admin-dashboard .row {
-    flex-direction: column;
-    align-items: stretch;
-    width: inherit;
-}
+    section.admin-dashboard {
+        padding: 0;
+        width: calc(100% - 50px);
+        left: 48px;
+    }
 
-.admin-dashboard .col {
-    width: 100%;
-    margin: 0;
-    padding: 10px;
-    box-shadow: none;
-    display: flex;
-    flex-direction: column;
-    background-color: #fff;
-    border-bottom: 1px solid #e0e0e0;
-    transition: background-color 0.3s ease;
-}
+    .admin-dashboard .row {
+        flex-direction: column;
+        align-items: stretch;
+        width: inherit;
+    }
 
-.admin-dashboard .col:hover {
-    background-color: #f5f5f5;
-}
+    .admin-dashboard .col {
+        width: 100%;
+        margin: 0;
+        padding: 10px;
+        box-shadow: none;
+        display: flex;
+        flex-direction: column;
+        background-color: #fff;
+        border-bottom: 1px solid #e0e0e0;
+        transition: background-color 0.3s ease;
+    }
 
-.col .container-header {
-    gap: 10px;
-    display: inherit;
-    justify-content: space-between;
-}
+    .admin-dashboard .col:hover {
+        background-color: #f5f5f5;
+    }
 
-.col .total-number {
-    display: none;
-}
+    .col .container-header {
+        gap: 10px;
+        display: inherit;
+        justify-content: space-between;
+    }
 
-.sub-number {
-    width: 24px;
-    height: 24px;
-    font-size: 12px;
-    padding: 5px;
-    margin-top: 9px;
-}
+    .col .total-number {
+        display: none;
+    }
 
-.col.first-col{
-    border-bottom-left-radius: 0; 
-    border-bottom-right-radius: 0;
-}
+    .sub-number {
+        width: 24px;
+        height: 24px;
+        font-size: 12px;
+        padding: 5px;
+        margin-top: 9px;
+    }
 
-.col.middle-col{
-    border-radius: 0;
-}
+    .col.first-col {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
 
-.col.last-col{
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
+    .col.middle-col {
+        border-radius: 0;
+    }
 
-}
+    .col.last-col {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+
+    }
 }
 
 /* ------------------------------------------------------ CHARTS IN DASHBOARD ADMIN ---------------------------------------------- */
-.charts{
+.charts {
     width: calc(100% - 78px);
     display: grid;
     grid-template-columns: 1fr 1fr;
     padding: 10px;
     gap: 20px;
 }
-.charts .col{
+
+.charts .col {
     border-radius: 5%;
     padding: 30px;
     width: 100%;
     height: 100%;
     background-color: #ffff;
-}   
+}
 
 
 @media screen and (max-width: 768px) {
-    .charts{
+    .charts {
         display: flex;
         flex-direction: column;
     }
-}   
+}
 
 /* ------------------------------------------------------------ ADMIN MESSAGE GUEST SECTION ----------------------------------------------------- */
 .admin-messages {
@@ -440,12 +448,12 @@ section.admin-dashboard{
     overflow-x: scroll;
 }
 
-.search-main-container{
+.search-main-container {
     display: flex;
     justify-content: center;
 }
 
-.admin-search-bar{
+.admin-search-bar {
     width: 92%;
     display: flex;
     align-items: center;
@@ -456,7 +464,7 @@ section.admin-dashboard{
     border-radius: 20px;
 }
 
-.admin-search-bar input[type="text"]{
+.admin-search-bar input[type="text"] {
     width: inherit;
     border: none;
     outline: none;
@@ -464,7 +472,7 @@ section.admin-dashboard{
     margin: 0 10px 0 10px;
 }
 
-.admin-search-bar i{
+.admin-search-bar i {
     margin-right: 10px;
 }
 
@@ -476,7 +484,7 @@ section.admin-dashboard{
     height: 630px;
 }
 
-.message-container .admin-msg-title{
+.message-container .admin-msg-title {
     text-align: start;
     padding: 30px;
     margin-bottom: -20px;
@@ -493,8 +501,8 @@ section.admin-dashboard{
     overflow: auto;
 }
 
-.chat-people li a{
-    display: flex;     
+.chat-people li a {
+    display: flex;
     gap: 10px;
     text-decoration: none;
     overflow: hidden;
@@ -507,7 +515,7 @@ section.admin-dashboard{
     font-size: 14px;
 }
 
-.chat-people li:hover{
+.chat-people li:hover {
     background-color: #c6c6c6;
     transition: all 0.5s ease;
 }
@@ -522,17 +530,17 @@ section.admin-dashboard{
 li a .msg-allText {
     display: flex;
     flex-direction: column;
-  
+
 }
 
-.msg-allText .guest-name{
+.msg-allText .guest-name {
     font-size: 1rem;
     font-weight: 600 !important;
     color: #303030;
 }
 
 
-.msg-allText .msg{
+.msg-allText .msg {
     word-wrap: break-word;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -541,17 +549,18 @@ li a .msg-allText {
 }
 
 @media screen and (max-width: 768px) {
-    .admin-messages{
+    .admin-messages {
         margin: 0 15px;
         top: 0;
         align-items: stretch;
         height: 100%;
     }
-    .chat-people{
+
+    .chat-people {
         margin-left: -18px;
     }
 
-    .message-container{
+    .message-container {
         max-height: 100%;
         width: 100%;
         padding-left: -2px;
@@ -581,6 +590,7 @@ section.messages .message-container {
     width: 50%;
     height: 100%;
 }
+
 .message-container .messaging-guest-header {
     width: 100%;
     padding: 10px;
@@ -590,13 +600,13 @@ section.messages .message-container {
     box-shadow: rgba(27, 31, 35, 0.04) 0px 1px 0px, rgba(255, 255, 255, 0.25) 0px 1px 0px inset;
 }
 
-.message-container .messaging-guest-header .user-info-adminSide{
+.message-container .messaging-guest-header .user-info-adminSide {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-.user-info-adminSide img{
+.user-info-adminSide img {
     border-radius: 50%;
     width: 35px;
     height: 35px;
@@ -608,7 +618,7 @@ section.messages .message-container {
     overflow: auto;
 }
 
-.chat-box span.time-stamp{
+.chat-box span.time-stamp {
     display: flex;
     justify-content: center;
     margin-bottom: 10px;
@@ -708,9 +718,10 @@ form.typing-area input[type="text"] {
         max-width: 100%;
     }
 
-    section.messages{
+    section.messages {
         margin: 15px;
     }
+
     section.messages .message-container {
         width: 90%;
     }
@@ -723,7 +734,7 @@ form.typing-area input[type="text"] {
     }
 
 
-    section.messages{
+    section.messages {
         min-height: 100%;
         left: 53px;
         width: calc(100% - 72px);
@@ -819,13 +830,13 @@ form.typing-area input[type="text"] {
     display: flex;
     flex-direction: row;
     gap: 30px;
-    border-radius: 10px; 
+    border-radius: 10px;
 }
 
 .main-container-login .side-photo {
     background-image:
-    linear-gradient(rgba(0, 87, 169, 0.5), rgba(0, 87, 169, 0.5)),
-    url('/images/img_from_net.jpg');
+        linear-gradient(rgba(0, 87, 169, 0.5), rgba(0, 87, 169, 0.5)),
+        url('/images/img_from_net.jpg');
     object-fit: cover;
     background-size: cover;
     width: 50%;
@@ -839,7 +850,7 @@ form.typing-area input[type="text"] {
     justify-content: center;
 }
 
-.main-container-login form{
+.main-container-login form {
     margin-left: -10px;
     display: flex;
     align-items: center;
@@ -848,7 +859,7 @@ form.typing-area input[type="text"] {
     position: relative;
 }
 
-.main-container-login form .admin-photo-login{
+.main-container-login form .admin-photo-login {
     margin-bottom: 20px;
     display: flex;
     align-items: center;
@@ -857,20 +868,21 @@ form.typing-area input[type="text"] {
     position: relative;
 }
 
-.main-container-login form .logo-main{
+.main-container-login form .logo-main {
     width: 50px;
 }
 
-.main-container-login form .admin-photo-title{
+.main-container-login form .admin-photo-title {
     width: 150px;
 }
 
-.main-container-login .login-text{
+.main-container-login .login-text {
     margin-bottom: 20px;
     font-size: 13px;
     color: #717171;
 }
-.main-container-login form .inputs-login{
+
+.main-container-login form .inputs-login {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -882,7 +894,7 @@ form.typing-area input[type="text"] {
 }
 
 .inputs-login input[type="email"],
-.inputs-login input[type="password"]{
+.inputs-login input[type="password"] {
     border: none;
     outline: none;
     background-color: transparent;
@@ -890,20 +902,20 @@ form.typing-area input[type="text"] {
     font-size: 15px;
 }
 
-.inputs-login i{
+.inputs-login i {
     color: #f99830;
 }
 
-.inputs-login .fa-eye{
+.inputs-login .fa-eye {
     cursor: pointer;
 }
 
-form .admin-theme{
+form .admin-theme {
     color: rgb(249, 152, 48);
     font-weight: 600;
 }
 
-button.btn-admin-login{
+button.btn-admin-login {
     margin-top: 10px;
     width: 100%;
     padding: 10px;
@@ -916,19 +928,20 @@ button.btn-admin-login{
     background-color: rgb(35, 87, 137);
 }
 
-button.btn-admin-login:hover{
+button.btn-admin-login:hover {
     transition: all 0.5s ease;
     background-color: #3485d0;
 }
+
 @media screen and (max-width: 1280px) {
-    .main-container-login form{
+    .main-container-login form {
         right: 32px;
     }
 
 }
 
 @media screen and (max-width: 1050px) {
-    .main-container-login form{
+    .main-container-login form {
         right: 39px;
     }
 
@@ -950,7 +963,7 @@ button.btn-admin-login:hover{
         right: 0;
     }
 
-    .main-container-login form{
+    .main-container-login form {
         height: 330px;
         right: 0;
         width: auto;
@@ -962,9 +975,346 @@ button.btn-admin-login:hover{
         height: 40%;
     }
 
-    .main-container-login form{
+    .main-container-login form {
         height: 350px;
         right: 0;
         width: 80%;
+    }
+}
+
+/* ------------------------------ APPOINTMENT LISTS  --------------------------------- */
+.appointments-list {
+    position: relative;
+    min-height: 100vh;
+    top: 50%;
+    width: calc(100% - 78px);
+    left: 70px;
+    z-index: 2;
+    margin: auto 15px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+}
+
+.admin-appoint-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 21px 0 0 0;
+    gap: 20px;
+    width: 80%;
+    position: fixed;
+    top: 0;
+    background-color: #ededed;
+    z-index: 999;
+}
+
+.admin-appoint-header .right-section {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.right-section .admin-title {
+    font-weight: 600;
+    line-height: 20px;
+    font-size: 25px;
+}
+
+.right-section .total-indicator {
+    color: #adadad;
+    font-size: 14px;
+}
+
+.total-num {
+    margin: 0 5px 0 5px;
+    color: #235789;
+    font-weight: 700;
+}
+
+.center-section {
+    width: 100%;
+}
+
+.center-section .search-bar-admin {
+    width: 100%;
+    background-color: #dedede;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0 10px 10px;
+    border-radius: 10px;
+}
+
+.search-bar-admin input {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    width: inherit;
+    font-size: 16px;
+}
+
+.left-section {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 10px;
+    justify-content: flex-end;
+    color: #adadad;
+    cursor: pointer;
+    width: 100%;
+}
+
+
+:is(.notification-list)::-webkit-scrollbar {
+    width: 0;
+}
+
+.notification-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: inherit;
+    overflow-y: auto;
+    height: 100%;
+    overflow: auto;
+    margin-top: 100px;
+    max-height: 200vh
+}
+
+.notification-card {
+    position: relative;
+    width: 85%;
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffff;
+    padding: 10px 20px;
+    border-radius: 20px;
+    box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
+    margin: 1px 10px 10px 10px;
+    white-space: nowrap;
+}
+
+.first-section {
+    background-color: #fff;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    position: relative;
+}
+
+.notification-card .first-section img {
+    width: 70px;
+    border: solid #235789;
+    border-radius: 50%;
+    padding: 3px;
+}
+
+.second-section {
+    display: flex;
+    flex-direction: row;
+    gap: 150px;
+    justify-content: space-between;
+    width: auto;
+}
+
+.appoint-details .detail-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: #717171;
+}
+
+.detail-title i {
+    color: #235789;
+}
+
+.appoint-details .date {
+    font-weight: 500;
+    font-size: 17px;
+}
+
+
+span.guest {
+    font-weight: 600;
+}
+
+span.status {
+    padding: 10px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+span.status.confirmed {
+    background-color: #69b756;
+}
+
+span.status.pending {
+    background-color: #f7cc00;
+}
+
+span.status.cancelled {
+    background-color: #f73b3b;
+}
+
+span.status.pending,
+span.status.confirmed,
+span.status.cancelled {
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+
+.third-section .notif-button {
+    padding: 10px 20px;
+    background-color: #235789;
+    border-radius: 35px;
+    cursor: pointer;
+    width: 150px;
+    text-align: center;
+}
+
+.notif-button .btn-view {
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+}
+
+
+
+@media screen and (max-width: 1276px) {
+    .appointments-list {
+        left: 57px;
+    }
+
+    .admin-appoint-header {
+        margin: 0;
+        padding: 23px 20px 0px 20px;
+        width: 90%;
+    }
+
+    .right-section {
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    p.total-indicator {
+        margin-bottom: 0;
+        font-size: 14px;
+    }
+
+    .center-section {
+        width: 100%;
+    }
+
+    .left-section {
+        justify-content: end;
+    }
+
+    .notification-list {
+        width: 90%;
+    }
+
+    .notification-card {
+        height: auto;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 20px;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .notification-card .first-section {
+        width: 50px;
+        height: 50px;
+    }
+
+    .notification-card .first-section img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+
+    }
+
+    .second-section {
+        gap: 5px;
+        width: 100%;
+        align-items: flex-start;
+        margin: 15px 0 15px 0;
+    }
+
+    .appoint-details {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .detail-title {
+        font-size: 12px;
+    }
+
+    .date {
+        font-size: 14px;
+    }
+
+    .third-section {
+        justify-content: center;
+        width: 100%;
+    }
+
+    .notif-button {
+        padding: 5px 10px;
+        width: 100% !important;
+    }
+
+    .notif-button .btn-view {
+        font-size: 14px;
+    }
+
+    span.status {
+        padding: 5px;
+        height: auto;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        gap: 0 !important;
+    }
+
+    span.status i {
+        font-size: 12px;
+        margin-right: 5px;
+    }
+
+
+}
+
+@media screen and (max-width: 768px) {
+    .admin-appoint-header {
+        flex-direction: column;
+        justify-content: flex-start; 
+        padding: 27px 35px 0px 35px;
+    }
+    .notification-list {
+        margin-top: 200px;
+
+    }    
+
+    .appoint-details .date {
+        font-size: 12px;
     }
 }

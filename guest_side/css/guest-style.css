@@ -2548,7 +2548,7 @@ h1#content-title{
     gap: 10px;
 }
 
-.selection .time-options {
+.selection .time-options[data-status="available"] {
     cursor: pointer;
     padding: 10px 20px;
 }
@@ -2557,14 +2557,29 @@ h1#content-title{
     font-size: 13px;
 }
 
-.selection .time-options:hover {
+.selection .time-options.disabled[data-status="booked"] {
+    background-color: #ececec;
+    color: #888;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+.selection .time-options.disabled[data-status="booked"]:hover {
+    background-color: #ececec;
+    color: #888;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+
+.selection .time-options[data-status="available"]:hover {
     background-color: #235789;
     transition: all 0.5s ease;
     border-radius: 5px;
     color: #fff;
 }
 
-.selection .time-options::after {
+.selection .time-options[data-status="available"]:after {
     background-color: #235789;
     color: #fff;
 }
@@ -2578,10 +2593,13 @@ h1#content-title{
 }
 
 .wrapper header {
+    background-color: #235789;
     display: flex;
     align-items: center;
     padding: 25px 30px 10px;
     justify-content: space-between;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
 
 header .icons {
@@ -2593,12 +2611,13 @@ header .icons span {
     width: 38px;
     margin: 0 1px;
     cursor: pointer;
-    color: #878787;
+    color: #fff;
     text-align: center;
     line-height: 38px;
     font-size: 1.9rem;
     user-select: none;
     border-radius: 50%;
+    font-weight: 700;
 }
 
 .icons span:last-child {
@@ -2607,14 +2626,21 @@ header .icons span {
 
 header .icons span:hover {
     background: #f2f2f2;
+    transition: all 0.5s ease;
+    color: #11395d;
 }
 
 header .current-date {
     font-size: 1.45rem;
     font-weight: 500;
     margin-bottom: 0;
+    color: #fff;
 }
 
+.calendar .days li[data-status="booked"] {
+    color: #aaa;
+    pointer-events: none;
+}
 .calendar {
     padding: 10px 20px 20px 20px;
 }
@@ -2631,6 +2657,7 @@ header .current-date {
     color: #333;
     width: calc(100% / 7);
     font-size: 1.07rem;
+    margin-top: 20px;
 }
 
 .calendar .weeks li {
@@ -2644,6 +2671,12 @@ header .current-date {
     position: relative;
     margin-top: 20px;
 }
+
+.days li.disabled {
+    color: #aaa;
+    pointer-events: none;
+}
+
 
 .days li.inactive {
     color: #aaa;
@@ -2671,10 +2704,13 @@ header .current-date {
 }
 
 
+.days li:not(.inactive):hover{
+    color: #ffff;
+}
+
 .days li:not(.inactive):hover::before {
     background: #539de2;
     transition: all 0.5s ease;
-    color: #ffff;
 }
 
 @media screen and (max-width: 780px) {
