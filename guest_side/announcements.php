@@ -1,3 +1,16 @@
+<?php
+    require("../connection.php");
+    session_name("user_session");
+    session_start();
+
+    // Check if 'user_id' exists in the $_GET array
+    if (isset($_GET['user_id'])) {
+        $user_id = $_GET['user_id'];
+    } else {
+        $user_id = 0;
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,11 +28,12 @@
     <title>Announcements</title>
 </head>
 <body>
-    <!------------------------------------------------- HEADER ---------------------------------------------------------->
-   <?php include("guest_navbar.php");?>
+   <?php 
+        include("guest_navbar.php");
+        include("logout_modal.php");
+    ?>
 
     <!------------------------------------------------- START OF ANNOUNCEMENTS --------------------------------------------------->
-
     <section class="announcements">
         <div class="posts">
             <h1>Trinitas updates</h1>
