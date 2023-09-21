@@ -1,3 +1,16 @@
+<?php
+    require("../connection.php");
+    session_name("user_session");
+    session_start();
+
+    // Check if 'user_id' exists in the $_GET array
+    if (isset($_GET['user_id'])) {
+        $user_id = $_GET['user_id'];
+    } else {
+        $user_id = 0;
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,7 +28,11 @@
 </head>
 
 <body>
-    <?php include "guest_navbar.php";?>
+    <?php 
+        include("guest_navbar.php");
+        include("logout_modal.php");
+    ?>
+
     <div class="about-content my-5">
         <div class="about-trinitas container">
             <h1 class="text-center" id="content-title">About Us<i class="fa-solid fa-user-group about-icon" id="about-icon"></i></h1>

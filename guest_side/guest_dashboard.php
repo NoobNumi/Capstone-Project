@@ -6,8 +6,7 @@
     if (!isset($_SESSION['user_id'])) {
         header("location: login.php");
     }
-
-
+    
     try {
 
         $host = 'localhost';
@@ -93,6 +92,7 @@
         </ul>
     </div>
     <?php require("logout_modal.php"); ?>
+
     <!-- GUEST DASHBOARD STARTS HERE -->
     <section class="reservation-section">
         <div class="dash-content">
@@ -119,7 +119,7 @@
                         </a>
                     </li>
                     <li class="navigation-btn">
-                        <a href="discover.html">
+                        <a href="discover.php">
                             <i class="fa-solid fa-compass">
                                 <span class="tooltip-text">
                                     DISCOVER
@@ -128,7 +128,7 @@
                         </a>
                     </li>
                     <li class="navigation-btn">
-                        <a href="announcements.html">
+                        <a href="announcements.php">
                             <i class="fa-solid fa-bullhorn">
                                 <span class="tooltip-text">
                                     ANNOUNCEMENTS

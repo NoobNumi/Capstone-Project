@@ -97,7 +97,7 @@ if ($no_user) {
                     </hr>
                 </div>
                 <div class="continue-browsing">
-                    <a class="btn-login-signup" href="index.html">Continue browsing</a>
+                    <a class="btn-login-signup" href="index.php">Continue browsing</a>
                 </div>
                 <p class="signin">Don't have an account yet? <a href="signup.php" style="text-decoration: none;">Signup</a> </p>
                 <p class="copyright">Copyright &copy <script>
