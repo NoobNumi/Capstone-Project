@@ -1,6 +1,13 @@
 <?php 
-    include "../connection.php"; 
-    include("reservation_category.html");
+     require("../connection.php");
+     session_name("user_session");
+     session_start();
+ 
+     if (isset($_GET['user_id'])) {
+         $user_id = $_GET['user_id'];
+     } else {
+         $user_id = 0;
+     }
 ?>
 <!DOCTYPE html>
 <html lang="en">

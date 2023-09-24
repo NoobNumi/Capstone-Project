@@ -3,7 +3,6 @@
     session_name("user_session");
     session_start();
 
-    // Check if 'user_id' exists in the $_GET array
     if (isset($_GET['user_id'])) {
         $user_id = $_GET['user_id'];
     } else {
