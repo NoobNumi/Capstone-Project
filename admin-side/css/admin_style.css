@@ -65,6 +65,7 @@ body {
     padding: 6px 14px;
     z-index: 99;
     transition: all 0.5s ease;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
     overflow-y: hidden;
 }
 
@@ -222,24 +223,33 @@ ul.admin-navbar li a:hover .fa-regular {
 
 @media screen and (max-width: 756px) {
     .admin-sidebar {
-        width: 65px;
+        width: 55px;
     }
 
     .menu {
         padding: 0;
+        background-color: #fff;
     }
 
     ul.admin-navbar {
         padding-left: 0px;
+        margin-left: -7px;
     }
 
     .count-color {
-        left: 34px;
+        left: 28px!important;
     }
+
+    .admin-profile-details img {
+        height: 40px;
+        width: 40px;
+        margin-left: -7px;
+}
 }
 
 
 /* ---------------------------------------------- ADMIN DASHBOARD --------------------------------------------------------------- */
+
 
 section.admin-dashboard {
     position: relative;
@@ -259,6 +269,33 @@ section.admin-dashboard {
 
 :is(.admin-dashboard)::-webkit-scrollbar {
     width: 0px;
+}
+
+.dashboard-header {
+    display: flex;
+    width: inherit;
+    justify-content: flex-end;
+    align-items: center;
+    height: 100px;
+}
+
+.add-button {
+    cursor: pointer;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #fff;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-weight: 700;
+    background-color: #235789;
+    font-size: 13px;
+}
+
+.add-button:hover {
+    transition: all 0.5s ease;
+    background-color: #368ad9;
 }
 
 
@@ -342,6 +379,8 @@ span.notif-count {
 .admin-sidebar.open .count-color {
     display: none;
     transition: all 0.5s ease;
+    position: fixed;
+    overflow: hidden;
 }
 
 @media (max-width: 767px) {
@@ -406,6 +445,92 @@ span.notif-count {
 
     }
 }
+
+/* ------------------------------------------------------ MODAL SCHED OPTION ---------------------------------------------- */
+
+.modal-section {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    position: absolute;
+}
+
+.modal-container {
+    background-color: #fff;
+    padding: 10px 14px;
+    width: auto;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 10px;
+}
+
+.sched-modal-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    line-height: 2rem;
+    width: auto;
+    height: 100%;
+    margin-bottom: 14px;
+}
+
+.sched-modal-content i.fa-calendar-days {
+    font-size: 30px;
+    margin: 15px 0;
+    color: #235789;
+}
+
+.close-btn {
+    justify-content: flex-end;
+    display: flex;
+    position: relative;
+    right: 0;
+    width: 100%;
+    cursor: pointer;
+}
+
+
+.buttons-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.buttons-section .btn-reserve,
+.buttons-section .btn-appoint {
+    text-decoration: none;
+    background-color: #FFFF;
+    border: solid #333 1px;
+    padding: 10px;
+    color: #333;
+    border-radius: 5px;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.buttons-section .btn-reserve:hover {
+    transition: all 0.3s ease;
+    background-color: #235789;
+    color: #ffff;
+    border: none;
+}
+
+
+.buttons-section .btn-appoint:hover {
+    transition: all 0.3s ease;
+    background-color: #edc500;
+    border: none;
+}
+
 
 /* ------------------------------------------------------ CHARTS IN DASHBOARD ADMIN ---------------------------------------------- */
 .charts {
@@ -611,6 +736,12 @@ section.messages .message-container {
     width: 35px;
     height: 35px;
 }
+
+.message-title{
+    font-weight: 600;
+    color: #303030;
+}
+
 
 .chat-box {
     height: 500px;
@@ -1306,15 +1437,501 @@ span.status.cancelled {
 @media screen and (max-width: 768px) {
     .admin-appoint-header {
         flex-direction: column;
-        justify-content: flex-start; 
+        justify-content: flex-start;
         padding: 27px 35px 0px 35px;
     }
+
     .notification-list {
         margin-top: 200px;
 
-    }    
+    }
 
     .appoint-details .date {
         font-size: 12px;
     }
+}
+
+
+/* -------------------------------------------------------- DATE FOR APPOINTMENT SELECTOR ------------------------------------------ */
+
+.appointment-sched-selector {
+    width: 100%;
+    height: 100vh;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+.date-select-container {
+    background-color: #fff;
+    padding: 10px 14px;
+    border-radius: 10px;
+    width: auto;
+}
+
+
+.appointment-date-sched-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100px;
+}
+
+a span.back {
+    cursor: pointer;
+    position: absolute;
+    margin-left: 30px;
+    display: flex;
+    display: flex-start;
+    color: #235789;
+}
+
+
+.appointment-date-sched-header .separate-div {
+    display: flex;
+    justify-content: center;
+    width: inherit;
+}
+
+span#header-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+.wrapper {
+    width: 450px;
+    border-radius: 10px;
+    background: #fff;
+    margin: 0 auto;
+}
+
+.wrapper header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 30px;
+    border-radius: 10px 10px 0 0;
+}
+
+header .icons {
+    display: flex;
+}
+
+header .icons span {
+    height: 38px;
+    width: 38px;
+    margin: 0 5px;
+    cursor: pointer;
+    color: #235789;
+    text-align: center;
+    line-height: 38px;
+    font-size: 1.4rem;
+    user-select: none;
+    border-radius: 50%;
+    transition: background-color 0.3s;
+}
+
+header .icons span:last-child {
+    margin-right: 0;
+}
+
+header .icons span:hover {
+    background: #0a1d2e;
+    color: #fff;
+}
+
+header .current-date {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: #235789;
+}
+
+.calendar {
+    padding: 20px;
+    background: #fff;
+}
+
+.calendar ul {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    text-align: center;
+}
+
+.calendar .days {
+    margin-bottom: 20px;
+}
+
+.calendar li {
+    color: #333;
+    width: calc(100% / 7);
+    font-size: 1.07rem;
+    position: relative;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.calendar .weeks li {
+    font-weight: 500;
+    cursor: default;
+}
+
+.days li.selected {
+    background: #235789;
+    transition: all 1s ease;
+    color: #fff;
+}
+
+.days li.inactive {
+    color: #aaa;
+    cursor: not-allowed;
+}
+
+.days li.inactive:hover {
+    background: none;
+}
+
+.days li.active {
+    color: #fff;
+}
+
+.days li::before {
+    position: absolute;
+    content: "";
+    left: 50%;
+    top: 50%;
+    height: 40px;
+    width: 40px;
+    z-index: -1;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.days li.active::before {
+    background: #9B59B6;
+}
+
+.days li:not(.active):hover::before {
+    background: #f2f2f2;
+}
+
+.option-buttons {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.option-buttons .btn-custom {
+    text-decoration: none;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+.option-buttons .confirm {
+    background-color: #235789;
+    color: #fff;
+}
+
+.option-buttons .confirm:hover {
+    background-color: #0a1d2e;
+    color: #fff;
+    transition: all 0.5s ease;
+}
+
+.option-buttons .cancel:hover {
+    background-color: #f73b3b;
+    color: #fff;
+    transition: all 0.5s ease;
+    border: none;
+}
+
+.option-buttons .cancel {
+    color: #333;
+    border: solid #959595 1px;
+}
+
+@media screen and (max-width: 768px) {
+
+    .appointment-date-sched-header a{
+        align-items: center;
+        display: flex;
+    }
+
+    .wrapper {
+        width: auto;
+    }
+
+    .wrapper header{
+        padding: 10px 6px;
+    }
+
+    .date-select-container {
+        height: auto;
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    span.back{
+        margin-left: 9px;
+    }
+
+    span#header-title {
+        font-size: 17px;
+    }
+
+    .calendar{
+        padding: 0;
+    }
+}
+
+/* -------------------------------------------------- FOR CALENDAR VIEW ------------------------------------------------------------ */
+.schedule-view {
+    position: relative;
+    left: 85px;
+    width: calc(100% - 85px);
+    transition: left 0.3s, width 0.3s;
+}
+
+.docu-name {
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+.admin-sidebar.open .schedule-view,
+.schedule-view.admin-sidebar-open {
+    left: 254px;
+    width: calc(100% - 254px);
+}
+
+.sched-view-header {
+    padding: 10px 14px;
+    height: 66px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #ffff;
+    transition: left 0.3s, width 0.3s;
+}
+
+.admin-sidebar.open .sched-view-header,
+.schedule-view.admin-sidebar-open+.sched-view-header {
+    left: 250px;
+    width: calc(100% - 250px);
+}
+
+
+.main-content-sched {
+    display: flex;
+    height: auto;
+    gap: 6px;
+}
+
+.today-sched {
+    background-color: #fff;
+    margin: 10px 0 10px;
+    padding: 10px;
+    width: auto;
+    height: 88vh;
+}
+
+.date-sched {
+    font-size: 12px;
+    font-weight: 500;
+    color: #888799;
+}
+
+.sched-text {
+    font-size: 20px;
+    line-height: 3rem;
+    font-weight: 700;
+    letter-spacing: 1.7px;
+}
+
+.date-today {
+    font-size: 13px;
+    font-weight: 500;
+    color: #888799;
+}
+
+.weekday {
+    color: #235789;
+    font-weight: 600;
+}
+
+.people-sched {
+    padding-left: 0;
+    width: 300px;
+    margin-top: 16px;
+}
+
+.person-name {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.people-sched .person {
+    list-style: none;
+    margin: 10px 0 10px 0;
+    background-color: #f7f7fd;
+    width: 50%;
+    border-radius: 10px;
+    padding: 10px 7px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: auto;
+}
+
+.person img {
+    width: 50px;
+}
+
+.person .important-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.sched-calendar-view {
+    margin: 10px 0 10px;
+    padding: 10px;
+    background: #fff;
+    width: 100%;
+    height: inherit;
+}
+
+.sched-calendar-view header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 15px;
+}
+
+.sched-calendar-view header .current-date {
+    margin-top: 20px;
+    padding-left: 0;
+}
+
+.sched-calendar-view .calendar {
+    padding: 0;
+}
+
+.sched-calendar-view .calendar .days-calendar,
+.sched-calendar-view .calendar .weekdays {
+    display: flex;
+    gap: 12px;
+}
+
+
+.sched-calendar-view .calendar .weekdays li {
+    padding: 10px 10px;
+    width: 13%;
+    display: flex;
+    align-items: start;
+    justify-content: end;
+    text-align: center;
+    flex-wrap: wrap;
+
+}
+
+.sched-calendar-view .calendar li {
+    margin-top: 15px;
+}
+
+.sched-calendar-view .calendar .days-calendar li {
+    border-radius: 5px;
+    background-color: #ededed;
+    padding: 10px 10px;
+    width: 13%;
+    display: flex;
+    align-items: start;
+    justify-content: end;
+    height: 80px;
+    text-align: center;
+    flex-wrap: wrap;
+}
+
+@media screen and (max-width: 1243px) {
+
+    .sched-calendar-view .calendar .weekdays,
+    .sched-calendar-view .calendar .days-calendar {
+        gap: 10px;
+
+    }
+
+}
+
+@media screen and (max-width: 1118px) {
+
+    .sched-calendar-view .calendar .weekdays,
+    .sched-calendar-view .calendar .days-calendar {
+        gap: 8px;
+
+    }
+
+}
+
+@media screen and (max-width: 990px) {
+
+    .sched-calendar-view .calendar .weekdays,
+    .sched-calendar-view .calendar .days-calendar {
+        gap: 4px;
+
+    }
+
+}
+
+@media screen and (max-width: 768px) {
+    .schedule-view {
+        left: 60px;
+        width: calc(100% - 60px);
+    }
+
+    .main-content-sched {
+        flex-direction: column;
+    }
+
+    .people-sched {
+        width: auto;
+    }
+
+    .sched-calendar-view header {
+        padding: 0;
+    }
+
+    .sched-calendar-view header .current-date {
+        font-size: 16px;
+        font-weight: 700;
+        margin-top: 0;
+    }
+
+
+    .sched-calendar-view .calendar .weekdays,
+    .sched-calendar-view .calendar .days-calendar {
+        gap: 4px;
+
+    }
+
+    .sched-calendar-view .calendar .weekdays li,
+    .sched-calendar-view .calendar .days-calendar li {
+        font-size: 13px;
+    }
+
+
 }

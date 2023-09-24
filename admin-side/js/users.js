@@ -8,6 +8,14 @@ function fetchAllUsers() {
         if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
                 const data = JSON.parse(xhr.responseText);
+
+                // Sort the data based on the most recent message timestamp in descending order
+                data.sort((a, b) => {
+                    const timestampA = new Date(a.timestamp).getTime();
+                    const timestampB = new Date(b.timestamp).getTime();
+                    return timestampB - timestampA;
+                });
+
                 let html = "";
                 data.forEach((user) => {
                     html += `
@@ -18,7 +26,7 @@ function fetchAllUsers() {
                                     <span class="guest-name">
                                         ${user.first_name} ${user.last_name}
                                     </span>
-                                    <p class="msg">${user.latest_message}</p>
+                                    <p class="msg">${user.latest_message || 'No messages'}</p>
                                 </div>
                             </a>
                         </li>

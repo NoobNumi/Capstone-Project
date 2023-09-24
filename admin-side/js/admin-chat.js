@@ -9,102 +9,124 @@ $(document).ready(function () {
   const user_id = urlParams.get('user_id');
 
   if (!user_id) {
-    console.error("user_id not found in URL.");
-    return;
+      console.error("user_id not found in URL.");
+      return;
   }
 
   form.onsubmit = (e) => {
-    e.preventDefault();
+      e.preventDefault();
   };
 
   inputField.focus();
   inputField.onkeyup = () => {
-    if (inputField.value !== "") {
-      sendBtn.classList.add("active");
-    } else {
-      sendBtn.classList.remove("active");
-    }
+      if (inputField.value !== "") {
+          sendBtn.classList.add("active");
+      } else {
+          sendBtn.classList.remove("active");
+      }
   };
 
   sendBtn.onclick = () => {
-    console.log('Send button clicked');
-    sendMessage();
+      console.log('Send button clicked');
+      sendMessage();
   };
 
   function sendMessage() {
-    let xhr = new XMLHttpRequest();
-    xhr.open("POST", "admin_handle_messages.php", true);
-    xhr.onload = () => {
-      if (xhr.readyState === XMLHttpRequest.DONE) {
-        if (xhr.status === 200) {
-          inputField.value = "";
-          updateChat();
-        } else {
-          console.error("Failed to send message:", xhr.status);
-        }
-      }
-    };
-    let formData = new FormData(form);
-    formData.append("action", "insert");
-    formData.append("user_id", user_id);
-    xhr.send(formData);
+      let xhr = new XMLHttpRequest();
+      xhr.open("POST", "admin_handle_messages.php", true);
+      xhr.onload = () => {
+          if (xhr.readyState === XMLHttpRequest.DONE) {
+              if (xhr.status === 200) {
+                  inputField.value = "";
+                  updateChat();
+              } else {
+                  console.error("Failed to send message:", xhr.status);
+              }
+          }
+      };
+      let formData = new FormData(form);
+      formData.append("action", "insert");
+      formData.append("user_id", user_id);
+      xhr.send(formData);
   }
 
   function scrollToBottom() {
-    chatBox.scrollTop = chatBox.scrollHeight;
+      chatBox.scrollTop = chatBox.scrollHeight;
   }
 
   function updateChat() {
-    console.log('Updating chat...');
-    let xhr = new XMLHttpRequest();
-    xhr.open("POST", "admin_handle_messages.php", true);
-    xhr.onload = () => {
-      if (xhr.readyState === XMLHttpRequest.DONE) {
-        if (xhr.status === 200) {
-          let data = xhr.response;
-          chatBox.innerHTML = data;
-          scrollToBottom();
-        } else {
-          console.error("Failed to fetch messages:", xhr.status);
-        }
-      }
-    };
+      console.log('Updating chat...');
+      let xhr = new XMLHttpRequest();
+      xhr.open("POST", "admin_handle_messages.php", true);
+      xhr.onload = () => {
+          if (xhr.readyState === XMLHttpRequest.DONE) {
+              if (xhr.status === 200) {
+                  let data = xhr.responseText; 
+                  chatBox.innerHTML = data;
+                  scrollToBottom();
+              } else {
+                  console.error("Failed to fetch messages:", xhr.status);
+              }
+          }
+      };
 
-    xhr.onerror = function () {
-      console.error('An error occurred with the AJAX request.');
-    };
+      xhr.onerror = function () {
+          console.error('An error occurred with the AJAX request.');
+      };
 
-    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhr.send("action=get&user_id=" + user_id);
+      xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      xhr.send("action=get&user_id=" + user_id);
+  }
+
+  function loadMessages(user_id) {
+      const xhr = new XMLHttpRequest();
+      xhr.open("POST", "load_messages.php", true);
+      xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+      xhr.onload = () => {
+          if (xhr.readyState === XMLHttpRequest.DONE) {
+              if (xhr.status === 200) {
+                  const messages = JSON.parse(xhr.responseText);
+                  let chatMessages = document.querySelector(".chat-messages");
+
+                  chatMessages.innerHTML = "";
+
+                  messages.forEach((message) => {
+                      const messageText = message.message;
+                      chatMessages.innerHTML += '<p class="msg">' + messageText + '</p>';
+                  });
+              } else {
+                  console.error("Error status:", xhr.status);
+              }
+          }
+      };
+
+      xhr.send("user_id=" + user_id);
   }
 
   confirmButton.addEventListener('click', () => {
-    logoutUser(); 
+      logoutUser(); 
   });
-  
+
   function logoutUser() {
-    let xhr = new XMLHttpRequest();
-    xhr.open("POST", "logout.php", true);
-    xhr.onload = () => {
-      if (xhr.readyState === XMLHttpRequest.DONE) {
-        if (xhr.status === 200) {
-          window.location.href = "admin_login.php";
-        } else {
-          console.error("Failed to log out:", xhr.status);
-        }
-      }
-    };
-    xhr.send();
+      let xhr = new XMLHttpRequest();
+      xhr.open("POST", "logout.php", true);
+      xhr.onload = () => {
+          if (xhr.readyState === XMLHttpRequest.DONE) {
+              if (xhr.status === 200) {
+                  window.location.href = "admin_login.php";
+              } else {
+                  console.error("Failed to log out:", xhr.status);
+              }
+          }
+      };
+      xhr.send();
   }
-  
+
+  loadMessages(user_id);
 
   updateChat();
 
+  scrollToBottom();
   setInterval(updateChat, 500);
-
-  window.onload = function () {
-    scrollToBottom();
-    updateChat();
-};
-
 });

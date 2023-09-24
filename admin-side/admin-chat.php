@@ -41,55 +41,10 @@ if (isset($_GET['user_id'])) {
 </head>
 
 <body>
-    <div class="admin-sidebar">
-        <div class="admin-logo-details">
-            <a href="index.php" class="logo" style="text-decoration: none;">
-                <img class="logo-img" src="../images/logo_trinitas.png">
-                <div>
-                    <h1 class="logo-name">Trinitas</h1>
-                    <span class="admin-name">ADMIN</span>
-                </div>
-            </a>
-            <span class="material-symbols-outlined menu" id="guestMenu">
-                menu
-            </span>
-        </div>
-        <ul class="admin-navbar">
-            <p class="menu-name">Menu</p>
-            <li>
-                <a href="admin_home.php">
-                    <i class="fa-regular fa-compass"></i>
-                    <span class="links-names" style="margin-left: -4px;">Dashboard</span>
-                </a>
-            </li>
-            <li class="active">
-                <a href="admin_messages.php">
-                    <i class="fa-regular fa-message"></i>
-                    <span class="count-color"> </span>
-                    <span class="links-names">Messages</span>
-                    <span class="notif-count">10</span>
-                </a>
-            </li>
-            <li>
-                <a href="feedback.html">
-                    <i class="fa-regular fa-comments"></i>
-                    <span class="links-names" style="margin-left: -4px;">Feedback</span>
-                </a>
-            </li>
-            <li class="admin-profile">
-                <div class="admin-profile-details">
-                    <img src="../images/nun.png">
-                    <span class="guest-name">
-                        Admin
-                    </span>
-                </div>
-                <span class="material-symbols-outlined logout" id="logout_click">
-                    logout
-                </span>
-            </li>
-        </ul>
-    </div>
-    <?php require("logout_modal.php"); ?>
+    <?php 
+        require("logout_modal.php"); 
+        include"./admin_sidebar.php";    
+    ?>
     <section class="messages">
         <div class="message-container">
             <div class="messaging-guest-header">
@@ -99,7 +54,7 @@ if (isset($_GET['user_id'])) {
                     </a>
                     <img src="../images/guest.png">
                     <span class="message-title">
-                        Guest
+                    <?php echo $userData['first_name']; ?>
                     </span>
                 </div>
                 <div class="chat-settings">
@@ -117,7 +72,7 @@ if (isset($_GET['user_id'])) {
                         <i class="fa-solid fa-camera"></i>
                     </label>
 
-                    <input type="file" id="file-input">
+                    <input type="file" id="file-input" name="image">
                 </div>
                 <input type="text" class="input-field" name="message" placeholder="Type message here...">
                 <button type="submit" name="submit" class="send"><i class="fa-solid fa-paper-plane"></i></button>
@@ -129,14 +84,6 @@ if (isset($_GET['user_id'])) {
 
 <script src="./js/admin-chat.js"></script>
 <script src="./js/userFetch.js"></script>
-<script>
-    let guestSidebar = document.querySelector(".admin-sidebar");
-    let closeBtn = document.querySelector("#guestMenu");
-
-    closeBtn.addEventListener("click", () => {
-        guestSidebar.classList.toggle("open");
-        menuBtnchange();
-    })
-</script>
+<script src="./js/sidebar-animation.js"></script>
 
 </html>
