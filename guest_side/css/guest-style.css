@@ -139,7 +139,7 @@ hr {
 
 
 .main {
-    background-image: url(/images/bg_from_net.jpg);
+    background-image: url(/images/bg_from_net.jpg)!important;
     background-repeat: no-repeat;
     background-size: cover;
     height: 75vh;
@@ -1739,10 +1739,10 @@ section.messages .message-container {
 
 .chat-box .incoming {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
 }
 
-.chat-box .incoming img {
+.chat-box .incoming .profile-pic {
     height: 35px;
     width: 35px;
     margin-left: -20px;
@@ -1754,14 +1754,15 @@ section.messages .message-container {
     margin-bottom: 10px;
     max-width: 250px;
     max-height: 200px;
-    background-color: #497faa;
     border-radius: 18px 18px 0 18px;
 }
 
 
-.chat-box .incoming .image-msg {
-    max-width: 200px;
+.chat-box .incoming .details .image-msg {
+    max-width: 250px;
+    max-height: 200px;
     border-radius: 10px;
+    border-radius: 18px 18px 18px 0;
 }
 
 
@@ -1824,6 +1825,7 @@ form.typing-area {
     padding: 20px 0 0 0;
     flex-direction: column;
 }
+
 .preview-img .add-file,
 .select-img,
 button.send {
@@ -3423,7 +3425,7 @@ ul.service-des-main {
         justify-content: center;
         align-items: center;
         display: flex;
-        background-image: url(/images/img_from_net.jpg);
+        background-image: url(/images/img_from_net.jpg)!important;
         flex-direction: column;
         flex-wrap: wrap;
         ;

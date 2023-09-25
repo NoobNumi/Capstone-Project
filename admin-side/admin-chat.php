@@ -67,18 +67,36 @@ if (isset($_GET['user_id'])) {
             <form action="" class="typing-area" method="POST" autocomplete="off" id="chat-box" >
                 <input type="text" name="receiver_id" class="receiver_id" value="<?php echo $user_id; ?>" hidden>
                 <input type="text" name="sender_id" class="sender_id" value="<?php echo $_SESSION['admin_id']; ?>" hidden>
-                <div class="select-img">
-                    <label for="file-input">
-                        <i class="fa-solid fa-camera"></i>
+                <div class="preview-img">
+                    <label for="file-add">
+                        <span class="material-symbols-outlined add-file">
+                            add_photo_alternate
+                        </span>
                     </label>
-
-                    <input type="file" id="file-input" name="image">
+                    <input type="file" id="file-add" name="additional_images[]" accept=".png, .jpg, .jpeg, .gif, .webp" multiple>
                 </div>
-                <input type="text" class="input-field" name="message" placeholder="Type message here...">
-                <button type="submit" name="submit" class="send"><i class="fa-solid fa-paper-plane"></i></button>
+                <div class="image-set">
+                    <img id="image-preview" src="#" alt="Selected Image Preview" style="display: none; max-width: 100%;">
+                </div>
+                <div class="sending-msg">
+                    <div class="select-img">
+                        <label for="file-input">
+                            <i class="fa-solid fa-camera"></i>
+                        </label>
+                        <input type="file" id="file-input" name="image" accept=".png, .jpg, .jpeg, .gif, .webp">
+                    </div>
+                    <input type="text" class="input-field" name="message" placeholder="Type message here...">
+                    <button type="submit" name="submit" class="send"><i class="fa-solid fa-paper-plane"></i></button>
+                </div>
             </form>
         </div>
-
+        <div id="imageModal" class="image-modal">
+            <div class="image-buttons">
+                <a id="downloadButton" href="#" download><i class="fa-solid fa-file-arrow-down"></i></a>
+                <span class="button-close">&times;</span>
+            </div>
+            <img id="modalImage" class="image-modal-content" src="" alt="Selected Image">
+        </div>
     </section>
 </body>
 

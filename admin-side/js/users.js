@@ -7,18 +7,39 @@ function fetchAllUsers() {
     xhr.onload = () => {
         if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
-                const data = JSON.parse(xhr.responseText);
+                const response = JSON.parse(xhr.responseText);
+                console.log("Received data:", response);
 
-                // Sort the data based on the most recent message timestamp in descending order
-                data.sort((a, b) => {
-                    const timestampA = new Date(a.timestamp).getTime();
-                    const timestampB = new Date(b.timestamp).getTime();
-                    return timestampB - timestampA;
-                });
+                if (Array.isArray(response.users)) {
+                    response.users.sort((a, b) => {
+                        const timestampA = new Date(a.timestamp).getTime();
+                        const timestampB = new Date(b.timestamp).getTime();
+                        return timestampB - timestampA;
+                    });
 
-                let html = "";
-                data.forEach((user) => {
-                    html += `
+                    let html = "";
+                    response.users.forEach((user) => {
+                        let latestMessageText = user.latest_message || 'No messages';
+
+                        if (user.image_url) {
+                            if (user.is_admin === 1) {
+                                latestMessageText = 'You sent a photo';
+                            } else {
+                                latestMessageText = `${user.first_name} sent a photo`;
+                            }
+                        } else if (latestMessageText.startsWith('You: ')) {
+
+                        } else if (latestMessageText === 'No messages') {
+
+                        } else {
+                            if (user.is_admin === 1) {
+                                latestMessageText = `You: ${latestMessageText}`;
+                            } else {
+                                latestMessageText = `${latestMessageText}`;
+                            }
+                        }
+
+                        html += `
                         <li>
                             <a href="admin-chat.php?user_id=${user.user_id}">
                                 <img src="../images/guest.png">
@@ -26,13 +47,17 @@ function fetchAllUsers() {
                                     <span class="guest-name">
                                         ${user.first_name} ${user.last_name}
                                     </span>
-                                    <p class="msg">${user.latest_message || 'No messages'}</p>
+                                    <p class="msg">${latestMessageText}</p>
                                 </div>
                             </a>
                         </li>
                     `;
-                });
-                usersList.innerHTML = html;
+                    });
+
+                    usersList.innerHTML = html;
+                } else {
+                    console.error("Data.users is not an array.");
+                }
             } else {
                 console.error("Error status:", xhr.status);
             }

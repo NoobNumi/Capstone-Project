@@ -1,10 +1,34 @@
 $(document).ready(function () {
+    const form = document.querySelector(".typing-area");
+    const inputField = form.querySelector(".input-field");
+    const sendBtn = form.querySelector("button");
+    const chatBox = document.querySelector(".chat-box");
+    const confirmButton = document.getElementById('btn_confirm');
+    const fileInput = document.getElementById('file-input');
+    
+    function scrollToBottom() {
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    window.addEventListener('load', scrollToBottom);
+
+    function isUserScrolledUp() {
+        const chatBox = document.getElementById("chat-box");
+    
+        if (chatBox) {
+            return chatBox.scrollTop + chatBox.clientHeight < chatBox.scrollHeight;
+        }
+    
+        return false;
+    }
+
     function updateImagePreview(input) {
         console.log("updateImagePreview called");
         var $previewImgDiv = $(".preview-img");
 
         if (input.files.length > 0) {
             $previewImgDiv.show();
+            $previewImgDiv.html("");
 
             for (var i = 0; i < input.files.length; i++) {
                 var imageUrl = URL.createObjectURL(input.files[i]);
@@ -25,89 +49,51 @@ $(document).ready(function () {
         }
     }
 
+
     function openImageModal(imageUrl) {
         var modalImg = document.getElementById("imageModal");
         var modalImage = document.getElementById("modalImage");
         document.getElementById('downloadButton').setAttribute('href', imageUrl);
-        modalImg .style.display = "block";
+        modalImg.style.display = "block";
         modalImage.src = imageUrl;
 
         var closeBtn = document.getElementsByClassName("button-close")[0];
         closeBtn.onclick = function () {
-            modalImg .style.display = "none";
+            modalImg.style.display = "none";
         };
 
         window.onclick = function (event) {
             if (event.target == modalImg) {
-                modalImg .style.display = "none";
+                modalImg.style.display = "none";
             }
         };
     }
-    
 
     function handleImageSelection() {
         $(".chat-box").on("click", ".image-msg", function () {
             var imageUrl = $(this).attr("src");
-            
             openImageModal(imageUrl);
         });
     }
 
     handleImageSelection();
 
-
     $(".preview-img").hide();
 
-    $("#file-input").on("change", function () {
-        updateImagePreview(this);
-    });
-
-    $("#file-add").on("change", function () {
-        updateImagePreview(this);
-    });
-
-    $(".typing-area").on("submit", function (e) {
-        $(".preview-img").hide();
-    });
-
-    const form = document.querySelector(".typing-area");
-    const inputField = form.querySelector(".input-field");
-    const sendBtn = form.querySelector("button");
-    const chatBox = document.querySelector(".chat-box");
-    const confirmButton = document.getElementById('btn_confirm');
-
-    document.getElementById('file-add').addEventListener('change', function () {
+    fileInput.addEventListener('change', function () {
         updateImagePreview(this);
     });
 
     form.onsubmit = (e) => {
         e.preventDefault();
-    };
 
-    inputField.focus();
-    inputField.onkeyup = () => {
-        if (inputField.value !== "") {
-            sendBtn.classList.add("active");
-        } else {
-            sendBtn.classList.remove("active");
+        if (fileInput.files.length === 0 && inputField.value.trim() === "") {
+            return;
         }
-    };
 
-    function resetImagePreview() {
-        let imagePreview = document.getElementById('image-preview');
-        if (imagePreview) {
-            imagePreview.src = '';
-            imagePreview.style.display = 'none';
-        }
-    }
-
-    $('.typing-area').on('submit', function (e) {
-        e.preventDefault();
-
-        let formData = new FormData(this);
+        let formData = new FormData(form);
         formData.append("action", "insert");
 
-        console.log(formData);
         $.ajax({
             url: 'handle_messages.php',
             type: 'POST',
@@ -117,18 +103,20 @@ $(document).ready(function () {
             success: function (response) {
                 console.log('message posted');
                 inputField.value = "";
-                updateChat();
                 resetImagePreview();
+                updateChat();
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.error('An error occurred:', errorThrown);
             }
         });
-    });
+    };
 
-    function scrollToBottom() {
-        chatBox.scrollTop = chatBox.scrollHeight;
+    function resetImagePreview() {
+        fileInput.value = "";
+        $(".preview-img").hide();
     }
+
 
     function updateChat() {
         let xhr = new XMLHttpRequest();
@@ -138,7 +126,9 @@ $(document).ready(function () {
                 if (xhr.status === 200) {
                     let data = xhr.response;
                     chatBox.innerHTML = data;
-                    scrollToBottom();
+                    if (!isUserScrolledUp()) {
+                        scrollToBottom();
+                    }
                 } else {
                     console.error("Failed to fetch messages:", xhr.status);
                 }
@@ -178,6 +168,11 @@ $(document).ready(function () {
 
     window.onload = function () {
         scrollToBottom();
-        updateChat();
+        setTimeout(function () {
+            if (isUserScrolledUp()) {
+                updateChat();
+            }
+        }, 100);
     };
+    
 });

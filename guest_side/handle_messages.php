@@ -4,11 +4,9 @@ session_start();
 require_once("../connection.php");
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-
 if (!isset($_SESSION['user_id'])) {
     exit;
 }
-
 $user_id = $_SESSION['user_id'];
 $admin_id = 1;
 $action = isset($_POST['action']) ? $_POST['action'] : '';
@@ -21,15 +19,14 @@ try {
             $imagePath = $targetDirectory . $imageName;
     
             if (move_uploaded_file($_FILES['image']['tmp_name'], $imagePath)) {
+                $message = ''; 
                 echo 'Image Path: ' . $imagePath;
                 $sql = "INSERT INTO messages (sender_id, receiver_id, message, image_url, timestamp, is_read) VALUES (:sender_id, :receiver_id, :message, :image_url, NOW(), 1)";
                 $stmt = $conn->prepare($sql);
                 $stmt->bindParam(':sender_id', $user_id, PDO::PARAM_INT);
                 $stmt->bindParam(':receiver_id', $admin_id, PDO::PARAM_INT);
-                $message = ''; 
                 $stmt->bindParam(':message', $message, PDO::PARAM_STR);
                 $stmt->bindParam(':image_url', $imagePath, PDO::PARAM_STR);
-    
                 if ($stmt->execute()) {
                     echo 'Image message inserted successfully';
                 } else {
@@ -69,27 +66,22 @@ try {
 
         $output = "";
         foreach ($allMessages as $message) {
+            $messageClass = ($message['is_admin'] == 1) ? 'incoming' : 'outgoing';
             if (!empty($message['image_url'])) {
-                if ($message['sender_id'] == $user_id) {
-                    $output .= '<div class="chat outgoing">';
-                    $output .= '<div class="details">';
-                    $output .= '<img class="image-msg" src="' . $message['image_url'] . '" alt="Image">';
-                    $output .= '</div>';
-                    $output .= '</div>';
-                } else {
-                    $output .= '<div class="chat incoming">';
-                    $output .= '<div class="details">';
-                    $output .= '<img class="image-msg" src="' . $message['image_url'] . '" alt="Image">';
-                    $output .= '</div>';
-                    $output .= '</div>';
+                $output .= '<div class="chat ' . $messageClass . '">';
+                if ($messageClass == 'incoming') {
+                    $output .= '<img class="profile-pic" src="../images/nun.png">';
                 }
+                $output .= '<div class="details">';
+                $output .= '<img class="image-msg" src="' . $message['image_url'] . '" alt="Image">';
+                $output .= '</div>';
+                $output .= '</div>';
             } else {
                 $decryptedMessage = base64_decode($message['message']);
                 $messageClass = ($message['is_admin'] == 1) ? 'incoming' : 'outgoing';
                 $output .= '<div class="chat ' . $messageClass . '">';
-                
                 if ($messageClass == 'incoming') {
-                    $output .= '<img src="../images/nun.png">';
+                    $output .= '<img class="profile-pic" src="../images/nun.png">';
                 }
                 $output .= '<div class="details">';
                 $output .= '<p>' . $decryptedMessage . '</p>';
