@@ -1,4 +1,27 @@
 $(document).ready(function () {
+    const form = document.querySelector(".typing-area");
+    const inputField = form.querySelector(".input-field");
+    const sendBtn = form.querySelector("button");
+    const confirmButton = document.getElementById('btn_confirm');
+    const urlParams = new URLSearchParams(window.location.search);
+    const user_id = urlParams.get('user_id');
+    var chatBox = document.querySelector(".chat-box");
+    var userScrolledUp = false;
+    var isFirstLoad = true;
+
+    function scrollChatToBottom() {
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+    
+    chatBox.addEventListener("wheel", function (e) {
+        if (e.deltaY < 0) {
+            userScrolledUp = true;
+        } else {
+            userScrolledUp = false;
+        }
+    });
+
+
     function updateImagePreview(input) {
         console.log("updateImagePreview called");
         var $previewImgDiv = $(".preview-img");
@@ -29,26 +52,26 @@ $(document).ready(function () {
         var modalImg = document.getElementById("imageModal");
         var modalImage = document.getElementById("modalImage");
         document.getElementById('downloadButton').setAttribute('href', imageUrl);
-        modalImg .style.display = "block";
+        modalImg.style.display = "block";
         modalImage.src = imageUrl;
 
         var closeBtn = document.getElementsByClassName("button-close")[0];
         closeBtn.onclick = function () {
-            modalImg .style.display = "none";
+            modalImg.style.display = "none";
         };
 
         window.onclick = function (event) {
             if (event.target == modalImg) {
-                modalImg .style.display = "none";
+                modalImg.style.display = "none";
             }
         };
     }
-    
+
 
     function handleImageSelection() {
         $(".chat-box").on("click", ".image-msg", function () {
             var imageUrl = $(this).attr("src");
-            
+
             openImageModal(imageUrl);
         });
     }
@@ -68,17 +91,8 @@ $(document).ready(function () {
 
     $(".typing-area").on("submit", function (e) {
         $(".preview-img").hide();
-        $("#file-input").val(""); 
+        $("#file-input").val("");
     });
-
-    const form = document.querySelector(".typing-area");
-    const inputField = form.querySelector(".input-field");
-    const sendBtn = form.querySelector("button");
-    const chatBox = document.querySelector(".chat-box");
-    const confirmButton = document.getElementById('btn_confirm');
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const user_id = urlParams.get('user_id');
 
     if (!user_id) {
         console.error("user_id not found in URL.");
@@ -121,9 +135,6 @@ $(document).ready(function () {
         formData.append("user_id", user_id);
         xhr.send(formData);
     }
-    function scrollToBottom() {
-        chatBox.scrollTop = chatBox.scrollHeight;
-    }
 
     function updateChat() {
         console.log('Updating chat...');
@@ -134,7 +145,10 @@ $(document).ready(function () {
                 if (xhr.status === 200) {
                     let data = xhr.responseText;
                     chatBox.innerHTML = data;
-                    scrollToBottom();
+                    if (!userScrolledUp) {
+                        scrollChatToBottom();
+                    }
+
                 } else {
                     console.error("Failed to fetch messages:", xhr.status);
                 }
@@ -148,6 +162,13 @@ $(document).ready(function () {
         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhr.send("action=get&user_id=" + user_id);
     }
+
+    chatBox.addEventListener("wheel", function (e) {
+        if (e.deltaY < 0) {
+            userScrolledUp = true;
+        }
+    });
+
 
     function loadMessages(user_id) {
         const xhr = new XMLHttpRequest();
@@ -166,6 +187,11 @@ $(document).ready(function () {
                         const messageText = message.message;
                         chatMessages.innerHTML += '<p class="msg">' + messageText + '</p>';
                     });
+
+                    if (isFirstLoad) {
+                        scrollChatToBottom();
+                        isFirstLoad = false;
+                    }
                 } else {
                     console.error("Error status:", xhr.status);
                 }
@@ -195,9 +221,7 @@ $(document).ready(function () {
     }
 
     loadMessages(user_id);
-
     updateChat();
-
-    scrollToBottom();
     setInterval(updateChat, 500);
 });
+

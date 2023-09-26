@@ -6,7 +6,9 @@ $admin_id = 1;
 if (!isset($_SESSION['user_id'])) {
     header("location: login.php");
 }
+
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,51 +28,12 @@ if (!isset($_SESSION['user_id'])) {
 </head>
 
 <body>
-    <!-- guest-dashboard-sidebar -->
-    <div class="guest-sidebar">
-        <div class="logo-details">
-            <a href="index.php" class="logo" style="text-decoration: none;">
-                <img class="logo-img" src="../images/logo_trinitas.png">
-                <h1 class="logo-name">Trinitas</h1>
-            </a>
-            <span class="material-symbols-outlined menu" id="guestMenu">
-                menu
-            </span>
-        </div>
-        <ul class="guest-navbar">
-            <p class="menu-name">Menu</p>
-            <li>
-                <a href="guest_dashboard.php?user_id=<?php echo $_SESSION['user_id']; ?>">
-                    <i class="fa-regular fa-user"></i>
-                    <span class="links-names">Profile</span>
-                </a>
-            </li>
-            <li class="active">
-                <a href="messages.php?user_id=<?php echo $_SESSION['user_id']; ?>">
-                    <i class="fa-regular fa-message"></i>
-                    <span class="links-names">Messages</span>
-                </a>
-            </li>
-            <li>
-                <a href="feedback.html">
-                    <i class="fa-regular fa-comments"></i>
-                    <span class="links-names">Feedback</span>
-                </a>
-            </li>
-            <li class="guest-profile">
-                <div class="guest-profile-details">
-                    <img src="../images/guest.png">
-                    <span class="guest-name">
-                        Guest
-                    </span>
-                </div>
-                <span class="material-symbols-outlined logout" id="logout_click">
-                    logout
-                </span>
-            </li>
-        </ul>
-    </div>
-    <?php require("logout_modal.php"); ?>
+    <?php
+        // guest-dashboard-sidebar
+        include("sidebar.php");
+        // logoutmodal
+        require("logout_modal.php"); 
+    ?>
     <!-- MESSAGES STARTS HERE -->
     <section class="messages">
         <div class="message-container">

@@ -62,18 +62,16 @@ if (isset($_GET['user_id'])) {
                 </div>
             </div>
             <div class="chat-box">
+
+                <button id="scrollToLatestButton" hidden>Scroll to Latest</button>
+
             </div>
 
             <form action="" class="typing-area" method="POST" autocomplete="off" id="chat-box" >
                 <input type="text" name="receiver_id" class="receiver_id" value="<?php echo $user_id; ?>" hidden>
                 <input type="text" name="sender_id" class="sender_id" value="<?php echo $_SESSION['admin_id']; ?>" hidden>
                 <div class="preview-img">
-                    <label for="file-add">
-                        <span class="material-symbols-outlined add-file">
-                            add_photo_alternate
-                        </span>
-                    </label>
-                    <input type="file" id="file-add" name="additional_images[]" accept=".png, .jpg, .jpeg, .gif, .webp" multiple>
+
                 </div>
                 <div class="image-set">
                     <img id="image-preview" src="#" alt="Selected Image Preview" style="display: none; max-width: 100%;">
@@ -101,7 +99,7 @@ if (isset($_GET['user_id'])) {
 </body>
 
 <script src="./js/admin-chat.js"></script>
-<script src="./js/userFetch.js"></script>
+<script src="./js/users.js"></script>
 <script src="./js/sidebar-animation.js"></script>
 
 </html>

@@ -1269,6 +1269,8 @@ ul.service-des-main {
     padding: 6px 14px;
     transition: all 0.5s ease;
     overflow-y: hidden;
+    z-index: 1;
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px, rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;
 }
 
 .guest-sidebar.open {
@@ -1432,7 +1434,7 @@ ul.guest-navbar li a:hover .fa-regular {
 .logout {
     right: 0;
     cursor: pointer;
-    transform: translateX(84px);
+    transform: translateX(55px);
 }
 
 .guest-sidebar.open .guest-profile-details .guest-name,
@@ -1447,7 +1449,6 @@ ul.guest-navbar li a:hover .fa-regular {
     top: 50%;
     left: 70px;
     width: calc(100% - 78px);
-    z-index: 2;
     padding: 10px;
     margin: auto 15px;
     display: flex;
@@ -1678,7 +1679,6 @@ section.messages {
     top: 50%;
     left: 70px;
     width: calc(100% - 100px);
-    z-index: 2;
     margin: auto 15px;
     display: flex;
     justify-content: center;
@@ -1769,7 +1769,7 @@ section.messages .message-container {
 .image-modal {
     display: none;
     position: fixed;
-    z-index: 999;
+    z-index: 2;
     padding-top: 50px;
     left: 0;
     top: 0;
@@ -1972,7 +1972,6 @@ section.send-feedback {
     top: 50%;
     left: 70px;
     width: calc(100% - 100px);
-    z-index: 2;
     margin: auto 15px;
     display: flex;
     justify-content: center;

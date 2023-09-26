@@ -4,23 +4,22 @@ $(document).ready(function () {
     const sendBtn = form.querySelector("button");
     const chatBox = document.querySelector(".chat-box");
     const confirmButton = document.getElementById('btn_confirm');
+    var userScrolledUp = false;
     const fileInput = document.getElementById('file-input');
     
-    function scrollToBottom() {
+    function scrollChatToBottom() {
         chatBox.scrollTop = chatBox.scrollHeight;
     }
-
-    window.addEventListener('load', scrollToBottom);
-
-    function isUserScrolledUp() {
-        const chatBox = document.getElementById("chat-box");
     
-        if (chatBox) {
-            return chatBox.scrollTop + chatBox.clientHeight < chatBox.scrollHeight;
+
+    chatBox.addEventListener("wheel", function (e) {
+        if (e.deltaY < 0) {
+            userScrolledUp = true;
+        } else {
+            userScrolledUp = false;
         }
-    
-        return false;
-    }
+    });
+
 
     function updateImagePreview(input) {
         console.log("updateImagePreview called");
@@ -126,8 +125,8 @@ $(document).ready(function () {
                 if (xhr.status === 200) {
                     let data = xhr.response;
                     chatBox.innerHTML = data;
-                    if (!isUserScrolledUp()) {
-                        scrollToBottom();
+                    if (!userScrolledUp) {
+                        scrollChatToBottom();
                     }
                 } else {
                     console.error("Failed to fetch messages:", xhr.status);
@@ -142,6 +141,13 @@ $(document).ready(function () {
         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhr.send("action=get");
     }
+
+    chatBox.addEventListener("wheel", function (e) {
+        if (e.deltaY < 0) {
+            userScrolledUp = true;
+        }
+    });
+
 
     confirmButton.addEventListener('click', () => {
         logoutUser();
@@ -163,16 +169,6 @@ $(document).ready(function () {
     }
 
     updateChat();
-
     setInterval(updateChat, 500);
-
-    window.onload = function () {
-        scrollToBottom();
-        setTimeout(function () {
-            if (isUserScrolledUp()) {
-                updateChat();
-            }
-        }, 100);
-    };
     
 });

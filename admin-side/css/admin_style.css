@@ -704,7 +704,7 @@ section.messages {
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    overflow-x: scroll;
+    overflow-y: scroll;
 }
 
 section.messages .message-container {
@@ -745,7 +745,7 @@ section.messages .message-container {
 .chat-box {
     height: 500px;
     padding: 10px 30px 20px 30px;
-    overflow: auto;
+    overflow-y: auto;
 }
 
 .chat-box span.time-stamp {
@@ -797,7 +797,7 @@ section.messages .message-container {
     border-radius: 50%;
 }
 
-.preview-img .add-file,
+
 .select-img,
 button.send {
     border: none;
@@ -814,14 +814,6 @@ button.send {
     align-items: center;
 }
 
-.preview-img .add-file{
-    font-size: 30px;
-    cursor: pointer;
-    margin-left: 10px;
-    background-color: transparent;
-    padding: 10px;
-    border-radius: 10px;
-}
 
 .add-file:hover{
     background-color: #d0d0d0;
