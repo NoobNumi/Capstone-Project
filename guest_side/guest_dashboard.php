@@ -2,11 +2,10 @@
     require("../connection.php");
     session_name("user_session");
     session_start();
-    $user_id = $_GET['user_id'];
+    $user_id = 1;
     if (!isset($_SESSION['user_id'])) {
         header("location: login.php");
     }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,7 +27,7 @@
     <title>Dashboard</title>
 </head>
 <body>
-    <?php
+<?php
         // guest-dashboard-sidebar
         include("sidebar.php");
         // logoutmodal
@@ -42,10 +41,10 @@
                 <img src="../images/guest.png" class="profile-photo">
                 <div class="guest-name-email">
                     <span class="g-name">
-                        Guest Name
+                        <?php echo $userName; ?>
                     </span>
                     <span class="g-email">
-                        guest@gmail.com
+                        <?php echo $userEmail; ?>
                     </span>
                 </div>
             </div>

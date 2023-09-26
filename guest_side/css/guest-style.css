@@ -3575,4 +3575,15 @@ ul.service-des-main {
         flex: 100%;
         max-width: 100%;
     }
+
+}
+
+.alert.alert-danger {
+    width: 62%;
+    padding: 8px;
+    font-size: 12px;
+    font-weight: bold;
+    color: red;
+    background: none;
+    border: none;
 }

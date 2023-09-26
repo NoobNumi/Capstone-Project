@@ -2,13 +2,11 @@
 session_name("user_session");
 session_start();
 
-$admin_id = 1;
+$user_id = 1;
 if (!isset($_SESSION['user_id'])) {
     header("location: login.php");
 }
-
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -28,7 +26,7 @@ if (!isset($_SESSION['user_id'])) {
 </head>
 
 <body>
-    <?php
+<?php
         // guest-dashboard-sidebar
         include("sidebar.php");
         // logoutmodal
@@ -82,20 +80,19 @@ if (!isset($_SESSION['user_id'])) {
             <img id="modalImage" class="image-modal-content" src="" alt="Selected Image">
         </div>
     </section>
-<script src="./js/send_msg.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
-<script>
-    let guestSidebar = document.querySelector(".guest-sidebar");
-    let closeBtn = document.querySelector("#guestMenu");
+    <script src="./js/send_msg.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
+    <script>
+        let guestSidebar = document.querySelector(".guest-sidebar");
+        let closeBtn = document.querySelector("#guestMenu");
 
-    closeBtn.addEventListener("click", () => {
-        guestSidebar.classList.toggle("open");
-        menuBtnchange();
-    })
-</script>
+        closeBtn.addEventListener("click", () => {
+            guestSidebar.classList.toggle("open");
+            menuBtnchange();
+        })
+    </script>
 </body>
-
 
 
 </html>

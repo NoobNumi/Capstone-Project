@@ -25,9 +25,9 @@
 </head>
 
 <body>
-    <?php
-    include "guest_navbar.php";
-    include "logout_modal.php";
+    <?php 
+        include("guest_navbar.php");
+        include("logout_modal.php");
     ?>
 
     <section class="discover-part">
