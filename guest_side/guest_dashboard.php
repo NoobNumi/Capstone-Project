@@ -2,7 +2,7 @@
     require("../connection.php");
     session_name("user_session");
     session_start();
-    $user_id = $_GET['user_id'];
+    $user_id = 1;
     if (!isset($_SESSION['user_id'])) {
         header("location: login.php");
     }
@@ -16,13 +16,20 @@
         $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
-        $stmt = $pdo->prepare("SELECT * FROM admin");
+
+        $stmt = $pdo->prepare("SELECT first_name, last_name, email FROM users WHERE user_id = :user_id");
+        $stmt->bindParam(':user_id', $_SESSION['user_id']);
         $stmt->execute();
-        $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        $userFirstName = $user['first_name'];
+        $userLastName = $user['last_name'];
+        $userEmail = $user['email'];
+        $userName = $userFirstName . ' ' . $userLastName;
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
         exit;
     }
+    
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -73,7 +80,7 @@
                 </a>
             </li>
             <li>
-                <a href="feedback.html">
+                <a href="feedback.php?user_id=<?php echo $_SESSION['user_id']; ?>">
                     <i class="fa-regular fa-comments"></i>
                     <span class="links-names">Feedback</span>
                 </a>
@@ -82,7 +89,7 @@
                 <div class="guest-profile-details">
                     <img src="../images/guest.png">
                     <span class="guest-name">
-                        Guest
+                        <?php echo $userName; ?>
                     </span>
                 </div>
                 <span class="material-symbols-outlined logout" id="logout_click">
@@ -100,10 +107,10 @@
                 <img src="../images/guest.png" class="profile-photo">
                 <div class="guest-name-email">
                     <span class="g-name">
-                        Guest Name
+                        <?php echo $userName; ?>
                     </span>
                     <span class="g-email">
-                        guest@gmail.com
+                        <?php echo $userEmail; ?>
                     </span>
                 </div>
             </div>

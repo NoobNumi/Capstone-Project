@@ -2,11 +2,33 @@
 session_name("user_session");
 session_start();
 
-$admin_id = 1;
+$user_id = 1;
 if (!isset($_SESSION['user_id'])) {
     header("location: login.php");
 }
+
+try {
+
+    $host = 'localhost';
+    $dbname = 'trinitas';
+    $username = 'root';
+    $password = '';
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    $stmt = $pdo->prepare("SELECT first_name, last_name FROM users WHERE user_id = :user_id");
+    $stmt->bindParam(':user_id', $_SESSION['user_id']);
+    $stmt->execute();
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    $userFirstName = $user['first_name'];
+    $userLastName = $user['last_name'];
+    $userName = $userFirstName . ' ' . $userLastName; 
+    } catch (PDOException $e) {
+    echo "Error: " . $e->getMessage();
+    exit;
+    }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -52,7 +74,7 @@ if (!isset($_SESSION['user_id'])) {
                 </a>
             </li>
             <li>
-                <a href="feedback.html">
+                <a href="feedback.php?user_id=<?php echo $_SESSION['user_id']; ?>">
                     <i class="fa-regular fa-comments"></i>
                     <span class="links-names">Feedback</span>
                 </a>
@@ -61,7 +83,7 @@ if (!isset($_SESSION['user_id'])) {
                 <div class="guest-profile-details">
                     <img src="../images/guest.png">
                     <span class="guest-name">
-                        Guest
+                        <?php echo $userName; ?>
                     </span>
                 </div>
                 <span class="material-symbols-outlined logout" id="logout_click">
@@ -119,20 +141,19 @@ if (!isset($_SESSION['user_id'])) {
             <img id="modalImage" class="image-modal-content" src="" alt="Selected Image">
         </div>
     </section>
-<script src="./js/send_msg.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
-<script>
-    let guestSidebar = document.querySelector(".guest-sidebar");
-    let closeBtn = document.querySelector("#guestMenu");
+    <script src="./js/send_msg.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
+    <script>
+        let guestSidebar = document.querySelector(".guest-sidebar");
+        let closeBtn = document.querySelector("#guestMenu");
 
-    closeBtn.addEventListener("click", () => {
-        guestSidebar.classList.toggle("open");
-        menuBtnchange();
-    })
-</script>
+        closeBtn.addEventListener("click", () => {
+            guestSidebar.classList.toggle("open");
+            menuBtnchange();
+        })
+    </script>
 </body>
-
 
 
 </html>
