@@ -10,13 +10,14 @@
         $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
-        $stmt = $pdo->prepare("SELECT first_name, last_name FROM users WHERE user_id = :user_id");
+        $stmt = $pdo->prepare("SELECT * FROM users WHERE user_id = :user_id");
         $stmt->bindParam(':user_id', $_SESSION['user_id']);
         $stmt->execute();
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
         $userFirstName = $user['first_name'];
         $userLastName = $user['last_name'];
         $userName = $userFirstName . ' ' . $userLastName; 
+        $userEmail = $user['email'];
         } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
         exit;

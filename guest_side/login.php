@@ -26,13 +26,13 @@ if (isset($_POST['submit'])) {
     }
 }
 if ($invalid) {
-    echo '<div class="alert alert-danger" style="text-align:center; font-size: 1.2rem;">
+    echo '<div class="alert alert-danger warning" style="text-align:center; font-size: 1.2rem;">
                 <strong><i class="fa-solid fa-triangle-exclamation" style="margin-right: 12px";></i>Incorrect e-mail or password!</strong>
-                </div>';
+            </div>';
 }
 
 if ($no_user) {
-    echo '<div class="alert alert-danger" style="text-align:center; font-size: 1.2rem;">
+    echo '<div class="alert alert-danger warning" style="text-align:center; font-size: 1.2rem;">
                 <strong><i class="fa-solid fa-triangle-exclamation" style="margin-right: 12px";></i>No user found!</strong>
                 </div>';
 }
