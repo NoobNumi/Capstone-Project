@@ -20,7 +20,6 @@ $(document).ready(function () {
         }
     });
 
-
     function updateImagePreview(input) {
         console.log("updateImagePreview called");
         var $previewImgDiv = $(".preview-img");
@@ -104,6 +103,7 @@ $(document).ready(function () {
                 inputField.value = "";
                 resetImagePreview();
                 updateChat();
+                updateNotificationCount(); 
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.error('An error occurred:', errorThrown);
@@ -128,6 +128,7 @@ $(document).ready(function () {
                     if (!userScrolledUp) {
                         scrollChatToBottom();
                     }
+                    markLatestMessageAsRead();
                 } else {
                     console.error("Failed to fetch messages:", xhr.status);
                 }
@@ -141,6 +142,34 @@ $(document).ready(function () {
         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhr.send("action=get");
     }
+
+        function markLatestMessageAsRead() {
+            console.log("markLatestMessageAsRead called");
+            const latestMessage = document.querySelector(".chat:last-child");
+            if (latestMessage) {
+                const messageIdElement = latestMessage.querySelector(".message-id");
+                if (messageIdElement) {
+                    const messageId = messageIdElement.value;
+                    if (messageId) {
+                        console.log("Message ID:", messageId);
+        
+                        $.ajax({
+                            url: 'mark_latest_message_as_read.php',
+                            type: 'POST',
+                            data: { message_id: messageId },
+                            success: function (response) {
+                                console.log('Message marked as read');
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                console.error('An error occurred:', errorThrown);
+                            }
+                        });
+                    }
+                }
+            }
+        }
+    
+    
 
     chatBox.addEventListener("wheel", function (e) {
         if (e.deltaY < 0) {

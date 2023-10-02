@@ -197,10 +197,6 @@
                 </div>
                 <div class="tab-pane fade" id="appoint-tab-pane" role="tabpanel" aria-labelledby="appoint-tab"
                     tabindex="0">
-                    <!-- <p style="color: #9fa1a3; text-align: center; display: flex; align-items: center;">You have no appointments created
-                            
-                        </p>
-                        <i class="fa-solid fa-face-grin-beam-sweat"></i> -->
                     <div class="row row-cols-1 row-cols-md-2 g-4">
                         <div class="col">
                             <div class="card w-100">
@@ -297,8 +293,8 @@
         </div>
     </section>
 
-</body>
-<script src="./js/chat.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="./js/notification.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
     integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
     crossorigin="anonymous"></script>
@@ -314,6 +310,12 @@
         guestSidebar.classList.toggle("open");
         menuBtnchange();
     })
-</script>
 
+    let countColorElement = document.querySelector(".count-color");
+    console.log("Count Color Element:", countColorElement);
+
+    let countColorStyle = window.getComputedStyle(countColorElement);
+    console.log("Count Color Style:", countColorStyle);
+</script>
+</body>
 </html>

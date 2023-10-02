@@ -23,7 +23,7 @@ try {
             if (move_uploaded_file($_FILES['image']['tmp_name'], $imagePath)) {
                 $message = '';
                 $is_admin = 1;
-                $sql = "INSERT INTO messages (sender_id, receiver_id, message, image_url, timestamp, is_read, is_admin) VALUES (:sender_id, :receiver_id, :message, :image_url, NOW(), 1, :is_admin)";
+                $sql = "INSERT INTO messages (sender_id, receiver_id, message, image_url, timestamp, is_read, is_admin) VALUES (:sender_id, :receiver_id, :message, :image_url, NOW(), 0, :is_admin)";
                 $stmt = $conn->prepare($sql);
                 $stmt->bindParam(':sender_id', $admin_id, PDO::PARAM_INT);
                 $stmt->bindParam(':receiver_id', $user_id, PDO::PARAM_INT);
@@ -42,7 +42,7 @@ try {
         } else {
             $message = $_POST['message'];
             $encryptedMessage = base64_encode($message);
-            $sql = "INSERT INTO messages (sender_id, receiver_id, message, timestamp, is_read, is_admin) VALUES (:sender_id, :receiver_id, :message, NOW(), 1, 1)";
+            $sql = "INSERT INTO messages (sender_id, receiver_id, message, timestamp, is_read, is_admin) VALUES (:sender_id, :receiver_id, :message, NOW(), 0, 1)";
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(':sender_id', $admin_id, PDO::PARAM_INT);
             $stmt->bindParam(':receiver_id', $user_id, PDO::PARAM_INT);
@@ -54,7 +54,6 @@ try {
                 echo 'Message insertion failed';
             }
         }
-    
     } elseif ($action === 'get') {
         $sql = "SELECT * FROM messages WHERE (sender_id = :admin_id AND receiver_id = :user_id) OR (sender_id = :user_id AND receiver_id = :admin_id)";
         $stmt = $conn->prepare($sql);

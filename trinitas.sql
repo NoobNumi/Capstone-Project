@@ -2,8 +2,8 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Sep 26, 2023 at 05:23 AM
+-- Host: 127.0.0.1
+-- Generation Time: Sep 28, 2023 at 04:01 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -56,7 +56,8 @@ CREATE TABLE `appoinment_record` (
   `province` varchar(255) NOT NULL,
   `postal_code` int(4) NOT NULL,
   `contact_no` varchar(255) NOT NULL,
-  `appoint_sched` datetime NOT NULL,
+  `appoint_sched_date` varchar(100) NOT NULL,
+  `appoint_sched_time` varchar(1000) NOT NULL,
   `appoint_description` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -64,9 +65,16 @@ CREATE TABLE `appoinment_record` (
 -- Dumping data for table `appoinment_record`
 --
 
-INSERT INTO `appoinment_record` (`appoint_id`, `user_id`, `first_name`, `last_name`, `street_add`, `city_municipality`, `province`, `postal_code`, `contact_no`, `appoint_sched`, `appoint_description`) VALUES
-(1, 1, 'Niña Gillian', 'Villamin', 'National Road St.', 'Dimasalang', 'Masbate', 5407, '0912343434', '2023-05-30 03:47:00', 'Test'),
-(2, 3, 'Joana', 'Lomerio', 'P1', 'Pilar', 'Sorsogon', 2121, '091234578604', '2023-05-25 07:59:00', 'Appointment purpose');
+INSERT INTO `appoinment_record` (`appoint_id`, `user_id`, `first_name`, `last_name`, `street_add`, `city_municipality`, `province`, `postal_code`, `contact_no`, `appoint_sched_date`, `appoint_sched_time`, `appoint_description`) VALUES
+(1, 1, 'testing_only', 'terrerte', 'Street di matirhan', 'Legazpi', 'Albay', 212123, '09123456789', '', '', 'rerewrw'),
+(2, 1, 'Juan', 'Dela Cruz', 'Street di matirhan', 'Legazpi', 'Albay', 5403, '09123456789', 'September 27 2023', '09:00 AM', 'hehje'),
+(3, 1, 'Nina Gillian', 'Villamin', 'Street di matirhan', 'Legazpi', 'Albay', 1234, '09123456789', 'September 13 2023', '09:00 AM', 'fdfsd'),
+(4, 1, 'new', 'test', 'ewqeq', 'ewwqe', 'ewqeqw', 0, 'eqweqw', 'September 27 2023', '09:00 AM', 'erwerwe'),
+(5, 1, 'Hello ', 'World', 'Batungbakal Street', '12123', '2331', 3231, '09123456789', 'September 25 2023', '09:00 AM', 'dsfggd'),
+(6, 1, 'Ed', 'Sheeran', 'New York Street', 'New York', 'New York', 213314, '09123456789', 'September 19 2023', '03:00 PM', 'hello world'),
+(7, 1, 'Taylor', 'Sheesh', 'Cornelia Street', 'New York City', 'New York', 3231, '42344', 'September 21 2023', '09:00 AM', 'Hello'),
+(8, 1, 'New user', 'Hehe', '123', 'Legazpi', 'Albay', 5403, '09123456789', 'October 03 2023', '10:00 AM', 'test lang'),
+(9, 1, 'Taylor', 'Swift', 'Street di matirhan', 'Legazpi', 'Albay', 5403, '09123456789', 'September 30 2023', '3:00 PM', 'Wala lang');
 
 -- --------------------------------------------------------
 
@@ -79,6 +87,29 @@ CREATE TABLE `appoinment_report` (
   `appoint_id` int(11) NOT NULL,
   `appointt_report_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `appointment_availability`
+--
+
+CREATE TABLE `appointment_availability` (
+  `available_appoint_id` int(11) NOT NULL,
+  `date` varchar(1000) NOT NULL,
+  `time_slot` varchar(1000) NOT NULL,
+  `availability_status` enum('available','booked') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `appointment_availability`
+--
+
+INSERT INTO `appointment_availability` (`available_appoint_id`, `date`, `time_slot`, `availability_status`) VALUES
+(1, 'September 29, 2023', '9:00 AM', 'booked'),
+(2, 'September 20, 2023', '3:00 PM', 'available'),
+(3, 'October 7, 2023', '2:00 PM', 'booked'),
+(4, 'September 29, 2023', '10:00 AM', 'booked');
 
 -- --------------------------------------------------------
 
@@ -116,26 +147,7 @@ CREATE TABLE `feedback` (
 --
 
 INSERT INTO `feedback` (`feedback_id`, `user_id`, `name`, `feedback_message`, `rating`) VALUES
-(1, 5, 'Crissa Olavario', 'just okay', 'Okay'),
-(2, 5, 'Crissa Olavario', 'The services were amazing!', 'Amazing'),
-(3, 5, 'Crissa Olavario', 'Services are Good!', 'Good'),
-(4, 5, 'Crissa Olavario', 'Test', 'Bad'),
-(5, 5, 'Crissa Olavario', 'Testing', 'Terrible'),
-(6, 6, 'Nishinoya Yui', 'I\'m not satisfied', 'Bad'),
-(7, 6, 'Nishinoya Yui', 'Great', 'Amazing'),
-(8, 6, 'Nishinoya Yui', 'Test', 'Amazing'),
-(9, 6, 'Nishinoya Yui', 'Satisfied!', 'Amazing'),
-(10, 6, 'Nishinoya Yui', 'Test Ulit', 'Good'),
-(11, 6, 'Nishinoya Yui', 'Hays', 'Terrible'),
-(12, 6, 'Nishinoya Yui', 'Hays', 'Terrible'),
-(13, 6, 'Nishinoya Yui', 'The services were good!', 'Good'),
-(14, 6, 'Nishinoya Yui', 'The services were great', 'Amazing'),
-(15, 6, 'Nishinoya Yui', 'Amazing!', 'Amazing'),
-(16, 6, 'Nishinoya Yui', 'Sad', 'Terrible'),
-(17, 6, 'Nishinoya Yui', 'We\'re satisfied', 'Amazing'),
-(18, 6, 'Nishinoya Yui', 'We\'re satisfied', 'Amazing'),
-(19, 6, 'Nishinoya Yui', 'Goods', 'Good'),
-(20, 6, 'Nishinoya Yui', 'Amazing', 'Amazing');
+(1, 1, 'testing_only test', 'Oks lang', 'Bad');
 
 -- --------------------------------------------------------
 
@@ -147,7 +159,8 @@ CREATE TABLE `messages` (
   `message_id` int(11) NOT NULL,
   `sender_id` int(255) NOT NULL,
   `receiver_id` int(255) NOT NULL,
-  `message` text NOT NULL,
+  `message` varchar(1000) NOT NULL,
+  `image_url` varchar(1000) NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
   `is_read` int(11) NOT NULL DEFAULT 0,
   `is_admin` tinyint(1) NOT NULL
@@ -157,26 +170,14 @@ CREATE TABLE `messages` (
 -- Dumping data for table `messages`
 --
 
-INSERT INTO `messages` (`message_id`, `sender_id`, `receiver_id`, `message`, `timestamp`, `is_read`, `is_admin`) VALUES
-(1, 1, 1, 'Psst', '2023-09-09 04:01:49', 1, 1),
-(2, 4, 1, 'This is a test message', '2023-09-09 04:03:52', 1, 0),
-(3, 1, 4, 'hello!', '2023-09-09 04:03:57', 1, 1),
-(4, 4, 1, 'HI', '2023-09-09 04:04:00', 1, 0),
-(5, 1, 4, 'How are you?', '2023-09-09 04:04:05', 1, 1),
-(6, 2, 1, 'Hellooo', '2023-09-10 00:42:28', 1, 0),
-(7, 3, 1, 'Testing.....', '2023-09-10 01:17:13', 1, 0),
-(8, 2, 1, 'hehe', '2023-09-10 01:19:37', 1, 0),
-(9, 1, 2, 'hehehehehehehehh', '2023-09-10 01:19:46', 1, 1),
-(10, 1, 2, 'hello', '2023-09-10 04:16:40', 1, 1),
-(11, 1, 1, 'Hello', '2023-09-10 04:25:00', 1, 0),
-(12, 1, 1, 'Hiii', '2023-09-10 04:30:39', 1, 1),
-(13, 1, 1, 'hello ulit', '2023-09-10 04:30:55', 1, 1),
-(14, 1, 1, 'Yep?', '2023-09-10 04:30:59', 1, 0),
-(15, 1, 1, 'Opo sis', '2023-09-10 04:34:40', 1, 0),
-(16, 1, 2, 'HAHAHAH', '2023-09-10 05:46:53', 1, 1),
-(17, 1, 3, 'yes p', '2023-09-10 05:47:16', 1, 1),
-(18, 5, 1, 'Hello', '2023-09-19 16:46:23', 1, 0),
-(19, 5, 1, 'aGk=', '2023-09-25 13:43:50', 1, 0);
+INSERT INTO `messages` (`message_id`, `sender_id`, `receiver_id`, `message`, `image_url`, `timestamp`, `is_read`, `is_admin`) VALUES
+(1, 2, 1, 'SG95', '', '2023-09-28 13:26:39', 0, 0),
+(2, 1, 1, 'SGlpaWk=', '', '2023-09-28 13:28:05', 1, 0),
+(3, 1, 1, 'cHNzeQ==', '', '2023-09-28 13:28:55', 1, 0),
+(4, 1, 1, 'QW5nIGN1dGUgbmkgTmluYQ==', '', '2023-09-28 13:34:10', 1, 1),
+(5, 1, 1, 'VHJ1ZQ==', '', '2023-09-28 13:34:20', 1, 0),
+(6, 1, 1, '', '../uploads/651580e6a5133_WIN_20230927_17_07_51_Pro.jpg', '2023-09-28 13:34:30', 1, 0),
+(7, 1, 1, 'UmF3cg==', '', '2023-09-28 13:34:32', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -419,12 +420,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `email`, `password`) VALUES
-(1, 'testing_only', 'test', 'test@mail.com', '$2y$10$7aF3OFX6G3yv/gOKmjpplOl/k576321hLrBp9pTLbpr2ph591JbyW'),
-(2, 'Nina Gillian', 'Villamin', '1233@mail.com', '$2y$10$EbW5XQ04PobEzzh883WF4eKfTcAw2sYrdr1HDSY0W2G1TKJv9UJQa'),
-(3, 'Basta User', 'Basta lastname', 'test@ayokona.com', '$2y$10$M5H4CffLtpuke5jci8HO5e3ONwM2Eg0uoa/067VLdp8ATFZBee8f.'),
-(4, 'Juan', 'Dela Cruz', 'juan@mail.com', '$2y$10$6VuFvqbM3Sr9VnppwtU8RuGh9gojI9dqfOnRQWCGmSYgv3VK/IvuG'),
-(5, 'Crissa', 'Olavario', 'crissaaperin.olavario@bicol-u.edu.ph', '$2y$10$TUoYfVkSvtpGQiMhIbkd5.9LLC1QiNMwPSkhA35ebhf5aWAZ3HcGS'),
-(6, 'Nishinoya', 'Yui', 'nishinoya@gmail.com', '$2y$10$SDwZx.bM2rsfRZKbPD.CG.zJnlKa4Fl514CLlEcfZGPJHC67YwLla');
+(1, 'Nina Gillian', 'Villamin', 'nin@mail.com', '$2y$10$xkv9QC.aL5iHYrygOUoOT.zTYETdKlzaVUdIUUNCR8ueP7ZLCwbXe'),
+(2, 'Satoru', 'Gojo', 'gojo@email.com', '$2y$10$2n61M2RneGq9n8K5.v2H/uiZmcQYtfUR/3kb9eU8s9ubdjhzAXhlC');
 
 --
 -- Indexes for dumped tables
@@ -449,6 +446,12 @@ ALTER TABLE `appoinment_record`
 ALTER TABLE `appoinment_report`
   ADD PRIMARY KEY (`appoint_report_id`),
   ADD KEY `appoint_id` (`appoint_id`);
+
+--
+-- Indexes for table `appointment_availability`
+--
+ALTER TABLE `appointment_availability`
+  ADD PRIMARY KEY (`available_appoint_id`);
 
 --
 -- Indexes for table `cancellation_report`
@@ -549,19 +552,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `appoinment_record`
 --
 ALTER TABLE `appoinment_record`
-  MODIFY `appoint_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `appoint_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `appoinment_report`
 --
 ALTER TABLE `appoinment_report`
   MODIFY `appoint_report_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `appointment_availability`
+--
+ALTER TABLE `appointment_availability`
+  MODIFY `available_appoint_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `cancellation_report`
@@ -573,13 +582,13 @@ ALTER TABLE `cancellation_report`
 -- AUTO_INCREMENT for table `feedback`
 --
 ALTER TABLE `feedback`
-  MODIFY `feedback_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `feedback_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `product_details`
@@ -633,7 +642,7 @@ ALTER TABLE `training_reservation_record`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables

@@ -66,17 +66,15 @@ try {
                         <div class="time-header">
                             <i class="fa-solid fa-clock"></i>
                             <span class="title">
-                                Available Time
+                                
                             </span>
                         </div>
                         <div class="selection">
-                            <?php foreach ($appointments as $appointment) : ?>
-                                <div class="time-options <?php echo $appointment['availability_status'] === 'booked' ? 'disabled' : ''; ?>" data-status="<?php echo $appointment['availability_status']; ?>">
-                                    <div class="time">
-                                        <?php echo $appointment['time_slot']; ?>
-                                    </div>
+                            <div class="time-options">
+                                <div class="time">
+
                                 </div>
-                            <?php endforeach; ?>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -178,4 +176,5 @@ try {
     </script>
     <script src="./js/insert_date_time.js"></script>
 </body>
+
 </html>

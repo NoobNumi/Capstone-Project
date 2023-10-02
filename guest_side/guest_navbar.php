@@ -10,6 +10,10 @@
             <li><i class="fa-solid fa-newspaper fa-con"></i><a class="navigation-link" href="discover.php">Discover</a></li>
             <li><i class="fa-solid fa-bullhorn fa-con"></i><a class="navigation-link" href="announcements.php">Announcements</a></li>
             <li><i class="fa-solid fa-address-card fa-con"></i><a class="navigation-link" href="aboutPage.php">About</a></li>
+            <li class="msg-nav">
+                <span class="count-color navbar-side"></span>
+                <a class="navigation-link-message-part" href="messages.php"><i class="fa-solid fa-message message-con"></i></a>
+            </li>
             <?php if (!isset($_SESSION['user_id'])) { ?>
                 <li><i class="fa-solid fa-right-to-bracket fa-con"></i><a class="user-buttons" href="login.php">Log in</a>
                 </li>

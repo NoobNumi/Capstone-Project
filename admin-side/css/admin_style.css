@@ -66,6 +66,7 @@ body {
     transition: all 0.5s ease;
     box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
     overflow-y: hidden;
+    z-index: 2;
 }
 
 .admin-sidebar.open {
@@ -256,7 +257,6 @@ section.admin-dashboard {
     top: 50%;
     left: 70px;
     width: calc(100% - 78px);
-    z-index: 2;
     padding: 10px;
     margin: auto 15px;
     display: flex;
@@ -362,10 +362,17 @@ span.notif-count {
     background-color: #F76C6C;
     color: #ffff;
     font-weight: 600;
-    transition: all 0.5s ease;
+    opacity: 1;
+    transition: opacity 0.5s ease; 
 }
 
-.count-color {
+span.notif-count.hidden {
+    opacity: 0;
+    display: none;
+}
+
+.admin-sidebar .count-color {
+    display: none;
     padding: 5px;
     border-radius: 50%;
     width: 10px;
@@ -375,9 +382,7 @@ span.notif-count {
     top: calc(27% + (202px - 27%));
 }
 
-.admin-sidebar.open .count-color {
-    display: none;
-    transition: all 0.5s ease;
+.admin-sidebar.open .count-color {  
     position: fixed;
     overflow: hidden;
 }
@@ -563,7 +568,6 @@ span.notif-count {
     top: 50%;
     left: 70px;
     width: calc(100% - 100px);
-    z-index: 2;
     margin: auto 15px;
     display: flex;
     justify-content: center;
@@ -623,7 +627,37 @@ span.notif-count {
     list-style: none;
     padding: 0;
     overflow: auto;
+    margin-top: 15px;
 }
+
+.notification {
+    display: flex;
+    flex-direction: column;
+    width: 10px;
+    height: 10px;
+    background-color: #92c986;
+    border-radius: 50%;
+    position: absolute;
+    top: 40%; 
+    right: 7%;
+}
+
+.notification.unread{
+    display: block;
+}
+
+.notification.read{
+    display: none;
+}
+
+.chat-people li{
+    position: relative;
+}
+
+.chat-people li.unread {
+    background-color: #F6F2FF;
+}
+
 
 .chat-people li a {
     display: flex;
@@ -631,7 +665,7 @@ span.notif-count {
     text-decoration: none;
     overflow: hidden;
     width: 90%;
-    margin: 20px;
+    margin: 0px 20px 0 20px;
     padding: 10px;
     word-wrap: break-word;
     text-overflow: ellipsis;
@@ -648,6 +682,10 @@ span.notif-count {
     width: 40px;
     height: 40px;
     border-radius: 50%;
+}
+
+.bold-message {
+    font-weight: 700;
 }
 
 
@@ -677,7 +715,13 @@ li a .msg-allText {
         margin: 0 15px;
         top: 0;
         align-items: stretch;
-        height: 100%;
+        height: 100vh;
+        left: 50px;
+        width: calc(100% - 70px);
+    }
+
+    .msg-allText .guest-name{
+        font-size: 14px;
     }
 
     .chat-people {
@@ -698,7 +742,6 @@ section.messages {
     top: 50%;
     left: 70px;
     width: calc(100% - 100px);
-    z-index: 2;
     margin: auto 15px;
     display: flex;
     justify-content: center;
@@ -1247,9 +1290,9 @@ button.btn-admin-login:hover {
     position: relative;
     min-height: 100vh;
     top: 50%;
+    z-index: 1;
     width: calc(100% - 78px);
     left: 70px;
-    z-index: 2;
     margin: auto 15px;
     display: flex;
     justify-content: center;

@@ -205,6 +205,15 @@ $(document).ready(function () {
         logoutUser();
     });
 
+
+    document.querySelectorAll(".chat").forEach((messageElement) => {
+        messageElement.addEventListener("click", function() {
+            const messageId = this.getAttribute("data-message-id");
+            
+            markMessageAsRead(messageId);
+        });
+    });
+
     function logoutUser() {
         let xhr = new XMLHttpRequest();
         xhr.open("POST", "logout.php", true);

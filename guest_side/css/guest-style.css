@@ -87,8 +87,33 @@ body {
     margin-left: 30px;
     margin-bottom: 20px;
     font-weight: 700;
-    font-size: 14px;
+    font-size: 16px;
 }
+
+.navbar-links .msg-nav{
+    margin: 5px 10px 0 30px;
+    display: flex;
+    align-items: baseline;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.count-color.navbar-side{
+    right: 180px;
+    top: 26px;
+    position: absolute;
+    padding: 6px;
+    border-radius: 50%;
+    width: 10px;
+    background-color: #F76C6C;
+    display: none;
+}
+
+.msg-nav .message-con{
+    font-size: 20px;
+    color: #235789;
+}
+
 
 .navbar-links li .navigation-link:hover,
 .navbar-links li .user-buttons:hover {
@@ -353,7 +378,25 @@ hr {
     display: block;
 }
 
+@media screen and (max-width: 1066px) {
+    .navigation-link-message-part{
+        text-decoration: none;
+    }
+    .navbar-links .msg-nav{
+        display: flex;
+        flex-wrap: wrap;
+        align-content: flex-start;
+        justify-content: flex-start;
+        align-items: center;
+        text-decoration: none;
+    }
+    .count-color.navbar-side {
+        right: 234px;
+        top: 305px;
+        z-index: 99;
+    }
 
+}
 /* --------------------------------------------------- PHOTOS CSS -------------------------------------------------- */
 
 .photos {
@@ -1435,6 +1478,27 @@ ul.guest-navbar li a:hover .fa-regular {
     right: 0;
     cursor: pointer;
     transform: translateX(55px);
+}
+
+
+.guest-navbar .count-color {
+    z-index: 999;
+    padding: 5px;
+    border-radius: 50%;
+    width: 10px;
+    background-color: #F76C6C;
+    position: fixed;
+    left: 40px;
+    top: calc(27% + (202px - 27%));
+}
+
+.guest-navbar .count-color.count-color-hidden {
+    display: none;
+}
+
+
+.guest-sidebar.open .guest-navbar .count-color {  
+    position: fixed;
 }
 
 .guest-sidebar.open .guest-profile-details .guest-name,

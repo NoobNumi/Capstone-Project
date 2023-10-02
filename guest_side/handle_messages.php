@@ -21,7 +21,7 @@ try {
             if (move_uploaded_file($_FILES['image']['tmp_name'], $imagePath)) {
                 $message = ''; 
                 echo 'Image Path: ' . $imagePath;
-                $sql = "INSERT INTO messages (sender_id, receiver_id, message, image_url, timestamp, is_read) VALUES (:sender_id, :receiver_id, :message, :image_url, NOW(), 1)";
+                $sql = "INSERT INTO messages (sender_id, receiver_id, message, image_url, timestamp, is_read) VALUES (:sender_id, :receiver_id, :message, :image_url, NOW(), 0)";
                 $stmt = $conn->prepare($sql);
                 $stmt->bindParam(':sender_id', $user_id, PDO::PARAM_INT);
                 $stmt->bindParam(':receiver_id', $admin_id, PDO::PARAM_INT);
@@ -41,7 +41,7 @@ try {
             $message = $_POST['message'];
             $encryptedMessage = base64_encode($message);
             
-            $sql = "INSERT INTO messages (sender_id, receiver_id, message, timestamp, is_read) VALUES (:sender_id, :receiver_id, :message, NOW(), 1)";
+            $sql = "INSERT INTO messages (sender_id, receiver_id, message, timestamp, is_read) VALUES (:sender_id, :receiver_id, :message, NOW(), 0)";
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(':sender_id', $user_id, PDO::PARAM_INT);
             $stmt->bindParam(':receiver_id', $admin_id, PDO::PARAM_INT);
@@ -73,6 +73,7 @@ try {
                     $output .= '<img class="profile-pic" src="../images/nun.png">';
                 }
                 $output .= '<div class="details">';
+                $output .= '<input type="hidden" class="message-id" value="' . $message['message_id'] . '">';
                 $output .= '<img class="image-msg" src="' . $message['image_url'] . '" alt="Image">';
                 $output .= '</div>';
                 $output .= '</div>';
@@ -84,6 +85,7 @@ try {
                     $output .= '<img class="profile-pic" src="../images/nun.png">';
                 }
                 $output .= '<div class="details">';
+                $output .= '<input type="hidden" class="message-id" value="' . $message['message_id'] . '">';
                 $output .= '<p>' . $decryptedMessage . '</p>';
                 $output .= '</div>';
                 $output .= '</div>';

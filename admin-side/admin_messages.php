@@ -27,8 +27,7 @@ if (!isset($_SESSION['admin_id'])) {
 </head>
 
 <body>
-    <?php 
-        require("logout_modal.php"); 
+    <?php
         include("./admin_sidebar.php");
     ?>
     <!-- ALL MESSAGES BEGINS HERE -->
@@ -45,24 +44,16 @@ if (!isset($_SESSION['admin_id'])) {
                 <!-- All users and chats are here -->
             </ul>
         </div>
+        <?php  require("logout_modal.php");?>
     </section>
     <!-- ALL MESSAGE ENDS HERE -->
 </body>
 
 <script src="./js/users.js"></script>
-<script src="latest_message.php"></script>
 <script src="./js/admin-chat.js"></script>
 <script src="./js/search.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
-<script>
-    let guestSidebar = document.querySelector(".admin-sidebar");
-    let closeBtn = document.querySelector("#guestMenu");
-
-    closeBtn.addEventListener("click", () => {
-        guestSidebar.classList.toggle("open");
-        menuBtnchange();
-    })
-</script>
+<script src="./js/sidebar-animation.js"></script>
 
 </html>

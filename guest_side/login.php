@@ -6,36 +6,36 @@ $invalid = 0;
 $no_user = 0;
 error_reporting(E_ALL);
 
-if (isset($_POST['submit'])) {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $query = $conn->prepare("SELECT * FROM `users` WHERE email = ?");
-    $query->bindValue(1, $email);
-    $query->execute();
-    $row = $query->fetch(PDO::FETCH_ASSOC);
-    if ($query->rowCount() > 0) {
+    if (isset($_POST['submit'])) {
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        $query = $conn->prepare("SELECT * FROM `users` WHERE email = ?");
+        $query->bindValue(1, $email);
+        $query->execute();
+        $row = $query->fetch(PDO::FETCH_ASSOC);
+        if ($query->rowCount() > 0) {
 
-        if ($row && password_verify($password, $row['password'])) {
-            $_SESSION['user_id'] = $row['user_id'];
-            header('location:index.php');
+            if ($row && password_verify($password, $row['password'])) {
+                $_SESSION['user_id'] = $row['user_id'];
+                header('location:index.php');
+            } else {
+                $invalid = 1;
+            }
         } else {
-            $invalid = 1;
+            $no_user = 1;
         }
-    } else {
-        $no_user = 1;
     }
-}
-if ($invalid) {
-    echo '<div class="alert alert-danger warning" style="text-align:center; font-size: 1.2rem;">
-                <strong><i class="fa-solid fa-triangle-exclamation" style="margin-right: 12px";></i>Incorrect e-mail or password!</strong>
-            </div>';
-}
-
-if ($no_user) {
-    echo '<div class="alert alert-danger warning" style="text-align:center; font-size: 1.2rem;">
-                <strong><i class="fa-solid fa-triangle-exclamation" style="margin-right: 12px";></i>No user found!</strong>
+    if ($invalid) {
+        echo '<div class="alert alert-danger warning" style="text-align:center; font-size: 1.2rem;">
+                    <strong><i class="fa-solid fa-triangle-exclamation" style="margin-right: 12px";></i>Incorrect e-mail or password!</strong>
                 </div>';
-}
+    }
+
+    if ($no_user) {
+        echo '<div class="alert alert-danger warning" style="text-align:center; font-size: 1.2rem;">
+                    <strong><i class="fa-solid fa-triangle-exclamation" style="margin-right: 12px";></i>No user found!</strong>
+                    </div>';
+    }
 
 ?>
 

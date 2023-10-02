@@ -1,8 +1,6 @@
 <?php
     $currentPage = basename($_SERVER['PHP_SELF']);
-
     try {
-
         $host = 'localhost';
         $dbname = 'trinitas';
         $username = 'root';
@@ -44,6 +42,7 @@
         <li <?php echo ($currentPage === 'messages.php') ? 'class="active"' : ''; ?>>
             <a href="messages.php?user_id=<?php echo $_SESSION['user_id']; ?>">
                 <i class="fa-regular fa-message"></i>
+                <span class="count-color count-color-hidden"></span>
                 <span class="links-names">Messages</span>
             </a>
         </li>

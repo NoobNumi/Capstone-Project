@@ -24,6 +24,8 @@ if (isset($_GET['user_id'])) {
     
 }
 
+$unreadMessageCountHome = 2;
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -42,7 +44,6 @@ if (isset($_GET['user_id'])) {
 
 <body>
     <?php 
-        require("logout_modal.php"); 
         include"./admin_sidebar.php";    
     ?>
     <section class="messages">
@@ -63,7 +64,7 @@ if (isset($_GET['user_id'])) {
             </div>
             <div class="chat-box">
 
-                <button id="scrollToLatestButton" hidden>Scroll to Latest</button>
+                <!-- <button id="scrollToLatestButton" hidden>Scroll to Latest</button> -->
 
             </div>
 
@@ -95,11 +96,15 @@ if (isset($_GET['user_id'])) {
             </div>
             <img id="modalImage" class="image-modal-content" src="" alt="Selected Image">
         </div>
+        <?php  require("logout_modal.php");?>
     </section>
 </body>
 
-<script src="./js/admin-chat.js"></script>
 <script src="./js/users.js"></script>
+<script src="./js/admin-chat.js"></script>
+<script>
+    const unreadMessageCount = <?php echo $unreadMessageCountHome; ?>;
+</script>
 <script src="./js/sidebar-animation.js"></script>
 
 </html>

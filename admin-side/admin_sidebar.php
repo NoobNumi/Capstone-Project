@@ -28,7 +28,7 @@
                 <i class="fa-regular fa-message"></i>
                 <span class="count-color"> </span>
                 <span class="links-names">Messages</span>
-                <span class="notif-count">10</span>
+                <span class="notif-count" id="unread-count"></span>
             </a>
         </li>
         <li <?php echo ($currentPage === 'calendar.php') ? 'class="active"' : ''; ?>>

@@ -13,8 +13,13 @@ menuItems.forEach(function(item) {
 let guestSidebar = document.querySelector(".admin-sidebar");
 let closeBtn = document.querySelector("#guestMenu");
 let scheduleView = document.querySelector(".schedule-view");
+const messageCountElement = document.querySelector(".notif-count");
+const countColorElement = document.querySelector(".count-color");
 
 closeBtn.addEventListener("click", () => {
     guestSidebar.classList.toggle("open");
     scheduleView.classList.toggle("admin-sidebar-open");
+  
+    const isSidebarOpen = guestSidebar.classList.contains("open");
+    updateMessageCount(unreadCount, isSidebarOpen);
 });
