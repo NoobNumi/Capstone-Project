@@ -22,7 +22,7 @@ const months = [
   "December"
 ];
 
-const selectedDates = {};
+const selectedDates = new Set(); // Use a Set to store selected dates
 
 const renderCalendar = () => {
   const firstDayofMonth = new Date(currYear, currMonth, 1).getDay();
@@ -32,12 +32,12 @@ const renderCalendar = () => {
   for (let i = firstDayofMonth; i > 0; i--) {
     const prevMonthDate = lastDateofMonth - i + 1;
     liTag.push(
-      `<li class="inactive ${selectedDates[`${currYear}-${currMonth}-${prevMonthDate}`] ? "selected" : ""}" data-date="${prevMonthDate}">${prevMonthDate}</li>`
+      `<li class="inactive prev-month" data-date="${prevMonthDate}">${prevMonthDate}</li>`
     );
   }
 
   for (let i = 1; i <= lastDateofMonth; i++) {
-    const isSelected = selectedDates[`${currYear}-${currMonth}-${i}`] ? "selected" : "";
+    const isSelected = selectedDates.has(`${currYear}-${currMonth}-${i}`) ? "selected" : "";
     const isInactive =
       (currYear === date.getFullYear() && currMonth === date.getMonth() && i < today) ||
       (currYear < date.getFullYear() || (currYear === date.getFullYear() && currMonth < date.getMonth()))
@@ -48,20 +48,34 @@ const renderCalendar = () => {
       `<li class="${isSelected} ${isInactive}" data-date="${i}">${i}</li>`
     );
   }
+  const remainingDays = 42 - (firstDayofMonth + lastDateofMonth);
+
+  for (let i = 1; i <= remainingDays; i++) {
+    liTag.push(
+      `<li class="inactive next-month" data-date="${i}">${i}</li>`
+    );
+  }
 
   currentDate.innerText = `${months[currMonth]} ${currYear}`;
   daysTag.innerHTML = liTag.join("");
-  
+
   const dateElements = document.querySelectorAll(".calendar .days li:not(.inactive)");
   dateElements.forEach(dateElement => {
     dateElement.addEventListener("click", () => {
-      const selectedDate = parseInt(dateElement.getAttribute("data-date"));
-      const key = `${currYear}-${currMonth}-${selectedDate}`;
-      if (selectedDates[key]) {
-        delete selectedDates[key];
-      } else {
-        selectedDates[key] = true;
+      const selectedDate = `${currYear}-${currMonth}-${dateElement.getAttribute("data-date")}`;
+
+      if (dateElement.classList.contains("inactive")) {
+        return;
       }
+
+      if (selectedDates.has(selectedDate)) {
+        selectedDates.delete(selectedDate);
+        dateElement.classList.remove("selected"); // Remove the 'selected' class
+      } else {
+        selectedDates.add(selectedDate);
+        dateElement.classList.add("selected"); // Add the 'selected' class
+      }
+      
       renderCalendar();
     });
   });
@@ -87,3 +101,11 @@ prevNextIcon.forEach(icon => {
     renderCalendar();
   });
 });
+
+// Function to submit selected dates
+function submitForm() {
+    const selectedDatesArray = Array.from(selectedDates); // Convert Set to an array
+    const selectedDatesValue = selectedDatesArray.join(","); // Join selected dates with commas
+    document.getElementById("selectedDates").value = selectedDatesValue;
+    document.getElementById("dateForm").submit();
+}

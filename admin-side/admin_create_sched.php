@@ -1,3 +1,9 @@
+<?php 
+
+    include("insert_dates.php");
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,89 +19,47 @@
 </head>
 
 <body>
-    <section class="appointment-sched-selector" id="appointment_sched">
-        <div class="date-select-container">
-            <div class="appointment-date-sched-header">
-                <a href="./admin_home.php"><span class="material-symbols-outlined back">
-                        arrow_back_ios
-                    </span></a>
-                <div class="separate-div">
-                    <span id="header-title">Select available dates</span>
-                </div>
-            </div>
-            <div class="wrapper">
-                <header>
-                    <p class="current-date"></p>
-                    <div class="icons">
-                        <span id="prev" class="material-symbols-rounded">chevron_left</span>
-                        <span id="next" class="material-symbols-rounded">chevron_right</span>
+    <form action="insert_dates.php" method="POST" id="dateForm">
+        <section class="appointment-sched-selector" id="appointment_sched">
+            <div class="date-select-container">
+                <div class="appointment-date-sched-header">
+                    <a href="./calendar.php"><span class="material-symbols-outlined back">
+                            arrow_back_ios
+                        </span></a>
+                    <div class="separate-div">
+                        <span id="header-title">Select available dates</span>
                     </div>
-                </header>
-                <div class="calendar">
-                    <ul class="weeks">
-                        <li>Sun</li>
-                        <li>Mon</li>
-                        <li>Tue</li>
-                        <li>Wed</li>
-                        <li>Thu</li>
-                        <li>Fri</li>
-                        <li>Sat</li>
-                    </ul>
-                    <ul class="days"></ul>
+                </div>
+                <div class="wrapper">
+                    <header>
+                        <p class="current-date"></p>
+                        <div class="icons">
+                            <span id="prev" class="material-symbols-rounded">chevron_left</span>
+                            <span id="next" class="material-symbols-rounded">chevron_right</span>
+                        </div>
+                    </header>
+                    <div class="calendar">
+                        <ul class="weeks">
+                            <li>Sun</li>
+                            <li>Mon</li>
+                            <li>Tue</li>
+                            <li>Wed</li>
+                            <li>Thu</li>
+                            <li>Fri</li>
+                            <li>Sat</li>
+                        </ul>
+                        <ul class="days"></ul>
+                    </div>
+                </div>
+                <input type="hidden" name="selected_dates" id="selectedDates">
+                <div class="option-buttons">
+                    <a id="cancelBtn" class="cancel btn-custom">Cancel</a>
+                    <a href="#" class="confirm btn-custom" onclick="submitForm()">Confirm</a>
                 </div>
             </div>
-
-            <div class="option-buttons">
-                <a id="cancelBtn" class="cancel btn-custom">Cancel</a>
-                <a href="#" class="confirm btn-custom">Confirm</a>
-            </div>
-        </div>
-    </section>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const schedButton = document.getElementById('addButton');
-            const modalAddSched = document.getElementById('addSchedModal');
-            const closeButton = document.getElementById('closeBTN');
-
-            const addButton = document.getElementById('appointAdd');
-            const modalAppointAdd = document.getElementById('appointment_sched');
-            const closeAppModal = document.getElementById('cancelBtn');
-
-            function openAddSchedModal() {
-                modalAddSched.style.display = 'flex';
-                document.body.style.overflow = 'hidden';
-                modalAddSched.style.position = 'fixed';
-                console.log('AddSchedModal opened');
-            }
-
-            function closeAddSchedModal() {
-                modalAddSched.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            }
-
-            function openAppointAddModal() {
-                // Close the addschedmodal if it's open
-                if (modalAddSched.style.display === 'flex') {
-                    closeAddSchedModal();
-                }
-                modalAppointAdd.style.display = 'flex';
-                document.body.style.overflow = 'hidden';
-                modalAppointAdd.style.position = 'fixed';
-                console.log('Appointment Add Modal opened');
-            }
-
-            function closeAppointAddModal() {
-                modalAppointAdd.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            }
-
-            schedButton.addEventListener('click', openAddSchedModal);
-            closeButton.addEventListener('click', closeAddSchedModal);
-
-            addButton.addEventListener('click', openAppointAddModal);
-            closeAppModal.addEventListener('click', closeAppointAddModal);
-        });
-    </script>
+        </section>
+    </form>
+    <script src="./js/add_sched_modal.js"></script>
 </body>
 
 </html>

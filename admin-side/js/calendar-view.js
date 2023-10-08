@@ -1,54 +1,114 @@
-// Define your constants and variables
-const dayNum = document.querySelector(".days-calendar"),
-    curDateNum = document.querySelector(".current-newDate"),
-    previousNexIcon = document.querySelectorAll(".icons span");
+    console.log("calendar-view.js is executing");
 
-let newDate = new Date(),
-    currentYr = newDate.getFullYear(),
-    currentMth = newDate.getMonth();
+    document.addEventListener("DOMContentLoaded", function () {
+        const dayNum = document.querySelector(".days-calendar");
+        const curDateNum = document.querySelector(".current-newDate");
+        const previousNextIcon = document.querySelectorAll(".icons button");
+        const dateFilterSelect = document.querySelectorAll(".date-btn");
 
-const monthArray = ["January", "February", "March", "April", "May", "June", "July",
-    "August", "September", "October", "November", "December"];
 
-const renderCalndr = () => {
-    let firstDayofMonth = new Date(currentYr, currentMth, 1).getDay(), 
-        lastDateofMonth = new Date(currentYr, currentMth + 1, 0).getDate(),
-        lastDayofMonth = new Date(currentYr, currentMth, lastDateofMonth).getDay(),
-        lastDateofLastMonth = new Date(currentYr, currentMth, 0).getDate();
-    let liTag = "";
 
-    for (let i = firstDayofMonth; i > 0; i--) {
-        liTag += `<li class="inactive">${lastDateofLastMonth - i + 1}</li>`;
-    }
+        dateFilterSelect.forEach(button => {
+            button.addEventListener("click", () => {
+              dateFilterSelect.forEach(btn => {
+                btn.classList.remove("active");
+              });
+          
+              button.classList.add("active");
+            });
+          });
 
-    for (let i = 1; i <= lastDateofMonth; i++) {
-        let isToday = i === newDate.getDate() && currentMth === new Date().getMonth()
-            && currentYr === new Date().getFullYear() ? "active" : "";
-        liTag += `<li class="${isToday}">${i}</li>`;
-    }
 
-    for (let i = lastDayofMonth; i < 6; i++) {
-        liTag += `<li class="inactive">${i - lastDayofMonth + 1}</li>`
-    }
-    curDateNum.innerText = `${monthArray[currentMth]} ${currentYr}`;
-    dayNum.innerHTML = liTag;
-}
+        let newDate = new Date();
+        let currentYr = newDate.getFullYear();
+        let currentMth = newDate.getMonth();
 
-document.addEventListener("DOMContentLoaded", function() {
-    renderCalndr();
+        const monthArray = [
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
 
-    previousNexIcon.forEach(icon => {
-        icon.addEventListener("click", () => { 
-            currentMth = icon.id === "prev" ? currentMth - 1 : currentMth + 1;
-
-            if (currentMth < 0 || currentMth > 11) {
-                newDate = new Date(currentYr, currentMth, new Date().getDate());
-                currentYr = newDate.getFullYear();
-                currentMth = newDate.getMonth();
-            } else {
-                newDate = new Date();
+        function renderCalendar() {
+            console.log("Render calendar");
+            const firstDayOfMonth = new Date(currentYr, currentMth, 1).getDay();
+            const lastDateOfMonth = new Date(currentYr, currentMth + 1, 0).getDate();
+            const lastDayOfMonth = new Date(currentYr, currentMth, lastDateOfMonth).getDay();
+            const lastDateOfLastMonth = new Date(currentYr, currentMth, 0).getDate();
+            let liTag = "";
+        
+            for (let i = firstDayOfMonth; i > 0; i--) {
+                liTag += `<li class="inactive">
+                            <div class="day-num">${lastDateOfLastMonth - i + 1}</div>
+                            <div class="color-coding">
+                                <span class="color-guide reserve">
+                                    <i class="fa-solid fa-clipboard-list reserve-con"></i>
+                                    Reserves
+                                    <div class="total-list-count">12</div>
+                                </span>
+                                <span class="color-guide appoint">
+                                    <i class="fa-solid fa-calendar-check appoint-con"></i>
+                                    Appoints
+                                </span>
+                            </div>
+                        </li>`;
             }
-            renderCalndr();
+        
+            for (let i = 1; i <= lastDateOfMonth; i++) {
+                const isToday = i === newDate.getDate() && currentMth === new Date().getMonth() && currentYr === new Date().getFullYear() ? "active" : "";
+                liTag += `<li class="${isToday}">
+                            <div class="day-num">${i}</div>
+                            <div class="color-coding">
+                                <span class="color-guide reserve">
+                                    <i class="fa-solid fa-clipboard-list reserve-con"></i>
+                                    Reserves
+                                    <div class="total-list-count">12</div>
+                                </span>
+                                <span class="color-guide appoint">
+                                    <i class="fa-solid fa-calendar-check appoint-con"></i>
+                                    Appoints
+                                </span>
+                            </div>
+                        </li>`;
+            }
+        
+            for (let i = lastDayOfMonth; i < 6; i++) {
+                liTag += `<li class="inactive">
+                            <div class="day-num">${i - lastDayOfMonth + 1}</div>
+                            <div class="color-coding">
+                                <span class="color-guide reserve">
+                                    <i class="fa-solid fa-clipboard-list reserve-con"></i>
+                                    Reserves
+                                    <div class="total-list-count">12</div>
+                                </span>
+                                <span class="color-guide appoint">
+                                    <i class="fa-solid fa-calendar-check appoint-con"></i>
+                                    Appoints
+                                </span>
+                            </div>
+                        </li>`;
+            }
+        
+        
+            curDateNum.innerText = `${monthArray[currentMth]} ${currentYr}`;
+            dayNum.innerHTML = liTag;
+        }
+        
+
+        renderCalendar();
+
+        previousNextIcon.forEach(icon => {
+            icon.addEventListener("click", () => {
+                currentMth = icon.id === "prev" ? currentMth - 1 : currentMth + 1;
+
+                if (currentMth < 0 || currentMth > 11) {
+                    newDate = new Date(currentYr, currentMth, new Date().getDate());
+                    currentYr = newDate.getFullYear();
+                    currentMth = newDate.getMonth();
+                } else {
+                    newDate = new Date();
+                }
+
+                renderCalendar();
+            });
         });
     });
-});

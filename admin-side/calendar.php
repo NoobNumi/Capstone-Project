@@ -22,8 +22,8 @@ if (!isset($_SESSION['admin_id'])) {
 
 <body>
     <?php
-        include("add-sched-modal.php");
-        include("admin_create_sched.php");
+    include("add-sched-modal.php");
+    include("admin_create_sched.php");
     ?>
     <section class="schedule-view">
         <?php include "./admin_sidebar.php"; ?>
@@ -49,10 +49,29 @@ if (!isset($_SESSION['admin_id'])) {
             </div>
             <div class="sched-calendar-view">
                 <header>
-                    <p class="current-date"></p>
+                    <div class="filtering">
+                        <span class="date-btn active">
+                            Month
+                        </span>
+                        <span class="date-btn">
+                            Week
+                        </span>
+                        <span class="date-btn">
+                            Day
+                        </span>
+                    </div>
                     <div class="icons">
-                        <span id="prev" class="material-symbols-rounded">chevron_left</span>
-                        <span id="next" class="material-symbols-rounded">chevron_right</span>
+                        <button id="prev" class="material-symbols-rounded calendar-btn">chevron_left</button>
+                        <p class="current-newDate"></p>
+                        <button id="next" class="material-symbols-rounded calendar-btn">chevron_right</button>
+                    </div>
+                    <div class="filtering-sub-header">
+                        <div class="service-appoint">
+                            <select class="service-btn">
+                                <option>Reservations</option>
+                                <option>Appointments</option>   
+                            </select>
+                        </div>
                     </div>
                 </header>
                 <div class="calendar">
@@ -65,18 +84,32 @@ if (!isset($_SESSION['admin_id'])) {
                         <li>Fri</li>
                         <li>Sat</li>
                     </ul>
-                    <ul class="days-calendar"></ul>
+                    <ul class="days-calendar">
+                        <li>
+                            <div class="day-num"></div>
+                            <div class="color-coding">
+                                <span class="color-guide reserve">
+                                    <i class="fa-solid fa-clipboard-list reserve-con"></i>
+                                    Reserves
+                                    <div class="total-list-count">12</div>
+                                </span>
+                                <span class="color-guide appoint">
+                                    <i class="fa-solid fa-calendar-check appoint-con"></i>
+                                    Appoints
+                                </span>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
-        <?php  require("logout_modal.php");?>
+        <?php require("logout_modal.php"); ?>
     </section>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="./js/users.js"></script>
-    <script src="./js/calendar-view.js"></script>
     <script src="./js/render_calendar.js"></script>
     <script src="./js/sidebar-animation.js"></script>
-    
+    <script src="./js/calendar-view.js"></script>
 </body>
 
 </html>

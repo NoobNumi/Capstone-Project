@@ -553,6 +553,10 @@ span.notif-count.hidden {
     background-color: #ffff;
 }
 
+.charts .graph-card{
+    z-index: 1;
+}
+
 
 @media screen and (max-width: 768px) {
     .charts {
@@ -1364,9 +1368,19 @@ button.btn-admin-login:hover {
     align-items: baseline;
     gap: 10px;
     justify-content: flex-end;
-    color: #adadad;
     cursor: pointer;
     width: 100%;
+}
+
+.left-section .sorting-list{
+    outline: 0px;
+    border: none;
+    height: 40px;
+    width: 40%;
+}
+
+.sorting-list option{
+    font-size: 15px;
 }
 
 
@@ -1414,9 +1428,14 @@ button.btn-admin-login:hover {
 
 .notification-card .first-section img {
     width: 70px;
+    height: 70px;
     border: solid #235789;
     border-radius: 50%;
     padding: 3px;
+}
+
+.guest-details-admin{
+    width: 100%;
 }
 
 .second-section {
@@ -1424,7 +1443,8 @@ button.btn-admin-login:hover {
     flex-direction: row;
     gap: 150px;
     justify-content: space-between;
-    width: auto;
+    width: 30%;
+    position: relative;
 }
 
 .appoint-details .detail-title {
@@ -1433,6 +1453,7 @@ button.btn-admin-login:hover {
     gap: 10px;
     font-size: 14px;
     color: #717171;
+    width: 100%;
 }
 
 .detail-title i {
@@ -1457,6 +1478,7 @@ span.status {
     border-radius: 20px;
     font-size: 14px;
     font-weight: 600;
+    width: 120px;
 }
 
 span.status.confirmed {
@@ -1481,6 +1503,10 @@ span.status.cancelled {
 }
 
 
+span.status i{
+    color: #fff;
+}
+
 .third-section .notif-button {
     padding: 10px 20px;
     background-color: #235789;
@@ -1498,6 +1524,12 @@ span.status.cancelled {
 }
 
 
+.no-appointments-message{
+    display: block;
+    color: #303030;
+    font-size: 20px;
+}
+
 
 @media screen and (max-width: 1276px) {
     .appointments-list {
@@ -1506,7 +1538,7 @@ span.status.cancelled {
 
     .admin-appoint-header {
         margin: 0;
-        padding: 23px 20px 0px 20px;
+        padding: 23px 20px 10px 20px;
         width: 90%;
     }
 
@@ -1595,7 +1627,7 @@ span.status.cancelled {
         font-size: 12px;
         display: flex;
         align-items: center;
-        gap: 0 !important;
+        gap: 10px;
     }
 
     span.status i {
@@ -1610,14 +1642,18 @@ span.status.cancelled {
     .admin-appoint-header {
         flex-direction: column;
         justify-content: flex-start;
-        padding: 27px 35px 0px 35px;
+        padding: 27px 35px 10px 35px;
     }
 
     .notification-list {
-        margin-top: 200px;
+        margin-top: 215px;
 
     }
-
+    
+    .sorting-list option{
+        font-size: 15px;
+    }
+    
     .appoint-details .date {
         font-size: 12px;
     }
@@ -1691,9 +1727,12 @@ span#header-title {
 
 header .icons {
     display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-header .icons span {
+header .icons span,
+.icons button {
     height: 38px;
     width: 38px;
     margin: 0 5px;
@@ -1705,13 +1744,17 @@ header .icons span {
     user-select: none;
     border-radius: 50%;
     transition: background-color 0.3s;
+    border: none;
 }
 
-header .icons span:last-child {
+
+header .icons span:last-child,
+.icons button:last-child {
     margin-right: 0;
 }
 
-header .icons span:hover {
+header .icons span:hover,
+.icons button:hover {
     background: #0a1d2e;
     color: #fff;
 }
@@ -1992,12 +2035,47 @@ header .current-date {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 30px;
+}
+
+.sched-calendar-view header .current-newDate {
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding-left: 0;
+}
+
+.sched-calendar-view .filtering{
+    display: flex;
+    width: auto;
+}
+
+.filtering .date-btn{
+    padding: 5px 10px 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-right: 5px;
+    transition: all 0.4s ease;
+    font-weight: 500;
+}
+
+.date-btn.active{
+    background-color: #fed86b;
+    font-weight: 600;
+    color: #333;
+    border-radius: 5px;
+}
+
+.sched-calendar-view .filtering-sub-header{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
     padding: 0 15px;
 }
 
-.sched-calendar-view header .current-date {
-    margin-top: 20px;
-    padding-left: 0;
+.service-appoint .service-btn{
+    padding: 10px;
+    border: 1px solid #ededed;
+    outline: 0px;
 }
 
 .sched-calendar-view .calendar {
@@ -2007,7 +2085,7 @@ header .current-date {
 .sched-calendar-view .calendar .days-calendar,
 .sched-calendar-view .calendar .weekdays {
     display: flex;
-    gap: 12px;
+    gap: 10px;
 }
 
 
@@ -2029,15 +2107,80 @@ header .current-date {
 .sched-calendar-view .calendar .days-calendar li {
     border-radius: 5px;
     background-color: #ededed;
-    padding: 10px 10px;
+    padding: 5px;
     width: 13%;
     display: flex;
-    align-items: start;
     justify-content: end;
-    height: 80px;
+    flex-direction: row;
+    height: 100px;
     text-align: center;
     flex-wrap: wrap;
 }
+
+.days-calendar li .day-num{
+    text-align: center;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    height: 30px;
+    width: 30px;
+}
+
+.sched-calendar-view .calendar .days-calendar li.active .day-num{
+    background-color: #0a1d2e;
+    color: #ffff;
+    border-radius: 50%;
+    
+}
+
+.days-calendar .color-coding{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+    justify-content: start;
+    align-items: center;
+}
+
+.color-coding .color-guide{
+    font-size: 13px;
+    font-weight: 500;
+    color: #303030;
+    margin: 2px;
+    width: 100%;
+    border-radius: 5px;
+    padding: 3px;
+    display: flex;
+    align-items: center;
+}
+
+.color-coding .color-guide.reserve{
+    background-color: #c8e4f9;
+    justify-content: space-between;
+}
+
+.color-guide.reserve .reserve-con{
+    color: #7e89c0;
+    font-size: 15px;
+}
+
+.color-coding .color-guide.appoint{
+    background-color: #f2d89f;
+    gap: 17px;
+}
+
+.color-guide.reserve .total-list-count{
+    height: 20px;
+    width: 20px;
+    background-color: #7e89c0;
+    color: #fff;
+    border-radius: 5px;
+}
+
+.color-guide.appoint .appoint-con{
+    color: #a16e01;
+}
+
 
 @media screen and (max-width: 1243px) {
 
@@ -2057,6 +2200,13 @@ header .current-date {
 
     }
 
+    .sched-calendar-view header {
+        padding: 0;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+
 }
 
 @media screen and (max-width: 990px) {
@@ -2070,6 +2220,11 @@ header .current-date {
 }
 
 @media screen and (max-width: 768px) {
+
+    .sched-view-header{
+        position: relative;
+        padding-bottom: 10px;
+    }
     .schedule-view {
         left: 60px;
         width: calc(100% - 60px);
@@ -2081,10 +2236,6 @@ header .current-date {
 
     .people-sched {
         width: auto;
-    }
-
-    .sched-calendar-view header {
-        padding: 0;
     }
 
     .sched-calendar-view header .current-date {
@@ -2106,4 +2257,279 @@ header .current-date {
     }
 
 
+}
+
+/* --------------------------------------- APPOINTMENT DETAILS VIEW ------------------------------------------ */
+
+.appointment-details-view {
+    z-index: 2;
+    position: absolute;
+    height: 100vh;
+    width: 100%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.appointment-details-modal {
+    background-color: #ffff;
+    padding: 10px 14px;
+    width: 500px;
+    border-radius: 10px;
+}
+
+.close-button-details {
+    display: flex;
+    justify-content: end;
+    margin: 10px 0;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.appointment-details-content {
+    line-height: 2rem;
+    padding: 20px;
+}
+
+.appointment-details-content-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.appointment-details-content .appoint-details-title {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.appointment-stat {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.section-one {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.guest-pfp {
+    width: 60px;
+}
+
+.section-two {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.name-detail {
+    display: flex;
+    flex-direction: column;
+    line-height: 20px;
+}
+
+.section-three {
+    margin-top: 20px;
+}
+
+.detail-title {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+p#guest-agenda-details {
+    text-indent: 30px;
+    overflow-wrap: anywhere;
+    display: flex;
+    text-align: justify;
+    font-size: 14px
+}
+
+#ch{
+    display: none;
+}
+
+#ch:checked ~ label{
+    display: none;
+}
+
+.read-more-text{
+    display: none;
+}
+
+.read-more-btn{
+    display: inline-block;
+    color: #929191;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+#ch:checked ~ .read-more-text{
+    display: block;
+}
+
+
+.option-note{
+    text-align: justify;
+    gap: 10px;
+    justify-content: center;
+    display: flex;
+    line-height: 24px;
+    color: #888799;
+    margin: 10px 0px 10px 0px;
+}
+
+.fa-clock{
+    color: #f7cc00;
+}
+
+.fa-circle-check{
+    color: #69b756;
+}
+
+.fa-ban{
+    color: #f73b3b;
+}
+
+#status-icon{
+    font-size: 20px;
+}
+
+
+.disabled-confirm {
+    pointer-events: none;
+    background-color: #ccc;
+    color: #888;
+}
+
+.disabled-cancel {
+    pointer-events: none;
+    background-color: #ccc;
+    color: #888; 
+}
+
+
+.option-note .note{
+    font-size: 15px;
+}
+@media screen and (max-width: 768px) {
+    
+    .appointment-details-modal {
+        width: 360px;
+    }
+}
+
+
+@media screen and (max-width: 370px) {
+    .appointment-details-modal {
+        width: 330px;
+    }
+}
+
+@media screen and (max-height: 768px) {
+    
+    .appointment-details-modal {
+        padding: 0px 17px;
+    }
+
+}
+
+
+
+@media screen and (max-height: 568px) {
+
+    .appointment-details-view {
+        height: 200vh;
+    }
+
+    .appointment-details-modal {
+        width: 300px;
+        min-height: 100vh;
+        height: auto;
+    }
+
+    .section-three{
+        line-height: 30px;
+    }
+}
+
+/* ------------------------------------------------ CONFIRM MODAL ----------------------------------- */
+.confirm-modal-section{
+    position: absolute;
+    width: 100%;
+    z-index: 2;
+    height: 100vh;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.confirm-modal-container{
+    width: 300px;
+    background-color: #fff;
+    padding: 10px 14px;
+    border-radius: 10px;
+    justify-content: center;
+    text-align: center;
+    line-height: 2rem;
+}
+
+.close_confirm_modal{
+    justify-content: end;
+    display: flex;
+    margin: 5px;
+}
+
+.confirm-modal-content{
+    display: flex;
+    flex-direction: column;
+}
+
+.confirm-modal-content .fa-circle-exclamation{
+    margin-bottom: 10px;
+    font-size: 40px;
+    color: #f73b3b;
+}
+
+.question-text{
+    font-weight: 500;
+}
+
+.confirm-buttons{
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 10px;
+}
+
+.confirm-buttons .confirm-btn{
+    width: 100px;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    font-weight: 600;
+}
+
+.confirm-btn.yes{
+    background-color: #235789;
+    color: #ffff;
+}
+
+.confirm-btn.yes:hover{
+    background-color: #1473E6;
+    transition: all 0.5s ease;
+}
+
+.confirm-btn.no:hover{
+    background-color: #f73b3b;
+    color: #fff;
+    transition: all 0.5s ease;
 }

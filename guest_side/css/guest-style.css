@@ -2198,7 +2198,7 @@ form .d-grid {
 .appointment-form {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 14px;
     width: 600px;
     background-color: #fff;
     padding: 20px;
@@ -2300,6 +2300,12 @@ form .d-grid {
     outline: none;
     border: none;
     background-color: transparent;
+}
+
+#char-count{
+    font-size: 13px;
+    margin-left: 10px;
+    color: #9e9c9c;
 }
 
 
@@ -2718,6 +2724,7 @@ h1#content-title {
     border-radius: 5px;
     display: flex;
     justify-content: center;
+    width: 250px;
 }
 
 .time-selector-container {
@@ -2740,48 +2747,14 @@ h1#content-title {
     color: #235789;
 }
 
-.selection {
-    margin-top: 20px;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 10px;
-}
-
-.selection .time-options[data-status="available"] {
-    cursor: pointer;
-    padding: 10px 20px;
-}
-
 .time-options .meridian {
     font-size: 13px;
 }
 
-.selection .time-options.disabled[data-status="booked"] {
-    background-color: #ececec;
-    color: #888;
-    padding: 10px 20px;
-    border-radius: 5px;
+.time-options{
+    margin-top: 20px;
 }
 
-.selection .time-options.disabled[data-status="booked"]:hover {
-    background-color: #ececec;
-    color: #888;
-    cursor: not-allowed;
-    pointer-events: none;
-}
-
-
-.selection .time-options[data-status="available"]:hover {
-    background-color: #235789;
-    transition: all 0.5s ease;
-    border-radius: 5px;
-    color: #fff;
-}
-
-.selection .time-options[data-status="available"]:after {
-    background-color: #235789;
-    color: #fff;
-}
 
 .wrapper {
     width: 400px;

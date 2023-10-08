@@ -19,10 +19,12 @@ if (isset($_POST['submit'])) {
     $postal_code = $_POST['postal_code'];
     $contact_no = $_POST['contact_no'];
     $appoint_sched_date = $_POST['appoint_sched_date'];
-    $appoint_sched_time = $_POST['appoint_sched_time'];
     $appoint_description = $_POST['appoint_description'];
 
-    $query = $conn->prepare("SELECT * FROM `appoinment_record` WHERE `first_name` = ? AND `last_name` = ?");
+    $appoint_sched_time = "4:00 PM";
+    $appoint_status = "pending";
+
+    $query = $conn->prepare("SELECT * FROM `appointment_record` WHERE `first_name` = ? AND `last_name` = ?");
     $query->bindValue(1, $first_name);
     $query->bindValue(2, $last_name);
     $query->execute();
@@ -31,7 +33,7 @@ if (isset($_POST['submit'])) {
     if ($query->rowCount() > 0) {
         $already_filed = 1;
     } else {
-        $query = "INSERT INTO appoinment_record (user_id, first_name, last_name, street_add, city_municipality, province, postal_code, contact_no, appoint_sched_date, appoint_sched_time, appoint_description) VALUES (:user_id, :first_name, :last_name, :street_add, :city_municipality, :province, :postal_code, :contact_no, :appoint_sched_date, :appoint_sched_time, :appoint_description)";
+        $query = "INSERT INTO appointment_record (user_id, first_name, last_name, street_add, city_municipality, province, postal_code, contact_no, appoint_sched_date, appoint_sched_time, appoint_description, appoint_status) VALUES (:user_id, :first_name, :last_name, :street_add, :city_municipality, :province, :postal_code, :contact_no, :appoint_sched_date, :appoint_sched_time, :appoint_description, :appoint_status)";
         $run_query = $conn->prepare($query);
 
         $data = [
@@ -45,7 +47,8 @@ if (isset($_POST['submit'])) {
             ':contact_no' => $contact_no,
             ':appoint_sched_date' => $appoint_sched_date,
             ':appoint_sched_time' => $appoint_sched_time,
-            ':appoint_description' => $appoint_description
+            ':appoint_description' => $appoint_description,
+            ':appoint_status' => $appoint_status
         ];
 
         $query_execute = $run_query->execute($data);
@@ -102,7 +105,6 @@ if (isset($_POST['submit'])) {
     <?php
     include("guest_navbar.php");
     ?>
-
     <!--APPOINTMENT FORM STARTS-->
     <section class="main-appointment">
         <div class="appointment-container">
@@ -161,9 +163,10 @@ if (isset($_POST['submit'])) {
                 </div>
                 <div class="appoint-info">
                     <label>
-                        <textarea name="appoint_description" placeholder="Input purpose of appointment here..." cols="30" rows="5" class="app-description"></textarea>
+                        <textarea name="appoint_description" placeholder="Input purpose of appointment here..." cols="30" rows="5" class="app-description" oninput="limitTextarea(this, 300)"></textarea>
                     </label>
                 </div>
+                <p id="char-count">Characters: 0 / 300</p>
                 <?php
                 $select_query = 'SELECT * FROM `users` WHERE user_id = :user_id';
                 $stmt = $conn->prepare($select_query);
@@ -184,6 +187,18 @@ if (isset($_POST['submit'])) {
         <?php include("logout_modal.php"); ?>
     </section>
     <?php include("guest_footer.php"); ?>
+    <script>
+       function limitTextarea(textarea, maxChars) {
+            const text = textarea.value;
+            const currentCharCount = text.length;
+
+            if (currentCharCount > maxChars) {
+                textarea.value = text.slice(0, maxChars);
+            }
+
+            document.getElementById('char-count').textContent = `Characters: ${Math.min(currentCharCount, maxChars)} / ${maxChars}`;
+        }
+    </script>
     <script>
         let selectedDate = null;
         let selectedTime = null;

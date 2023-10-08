@@ -1,10 +1,30 @@
-<?php 
-    session_name("admin_session");
-    session_start();
-    require_once("../connection.php");
-    if (!isset($_SESSION['admin_id'])) {
-        header("location: admin_login.php");
-    }
+<?php
+session_name("admin_session");
+session_start();
+require_once("../connection.php");
+if (!isset($_SESSION['admin_id'])) {
+    header("location: admin_login.php");
+}
+
+$appointmentId = '';
+
+try {
+    $sql = "SELECT * FROM appointment_record ORDER BY STR_TO_DATE(appoint_sched_date, '%M %d %Y') DESC";
+    $result = $conn->query($sql);
+} catch (PDOException $e) {
+    die("Error fetching data: " . $e->getMessage());
+}
+
+try {
+    $sqlCount = "SELECT COUNT(*) AS total_appointments FROM appointment_record";
+    $resultCount = $conn->query($sqlCount);
+    $row = $resultCount->fetch(PDO::FETCH_ASSOC);
+    $totalAppointments = $row['total_appointments'];
+} catch (PDOException $e) {
+    die("Error fetching data: " . $e->getMessage());
+}
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,337 +33,123 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/admin_style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon.ico">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <link rel="stylesheet" href="./css/admin_style.css">
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <title>Appointments</title>
 </head>
 
 <body style="overflow-x: hidden;">
-    <?php include("./admin_sidebar.php");?>
+    <?php
+        include("./admin_sidebar.php");
+        include("./appointment_details_view.php");
+        include("./confirm_delete_modal.php");
+        require("logout_modal.php");
+    ?>
     <section class="appointments-list">
         <div class="admin-appoint-header">
             <div class="right-section">
                 <h4 class="admin-title">Appointments</h4>
-                <p class="total-indicator">You have<span class="total-num">10</span>total appointment(s)</p>
+                <p class="total-indicator">You have <span class="total-num"><?php echo $totalAppointments; ?></span> total appointment(s)</p>
             </div>
             <div class="center-section">
                 <div class="search-bar-admin">
                     <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" placeholder="Search here...">
+                    <input type="text" id="searchInput" placeholder="Search here...">
                 </div>
             </div>
             <div class="left-section">
-                <p class="sorting-list">Newest First</p>
-                <i class="fa-solid fa-angle-down"></i>
+                <select name="selectedStatus" class="sorting-list">
+                    <option value="">All</option>
+                    <option value="pending">Pending</option>
+                    <option value="confirmed">Confirmed</option>
+                    <option value="cancelled">Cancelled</option>
+                </select>
             </div>
         </div>
         <div class="notification-list">
-            <div class="notification-card">
-                <div class="first-section">
-                    <img src="/images/guest.png">
-                    <div class="guest-details-admin">
-                        <span class="guest">User Name</span>
-                        <span class="status confirmed"><i class="fa-solid fa-check"></i>Confirmed</span>
-                    </div>
-                </div>
-                <div class="second-section">
-                    <div class="appoint-details">
-                        <div class="detail-title"><i class="fa-solid fa-calendar-days"></i>DATE</div>
-                        <div class="date">September 20, 2023</div>
-                    </div>
-                    <div class="appoint-details">
-                        <div class="detail-title"><i class="fa-solid fa-calendar-days"></i>TIME</div>
-                        <div class="date">9:00 AM</div>
-                    </div>
-                </div>
-                <div class="third-section">
-                    <div class="notif-button">
-                        <a href="#" class="btn-view">
-                            View
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="notification-card">
-                <div class="first-section">
-                    <img src="/images/guest.png">
-                    <div class="guest-details-admin">
-                        <span class="guest">User Name</span>
-                        <span class="status pending"><i class="fa-solid fa-hourglass-start"></i>Pending</span>
-                    </div>
-                </div>
-                <div class="second-section">
-                    <div class="appoint-details">
-                        <div class="detail-title"><i class="fa-solid fa-calendar-days"></i>DATE</div>
-                        <div class="date">September 25, 2023</div>
-                    </div>
-                    <div class="appoint-details">
-                        <div class="detail-title"><i class="fa-solid fa-calendar-days"></i>TIME</div>
-                        <div class="date">9:00 AM</div>
-                    </div>
-                </div>
-                <div class="third-section">
-                    <div class="notif-button">
-                        <a href="#" class="btn-view">
-                            View
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="notification-card">
-                <div class="first-section">
-                    <img src="/images/guest.png">
-                    <div class="guest-details-admin">
-                        <span class="guest">User Name</span>
-                        <span class="status cancelled"><i class="fa-solid fa-ban"></i>Cancelled</span>
-                    </div>
-                </div>
-                <div class="second-section">
-                    <div class="appoint-details">
-                        <div class="detail-title"><i class="fa-solid fa-calendar-days"></i>DATE</div>
-                        <div class="date">September 25, 2023</div>
-                    </div>
-                    <div class="appoint-details">
-                        <div class="detail-title"><i class="fa-solid fa-calendar-days"></i>TIME</div>
-                        <div class="date">9:00 AM</div>
-                    </div>
-                </div>
-                <div class="third-section">
-                    <div class="notif-button">
-                        <a href="#" class="btn-view">
-                            View
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="notification-card">
-                <div class="first-section">
-                    <img src="/images/guest.png">
-                    <div class="guest-details-admin">
-                        <span class="guest">User Name</span>
-                        <span class="status pending"><i class="fa-solid fa-hourglass-start"></i>Pending</span>
-                    </div>
-                </div>
-                <div class="second-section">
-                    <div class="appoint-details">
-                        <div class="detail-title"><i class="fa-solid fa-calendar-days"></i>DATE</div>
-                        <div class="date">September 25, 2023</div>
-                    </div>
-                    <div class="appoint-details">
-                        <div class="detail-title"><i class="fa-solid fa-calendar-days"></i>TIME</div>
-                        <div class="date">9:00 AM</div>
-                    </div>
-                </div>
-                <div class="third-section">
-                    <div class="notif-button">
-                        <a href="#" class="btn-view">
-                            View
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="notification-card">
-                <div class="first-section">
-                    <img src="/images/guest.png">
-                    <div class="guest-details-admin">
-                        <span class="guest">User Name</span>
-                        <span class="status confirmed"><i class="fa-solid fa-check"></i>Confirmed</span>
-                    </div>
-                </div>
-                <div class="second-section">
-                    <div class="appoint-details">
-                        <div class="detail-title"><i class="fa-solid fa-calendar-days"></i>DATE</div>
-                        <div class="date">September 20, 2023</div>
-                    </div>
-                    <div class="appoint-details">
-                        <div class="detail-title"><i class="fa-solid fa-calendar-days"></i>TIME</div>
-                        <div class="date">9:00 AM</div>
-                    </div>
-                </div>
-                <div class="third-section">
-                    <div class="notif-button">
-                        <a href="#" class="btn-view">
-                            View
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="notification-card">
-                <div class="first-section">
-                    <img src="/images/guest.png">
-                    <div class="guest-details-admin">
-                        <span class="guest">User Name</span>
-                        <span class="status cancelled"><i class="fa-solid fa-ban"></i>Cancelled</span>
-                    </div>
-                </div>
-                <div class="second-section">
-                    <div class="appoint-details">
-                        <div class="detail-title"><i class="fa-solid fa-calendar-days"></i>DATE</div>
-                        <div class="date">September 25, 2023</div>
-                    </div>
-                    <div class="appoint-details">
-                        <div class="detail-title"><i class="fa-solid fa-calendar-days"></i>TIME</div>
-                        <div class="date">9:00 AM</div>
-                    </div>
-                </div>
-                <div class="third-section">
-                    <div class="notif-button">
-                        <a href="#" class="btn-view">
-                            View
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="notification-card">
-                <div class="first-section">
-                    <img src="/images/guest.png">
-                    <div class="guest-details-admin">
-                        <span class="guest">User Name</span>
-                        <span class="status pending"><i class="fa-solid fa-hourglass-start"></i>Pending</span>
-                    </div>
-                </div>
-                <div class="second-section">
-                    <div class="appoint-details">
-                        <div class="detail-title"><i class="fa-solid fa-calendar-days"></i>DATE</div>
-                        <div class="date">September 25, 2023</div>
-                    </div>
-                    <div class="appoint-details">
-                        <div class="detail-title"><i class="fa-solid fa-calendar-days"></i>TIME</div>
-                        <div class="date">9:00 AM</div>
-                    </div>
-                </div>
-                <div class="third-section">
-                    <div class="notif-button">
-                        <a href="#" class="btn-view">
-                            View
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="notification-card">
-                <div class="first-section">
-                    <img src="/images/guest.png">
-                    <div class="guest-details-admin">
-                        <span class="guest">User Name</span>
-                        <span class="status pending"><i class="fa-solid fa-hourglass-start"></i>Pending</span>
-                    </div>
-                </div>
-                <div class="second-section">
-                    <div class="appoint-details">
-                        <div class="detail-title"><i class="fa-solid fa-calendar-days"></i>DATE</div>
-                        <div class="date">September 25, 2023</div>
-                    </div>
-                    <div class="appoint-details">
-                        <div class="detail-title"><i class="fa-solid fa-calendar-days"></i>TIME</div>
-                        <div class="date">9:00 AM</div>
-                    </div>
-                </div>
-                <div class="third-section">
-                    <div class="notif-button">
-                        <a href="#" class="btn-view">
-                            View
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="notification-card">
-                <div class="first-section">
-                    <img src="/images/guest.png">
-                    <div class="guest-details-admin">
-                        <span class="guest">User Name</span>
-                        <span class="status pending"><i class="fa-solid fa-hourglass-start"></i>Pending</span>
-                    </div>
-                </div>
-                <div class="second-section">
-                    <div class="appoint-details">
-                        <div class="detail-title"><i class="fa-solid fa-calendar-days"></i>DATE</div>
-                        <div class="date">September 25, 2023</div>
-                    </div>
-                    <div class="appoint-details">
-                        <div class="detail-title"><i class="fa-solid fa-calendar-days"></i>TIME</div>
-                        <div class="date">9:00 AM</div>
-                    </div>
-                </div>
-                <div class="third-section">
-                    <div class="notif-button">
-                        <a href="#" class="btn-view">
-                            View
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="notification-card">
-                <div class="first-section">
-                    <img src="/images/guest.png">
-                    <div class="guest-details-admin">
-                        <span class="guest">User Name</span>
-                        <span class="status pending"><i class="fa-solid fa-hourglass-start"></i>Pending</span>
-                    </div>
-                </div>
-                <div class="second-section">
-                    <div class="appoint-details">
-                        <div class="detail-title"><i class="fa-solid fa-calendar-days"></i>DATE</div>
-                        <div class="date">September 25, 2023</div>
-                    </div>
-                    <div class="appoint-details">
-                        <div class="detail-title"><i class="fa-solid fa-calendar-days"></i>TIME</div>
-                        <div class="date">9:00 AM</div>
-                    </div>
-                </div>
-                <div class="third-section">
-                    <div class="notif-button">
-                        <a href="#" class="btn-view">
-                            View
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="notification-card">
-                <div class="first-section">
-                    <img src="/images/guest.png">
-                    <div class="guest-details-admin">
-                        <span class="guest">User Name</span>
-                        <span class="status cancelled"><i class="fa-solid fa-ban"></i>Cancelled</span>
-                    </div>
-                </div>
-                <div class="second-section">
-                    <div class="appoint-details">
-                        <div class="detail-title"><i class="fa-solid fa-calendar-days"></i>DATE</div>
-                        <div class="date">September 25, 2023</div>
-                    </div>
-                    <div class="appoint-details">
-                        <div class="detail-title"><i class="fa-solid fa-calendar-days"></i>TIME</div>
-                        <div class="date">9:00 AM</div>
-                    </div>
-                </div>
-                <div class="third-section">
-                    <div class="notif-button">
-                        <a href="#" class="btn-view">
-                            View
-                        </a>
-                    </div>
-                </div>
-            </div>
+            <?php
+            $appointmentsExist = false;
+
+            while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                $userName = $row["first_name"] . " " . $row["last_name"];
+                $status = $row["appoint_status"];
+                $date = $row["appoint_sched_date"];
+                $time = $row["appoint_sched_time"];
+
+                if ($status === 'confirmed' || $status === 'pending' || $status === 'cancelled') {
+                    $appointmentsExist = true;
+                    echo '<div class="notification-card searchable-card">';
+                    echo '<div class="first-section">';
+                    echo '<img src="https://static.independent.co.uk/s3fs-public/thumbnails/image/2014/12/05/18/Ed-Sheeran.jpg">';
+                    echo '<div class="guest-details-admin">';
+                    echo '<span class="guest">' . $userName . '</span>';
+                    echo '<span class="status ' . $status . '" data-status="' . $status . '">';
+                    echo ucfirst($status);
+                    if ($status === 'confirmed') {
+                        echo '<i class="fa-solid fa-check"></i>';
+                    } elseif ($status === 'pending') {
+                        echo '<i class="fa-solid fa-hourglass-start"></i>';
+                    } elseif ($status === 'cancelled') {
+                        echo '<i class="fa-solid fa-ban"></i>';
+                    }
+                    echo '</span>';
+
+                    echo '</div>';
+                    echo '</div>';
+                    echo '<div class="second-section">';
+                    echo '<div class="appoint-details">';
+                    echo '<div class="detail-title"><i class="fa-solid fa-calendar-days"></i>DATE</div>';
+                    echo '<div class="date">' . $date . '</div>';
+                    echo '</div>';
+                    echo '<div class="appoint-details">';
+                    echo '<div class="detail-title"><i class="fa-solid fa-calendar-days"></i>TIME</div>';
+                    echo '<div class="date">' . $time . '</div>';
+                    echo '</div>';
+                    echo '</div>';
+                    echo '<div class="third-section">';
+                    echo '<div class="notif-button" data-appointment-id="' . $row['appoint_id'] . '">';
+                    echo '<a href="#" class="btn-view">View</a>';
+                    echo '</div>';
+                    echo '</div>';
+                    echo '</div>';
+                }
+            }
+
+            if (!$appointmentsExist) {
+                echo '<p class="no-appointments-message">There are no appointments.</p>';
+            } else {
+                if (isset($_POST['selectedStatus'])) {
+                    $selectedStatus = $_POST['selectedStatus'];
+                    if (!empty($selectedStatus)) {
+                        echo '<p class="no-appointments-message">No appointments for ' . $selectedStatus . ' appointments</p>';
+                    } else {
+                        echo '<p class="no-appointments-message">There are no appointments.</p>';
+                    }
+                } else {
+                    echo '<p class="no-appointments-message">There are no appointments.</p>';
+                }
+            }
+            ?>
         </div>
     </section>
     <script src="./js/sidebar-animation.js"></script>
     <script>
         const appointmentList = document.querySelector('.appointments-list');
         appointmentList.scrollTop = 0;
-
         function scrollToBottom() {
             appointmentList.scrollTop = appointmentList.scrollHeight;
         }
-
         window.addEventListener('load', scrollToBottom);
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="./js/search_and_filter_appoint.js"></script>
+    <script src="./js/users.js"></script>
+    <!-- the appointment_details.js is where the javascript is -->
+    <script src="./js/appointment_details.js"> </script>
 </body>
 
 </html>

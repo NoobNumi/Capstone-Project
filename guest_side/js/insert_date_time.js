@@ -1,4 +1,4 @@
- document.querySelectorAll('.days li').forEach((dayElement) => {
+document.querySelectorAll('.days li').forEach((dayElement) => {
     dayElement.addEventListener('click', () => {
         if (!dayElement.classList.contains('inactive')) {
             const selectedDay = dayElement.textContent.trim();
@@ -9,21 +9,11 @@
 
             selectedDate = `${formattedMonth} ${formattedDay} ${selectedYear}`;
             updateAppointSched();
-        }
-    });
-});
-
-document.querySelectorAll('.time-options').forEach((timeOption) => {
-    timeOption.addEventListener('click', () => {
-        console.log('Clicked on time slot');
-        if (!timeOption.classList.contains('disabled')) {
-            selectedTime = timeOption.textContent.trim();
-            updateAppointSched();
+            
             closeDateTimeModal();
         }
     });
 });
-
 
 function closeDateTimeModal() {
     const dateTimeModal = document.querySelector('.dateTime-modal-trigger');

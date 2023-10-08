@@ -66,13 +66,13 @@ try {
                         <div class="time-header">
                             <i class="fa-solid fa-clock"></i>
                             <span class="title">
-                                
+                                Time Notice
                             </span>
                         </div>
                         <div class="selection">
                             <div class="time-options">
                                 <div class="time">
-
+                                    Please note that the only time available is only 4:00 PM
                                 </div>
                             </div>
                         </div>

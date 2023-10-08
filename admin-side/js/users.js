@@ -38,7 +38,6 @@ document.addEventListener("DOMContentLoaded", function () {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 if (xhr.status === 200) {
                     const response = JSON.parse(xhr.responseText);
-                    console.log("Received data:", response);
 
                     if (Array.isArray(response.users)) {
                         response.users.sort((a, b) => {
@@ -58,9 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                     latestMessageText = `${user.first_name} sent a photo`;
                                 }
                             } else if (latestMessageText.startsWith('You: ')) {
-                                // Handle 'You: ' prefix
                             } else if (latestMessageText === 'No messages') {
-                                // Handle 'No messages'
                             } else {
                                 if (user.is_admin === 1) {
                                     latestMessageText = `You: ${latestMessageText}`;
