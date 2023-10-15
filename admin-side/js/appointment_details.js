@@ -61,7 +61,9 @@ $(document).ready(function () {
         const appointmentId = $(this).attr('data-appointment-id');
         console.log('Confirm button clicked with ID:', appointmentId);
         updateAppointmentStatus(appointmentId, 'confirmed');
+        window.open('send_email.php?appoint_id=' + appointmentId, '_blank');
     });
+
 
     function showModal() {
         $('.appointment-details-view').css('display', 'flex');
@@ -87,6 +89,7 @@ $(document).ready(function () {
             case 'pending':
                 iconClass = 'fa-clock';
                 $('.cancel').removeClass('disabled-cancel');
+                $('.confirm').removeClass('disabled-confirm');
                 break;
             case 'confirmed':
                 iconClass = 'fa-circle-check';

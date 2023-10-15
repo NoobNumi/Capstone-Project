@@ -2,7 +2,7 @@
     require_once("../connection.php");
     session_name("user_session");
     session_start();
-    include("reservation_category.html");
+    include("reservation_category.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">

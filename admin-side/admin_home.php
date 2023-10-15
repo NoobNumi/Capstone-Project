@@ -5,6 +5,8 @@ require_once("../connection.php");
 if (!isset($_SESSION['admin_id'])) {
     header("location: admin_login.php");
 }
+
+require "fetch_counts_query.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,9 +24,9 @@ if (!isset($_SESSION['admin_id'])) {
 </head>
 
 <body style="overflow-x: hidden;">
-    <?php 
-        include("add-sched-modal.php"); 
-        include("admin_sidebar.php");
+    <?php
+    include("add-sched-modal.php");
+    include("admin_sidebar.php");
     ?>
     <section class="admin-dashboard">
         <div class="charts">
@@ -45,11 +47,8 @@ if (!isset($_SESSION['admin_id'])) {
                         <i class="fa-solid fa-users"></i>
                     </div>
                     <p class="total-number">
-                        50
+                        <?php echo $userCount; ?>
                     </p>
-                    <span class="sub-number">
-                        5
-                    </span>
                 </a>
             </div>
             <div class="col middle-col">
@@ -77,10 +76,10 @@ if (!isset($_SESSION['admin_id'])) {
                         <i class="fa-solid fa-calendar-check"></i>
                     </div>
                     <p class="total-number">
-                        18
+                        <?php echo $appointmentCount; ?>
                     </p>
                     <span class="sub-number">
-                        3
+                        <?php echo $pendingAppointmentsCount; ?>
                     </span>
                 </a>
             </div>
@@ -97,9 +96,6 @@ if (!isset($_SESSION['admin_id'])) {
                     <p class="total-number">
                         18
                     </p>
-                    <span class="sub-number">
-                        18
-                    </span>
                 </a>
             </div>
             <div class="col last-col">
@@ -113,9 +109,6 @@ if (!isset($_SESSION['admin_id'])) {
                     <p class="total-number">
                         18
                     </p>
-                    <span class="sub-number">
-                        10
-                    </span>
                 </a>
             </div>
         </div>
@@ -126,7 +119,7 @@ if (!isset($_SESSION['admin_id'])) {
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="./js/users.js"></script>
-<script src="./js/admin-chat.js"></script> 
+<script src="./js/admin-chat.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script src="./js/charts.js"></script>
 <script src="./js/sidebar-animation.js"></script>
