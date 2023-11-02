@@ -164,7 +164,7 @@ hr {
 
 
 .main {
-    background-image: url(/images/bg_from_net.jpg) !important;
+    background-image: url('/images/bg_from_net.jpg') !important;
     background-repeat: no-repeat;
     background-size: cover;
     height: 75vh;
@@ -1373,7 +1373,7 @@ ul.service-des-main {
     background-position: center;
     object-position: center;
     background-size: cover;
-    padding: 10px 14px;
+    /* padding: 10px 14px; */
 }
 
 .right-side-package {
@@ -1416,6 +1416,12 @@ ul.service-des-main {
 
 .package-title {
     padding: 20px 0;
+}
+
+.package-list{
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
 }
 
 .responsive-package-buttons {
@@ -2586,6 +2592,16 @@ input:checked+.slider:before {
     font-size: 14px;
     font-weight: bold;
     color: red;
+    background: none;
+    border: none;
+}
+
+.alert.alert-danger.warning{
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #c20114;
     background: none;
     border: none;
 }
@@ -4301,6 +4317,7 @@ ul {
 }
 
 .back-button {
+    left: 1px;
     top: 0;
     position: fixed;
     width: 100%;
@@ -4363,6 +4380,22 @@ ul {
     user-select: none;
 }
 
+.meal-type-name{
+    padding: 24px 50px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    position: fixed;
+    justify-content: flex-start;
+    width: 100%;
+    top: 42px;
+    margin-top: 61px;
+    font-size: 2rem;
+    font-weight: 600;
+    background-color: white;
+    z-index: 1;
+}
+
 .food-details {
     width: 250px;
     background-color: #fff;
@@ -4378,7 +4411,7 @@ ul {
 .food-details img {
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
-    height: 100%;
+    height: 200px;
     max-height: 300px;
     object-fit: cover;
     background-size: cover;
@@ -4418,6 +4451,15 @@ ul {
     color: #ffff;
 }
 
+.food-details.selected::before {
+    opacity: 1;
+}
+
+.food-details.selected .food-name {
+    color: #fff;
+}
+
+
 .meal-type.selected {
     background-color: #0c1f30;
     color: #fff;
@@ -4430,17 +4472,15 @@ ul {
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    padding-top: 250px;
+    padding-top: 120px;
     overflow: auto;
-    max-height: calc(100vh - 170px);
+    max-height: calc(100vh - 190px);
     position: relative;
 }
 
-:is(.meal-name)::-webkit-scrollbar {
+:is(.meal-name, .meal-list)::-webkit-scrollbar {
     width: 0px;
 }
-
-
 
 .meal-title-type {
     width: 100%;
@@ -4450,6 +4490,7 @@ ul {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 4rem;
+    overflow-y: auto;
 }
 
 .check-out-btn {
@@ -4479,19 +4520,105 @@ ul {
 }
 
 @media screen and (max-width: 915px) {
+
     .nav-toggle-choices {
         padding-left: 135px;
     }
 
     .meal-name .meal-list {
         grid-template-columns: repeat(2, 1fr);
-        margin-top: 500px;
     }
 }
 
 @media screen and (max-width: 661px) {
     .meal-name .meal-list {
         grid-template-columns: repeat(1, 1fr);
-        margin-top: 73pc;
+
     }
+
+    .meal-type-name{
+        padding: 24px 22px;
+    }
+
+
+}
+
+/* --------------------------------------------------- PACKAGES MODAL ----------------------------------------------------- */
+.package-header {
+    margin-top: 50px;
+}
+
+.amenity-info{
+    margin: 0;
+}
+.price {
+    font-weight: bold;
+    color: #FF5733;
+    font-size: 22px;
+    margin-top: 0px
+}
+
+.package-description {
+    font-style: italic;
+    color: #333;
+    margin: 0;
+}
+
+.view-package-section{
+    width: 100%;
+    height: 100vh;
+    display: none;
+    z-index: 2;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+:is(.view-package-modal)::-webkit-scrollbar{
+    width: 0;
+}
+
+.view-package-modal {
+    width: 550px;
+    max-height: 95vh; 
+    overflow-y: auto;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 10px 14px;
+}
+
+@media (max-width: 768px) {
+    .view-package-modal {
+        max-height: 90vh;
+    }
+}
+.view-package-modal-content {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.about-package {
+    margin-top: 20px;
+}
+
+.first-part {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 10px;
+    align-items: center;
+}
+
+.header-modal-package {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.package-title {
+    font-size: 20px;
 }

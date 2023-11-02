@@ -1,7 +1,9 @@
 <?php
 require_once("../connection.php");
+require_once("fetch_packages.php");
 session_name("user_session");
 session_start();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,11 +28,11 @@ session_start();
 
 <body style="overflow-x: hidden;">
     <?php
-        include("meal_modal.html");
+        include("packages_modal.php");
         include("guest_navbar.php"); 
     ?>
 
-    <section class="reception-reserve reserve">
+    <section class="seminar-reserve reserve">
         <div class="res-header">
             <h4 class="reservation-name">Seminar</h4>
             <div class="icon-tools">
@@ -91,11 +93,11 @@ session_start();
         </div>
         <div class="customer-choice">
             <div class="packages">
-                <h5 class="package-title">Packages available</h5>
+                <h5 class="package-title">Available Package</h5>
                 <div class="package-list">
                     <div class="card-package">
                         <div class="left-side-package images">
-                            <img src="/images/Seminar+Retreat.png" alt="" class="package-image">
+                            <img src="/images/seminar_package.png" alt="" class="package-image" style="border-radius: 25px;">
                         </div>
                         <div class="right-side-package">
                             <div class="package-title">
@@ -104,19 +106,21 @@ session_start();
                                 </div>
                             </div>
                             <div class="ammenity-info">
-                                <ul class="ammenity-list">
-                                    <li class="price">₱400</li>
-                                    <li class="ammenity-text">Food and Accomodation</li>
-                                    <li class="ammenity-text">No Overnight / No retreat</li>
-                                </ul>
+                                <?php
+                                    $seminarPackage = getPackageDetails('Seminar Package');
+                                    if ($seminarPackage) {
+                                        echo '<p class="price">₱' . number_format($seminarPackage['price'], 2) . ' Per Venue</p>';
+                                        echo '<p class="package-description">' . $seminarPackage['description'] . '</p>';
+                                    }
+                                ?>
                             </div>
                             <div class="desktop-view-button">
-                                <a href="#" id="button-view-details" class="button-view-details">View Package Details</a>
+                                <a href="#" class="button-view-details" id="openSeminarButton">View Package Details</a>
                             </div>
 
-                            <div class="responsive-package-buttons">
-                                <a href="#" id="button-view-details" class="button-view-details">View Package Details</a>
-                            </div>
+                            <!-- <div class="responsive-package-buttons">
+                                <a href="#" class="button-view-details" id="openSeminarButton">View Package Details</a>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -125,4 +129,5 @@ session_start();
     </section>
     <?php include("guest_footer.php"); ?>
     <script src="./js/services_photos.js"></script>
+    <script src="./js/package_modal.js"></script>
 </body>

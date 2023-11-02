@@ -17,7 +17,6 @@ $(document).ready(function () {
                 $('.confirm').attr('data-appointment-id', appointmentId);
                 $('.cancel').attr('data-appointment-id', appointmentId);
 
-
                 showModal();
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -35,11 +34,9 @@ $(document).ready(function () {
         console.log('Cancel button clicked with ID:', appointmentId);
 
         hideModal();
-
         $('.confirm-modal-section').css('display', 'flex');
         $('.confirm-modal-section').css('position', 'fixed');
         $('body').css('overflow', 'hidden');
-
 
         $('.confirm-btn.no').click(function () {
             $('.confirm-modal-section').css('display', 'none');
@@ -61,9 +58,8 @@ $(document).ready(function () {
         const appointmentId = $(this).attr('data-appointment-id');
         console.log('Confirm button clicked with ID:', appointmentId);
         updateAppointmentStatus(appointmentId, 'confirmed');
-        window.open('send_email.php?appoint_id=' + appointmentId, '_blank');
+        window.open('send_email_appointment.php?appoint_id=' + appointmentId, '_blank');
     });
-
 
     function showModal() {
         $('.appointment-details-view').css('display', 'flex');
@@ -74,6 +70,12 @@ $(document).ready(function () {
     function hideModal() {
         $('.appointment-details-view').css('display', 'none');
         $('body').css('overflow-y', 'auto');
+        const cancelButton = $('#cancel-button');
+        const confirmButton = $('#confirm-button');
+        
+        cancelButton.css('display', 'flex');
+        confirmButton.css('display', 'flex');
+        cancelButton.prop('disabled', false);
     }
 
     function updateModalContent(appointment) {
@@ -107,6 +109,25 @@ $(document).ready(function () {
 
 
         iconElement.attr('class', 'fas ' + iconClass);
+
+        const cancelButton = $('#cancel-button');
+        const confirmButton = $('#confirm-button');
+
+        if (appointment.appoint_status === 'pending') {
+            cancelButton.css('display', 'flex');
+            confirmButton.css('display', 'flex');
+        } else if (appointment.appoint_status === 'confirmed') {
+            cancelButton.css('display', 'flex');
+            confirmButton.css('display', 'none');
+        } else if (appointment.appoint_status === 'cancelled') {
+            cancelButton.css('display', 'flex');
+            confirmButton.css('display', 'none');
+            cancelButton.prop('disabled', true);
+        } else {
+            cancelButton.css('display', 'flex');
+            confirmButton.css('display', 'flex');
+            cancelButton.prop('disabled', false);
+        }
     }
 
     function updateAppointmentStatus(appointmentId, newStatus) {

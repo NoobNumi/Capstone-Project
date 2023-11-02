@@ -56,7 +56,7 @@
                     </ul>
                 </div>
             </a>
-            <a href="reception_page.php" class="reserve-link-2-form">
+            <a href="../guest_side/reception_page.php" class="reserve-link-2-form">
                 <div class="reservation reception">
                     <img src="../images/img17.jpg"
                         class="card-image">
@@ -132,7 +132,7 @@
 
             <a href="seminar_page.php" class="reserve-link-2-form">
                 <div class="reservation seminar">
-                    <img src="https://scontent.fmnl9-4.fna.fbcdn.net/v/t39.30808-6/313948058_135956659225210_1082207828745443346_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=5614bc&_nc_eui2=AeGtSeVctdF4HbjoB3D9ajg45UxqUpV4T4DlTGpSlXhPgGUcNfmR9E6d-xTtUDiZRL-vBOGzu21Hw__3GGoMuepv&_nc_ohc=_G67Wz7KfsEAX_suwZh&_nc_ht=scontent.fmnl9-4.fna&_nc_e2o=s&oh=00_AfADQpW51Do1DJAhTf0rcRK0ZP_2YgGjtvgLwlNsfCKZJA&oe=64F86F7A"
+                    <img src="/images/trinitasPic3.jpg"
                         class="card-image">
                     <h3 class="service-card-title">Seminar</h3>
                     <ul class="service-des-main">
@@ -166,7 +166,7 @@
             
             <a href="#" class="reserve-link-2-form">
                 <div class="reservation retreat">
-                    <img src="https://scontent.fceb2-2.fna.fbcdn.net/v/t39.30808-6/339569736_1316380799260381_5292908462280828946_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=5614bc&_nc_eui2=AeHcMJbmX0hHdV_qu0dgWOapiUQXjhjBLoGJRBeOGMEugYVhzMeVoOtYdLeWWpp8Sj0z_aMGFhzKuIfmYhgNI3OE&_nc_ohc=2sb2C8QZ8nwAX_wIpjU&_nc_ht=scontent.fceb2-2.fna&_nc_e2o=s&oh=00_AfAJtFfwR8H7G3Ji1No459rIZJklYrQCCKeaHwJ9F7l8dg&oe=64F9107F"
+                    <img src="../images/trinitasPic2.jpg"
                         class="card-image">
                     <h3 class="service-card-title">Retreat</h3>
                     <ul class="service-des-main">

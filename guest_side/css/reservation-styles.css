@@ -1,0 +1,488 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,500&family=Roboto:wght@400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Prompt:wght@400;500&display=swap');
+
+:root {
+    --blue: #235789;
+    --white: #ffffff;
+    --yellow: #f7f585;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #ededed;
+    min-height: 100vh;
+}
+
+/* ------------------------------------------------------ APPOINTMENT SECTION ------------------------------------------- */
+
+.main-reservation {
+    height: 100vh;
+    background-color: #ededed;
+}
+
+.reservation-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+}
+
+.reservation-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 600px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 20px;
+    position: relative;
+    margin-top: 30px;
+    box-shadow: rgba(17, 17, 26, 0.1) 0px 1px 0px;
+}
+
+.reservation-title {
+    text-align: center;
+    font-weight: 700;
+    font-size: 23px;
+    letter-spacing: 1px;
+}
+
+.reservation-form .message {
+    text-align: center;
+}
+
+.reserve-flex {
+    display: flex;
+    justify-content: center;
+    max-width: 100%;
+    gap: 5px;
+}
+
+.reservation-form label {
+    position: relative;
+    width: 100%;
+}
+
+.reservation-form label .input {
+    width: 100%;
+    height: 50px;
+    outline: 0;
+    border: 1px solid rgba(105, 105, 105, 0.397);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.reservation-form label .input+span {
+    position: absolute;
+    left: 10px;
+    top: 15px;
+    color: grey;
+    font-size: 0.9em;
+    cursor: text;
+    transition: 0.3s ease;
+}
+
+.reservation-form label .input:placeholder-shown+span {
+    top: 15px;
+    font-size: 0.9em;
+}
+
+.reservation-form label .input:focus+span,
+.reservation-form label .input:valid+span {
+    top: 30px;
+    font-size: 0.7em;
+    font-weight: 600;
+    color: #d2d2d2;
+}
+
+.select-date {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.sched-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    border: solid #d2d2d2 1px;
+    height: 50px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.calendar-icon {
+    color: #8d99a2;
+}
+
+.calendar.selected {
+    color: #3c9b3f;
+}
+
+#char-count {
+    font-size: 13px;
+    margin-left: 10px;
+    color: #9e9c9c;
+}
+
+#guest_count{
+    outline: none;
+    border: none;
+    width: 20px;
+    text-align: center;
+}
+
+.guest-div{
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+    width: 100%;
+    height: 50px;
+    outline: 0;
+    border: 1px solid rgba(105, 105, 105, 0.397);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.guest-div .input-guest{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: end;
+    width: 50%;
+}
+
+.guest-div .for-guest{
+    left: 10px;
+    top: 15px;
+    color: grey;
+    font-size: 0.9em;
+    cursor: text;
+    transition: 0.3s ease;
+}
+
+.guest-count-con{
+    background-color: #ededed;
+    padding: 7px;
+    cursor: pointer;
+    border-radius: 50%;
+    text-align: center;
+    color: #303030;
+    font-size: 15px;
+}
+
+.guest-count-con:hover{
+    background-color: #303030;
+    color: #ffff;
+    transition: 0.5s;
+}
+
+ /* ------------------------------------------------------ DATE TIME SELECTOR SECTION -------------------------------------------- */
+ .dateTime-modal-trigger {
+    display: none;
+    z-index: 999;
+    top: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    height: 100vh;
+}
+
+
+.close-button-header {
+    display: flex;
+    justify-content: flex-end;
+    position: fixed;
+    height: 40px;
+    width: 100%;
+    padding: 10px;
+}
+
+.dateTime-modal-trigger .fa-x {
+    height: 35px;
+    width: 35px;
+    color: black;
+    border-radius: 50%;
+    background-color: #ffff;
+    padding: 11px;
+}
+
+.dateTime-modal-trigger .fa-x:hover {
+    background-color: #a1a1a1;
+    color: #ffff;
+    transition: all 0.5s ease;
+}
+
+.date-time-section {
+    width: 100%;
+    height: 100vh;
+    justify-content: space-around;
+    align-items: center;
+    display: flex;
+}
+
+.date-and-time-container {
+    display: flex;
+    width: auto;
+    justify-content: center;
+    align-items: baseline;
+}
+
+
+.time-select-option {
+    right: 0;
+    top: 0;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    width: 250px;
+}
+
+.time-selector-container {
+    height: auto;
+    padding: 20px;
+    margin: 10px;
+    background-color: #ffff;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+    display: flex;
+    flex-direction: column;
+}
+
+.time-selector-container .title {
+    font-weight: 600;
+}
+
+.time-selector-container i {
+    margin-right: 10px;
+    color: #235789;
+}
+
+.time-options .meridian {
+    font-size: 13px;
+}
+
+.time-options {
+    margin-top: 20px;
+}
+
+.wrapper {
+    width: 670px !important;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+    height: 50%;
+}
+
+.wrapper header {
+    background-color: #235789;
+    display: flex;
+    align-items: center;
+    padding: 25px 30px 10px;
+    justify-content: space-between;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+header .icons {
+    display: flex;
+}
+
+header .icons {
+    height: 38px;
+    width: 38px;
+    margin: 0 1px;
+    cursor: pointer;
+    color: #fff;
+    text-align: center;
+    line-height: 38px;
+    font-size: 1.9rem;
+    user-select: none;
+    border-radius: 50%;
+    font-weight: 700;
+}
+
+
+header .icons:hover {
+    background: #f2f2f2;
+    transition: all 0.5s ease;
+    color: #11395d;
+}
+
+.calendar .days li[data-status="booked"] {
+    color: #aaa;
+    pointer-events: none;
+}
+
+.calendar {
+    padding: 10px 20px 20px 20px;
+}
+
+.calendar ul.weeks {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    text-align: center;
+}
+
+
+.calendar li {
+    color: #333;
+    width: calc(100% / 7);
+    font-size: 1.07rem;
+    margin-top: 20px;
+}
+
+.months {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.month {
+    width: 100%;
+    height: 430px;
+}
+
+p.month-name {
+    margin-bottom: 0;
+    color: #fff;
+    font-weight: 500;
+    font-size: 20px;
+}
+
+.calendar .weeks li {
+    font-weight: 500;
+    cursor: default;
+}
+
+.calendar .days li {
+    z-index: 1;
+    cursor: pointer;
+    position: relative;
+    margin-top: 20px;
+}
+
+
+
+.days li.disabled {
+    color: #aaa;
+    pointer-events: none;
+}
+
+
+.days li.inactive {
+    color: #aaa;
+    cursor: not-allowed;
+}
+
+.days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    text-align: center;
+}
+
+
+.days,
+.weeks {
+    padding-left: 0;
+}
+
+.days li {
+    position: relative;
+    text-align: center;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
+.days li::before {
+    position: absolute;
+    content: "";
+    left: 50%;
+    top: 50%;
+    height: 40px;
+    width: 40px;
+    z-index: -1;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: background-color 0.5s, color 0.5s;
+}
+
+.days li.selected,
+.days li.check-in,
+.days li.check-out {
+    color: #fff;
+    border-radius: 50%;
+}
+
+.days li.in-range {
+    background-color: gray;
+    color: #fff;
+}
+
+.days li.selected.check-in,
+.days li.selected.check-out {
+    background-color: #539de2;
+}
+
+
+.days li:not(.inactive):hover {
+    color: #ffff;
+}
+
+
+.days li:not(.inactive):hover::before {
+    background: #539de2;
+}
+
+
+@media screen and (max-width: 780px) {
+    .date-time-section {
+        height: 109vh;
+    }
+}
+
+@media screen and (max-width: 768px) {
+
+    .wrapper {
+        width: 360px;
+
+    }
+
+    .time-selector-container {
+        max-width: 100%;
+    }
+
+    .selection {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .date-and-time-container {
+        flex-direction: column;
+        align-items: center;
+        margin: auto 15px;
+    }
+
+    .dateTime-modal-trigger {
+        overflow: auto;
+    }
+}

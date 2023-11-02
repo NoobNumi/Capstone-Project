@@ -3,7 +3,7 @@
         <div class="confirm-modal-container">
         <i class="fa-solid fa-xmark close_confirm_modal" id="closeConfirmBtn"></i>
             <div class="confirm-modal-content">
-                <i class="fa-solid fa-circle-exclamation"></i>
+                <i class="fa-solid fa-circle-exclamation warning-icon"></i>
                 <span class="question-text">
                     Are you sure you want to cancel this appointment?
                 </span>

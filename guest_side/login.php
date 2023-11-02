@@ -1,43 +1,76 @@
 <?php
-session_name("user_session");
-session_start();
 require_once("../connection.php");
 $invalid = 0;
-$no_user = 0;
-error_reporting(E_ALL);
 
-    if (isset($_POST['submit'])) {
-        $email = $_POST['email'];
-        $password = $_POST['password'];
-        $query = $conn->prepare("SELECT * FROM `users` WHERE email = ?");
+if (isset($_POST['submit'])) {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    session_name("admin_session"); 
+    session_start();
+
+    $query = $conn->prepare("SELECT * FROM `admin` WHERE admin_email = ?");
+    $query->bindValue(1, $email);
+    $query->execute();
+    $adminRow = $query->fetch(PDO::FETCH_ASSOC);
+
+    if ($adminRow && password_verify($password, $adminRow['admin_password'])) {
+        echo '<script>console.log("Logged in as Admin");</script>';
+        $_SESSION['admin_id'] = $adminRow['admin_id'];
+        header('location: ../admin-side/admin_home.php');
+        exit();
+    } else {
+        session_destroy();
+
+        session_name("assistant_manager_session");
+        session_start();
+
+        $query = $conn->prepare("SELECT * FROM `assistant_manager` WHERE assist_email = ?");
         $query->bindValue(1, $email);
         $query->execute();
-        $row = $query->fetch(PDO::FETCH_ASSOC);
-        if ($query->rowCount() > 0) {
+        $assistantRow = $query->fetch(PDO::FETCH_ASSOC);
 
-            if ($row && password_verify($password, $row['password'])) {
-                $_SESSION['user_id'] = $row['user_id'];
-                header('location:index.php');
+        if ($assistantRow && password_verify($password, $assistantRow['assist_password'])) {
+            echo '<script>console.log("Logged in as Assistant Manager");</script>';
+            $_SESSION['asst_id'] = $assistantRow['asst_id'];
+            header('location: ../admin-side/admin_home.php');
+            exit();
+        } else {
+            session_destroy();
+
+            session_name("user_session");
+            session_start();
+
+            $query = $conn->prepare("SELECT * FROM `users` WHERE email = ?");
+            $query->bindValue(1, $email);
+            $query->execute();
+            $userRow = $query->fetch(PDO::FETCH_ASSOC);
+            
+            if ($userRow && password_verify($password, $userRow['password'])) {
+                echo '<script>console.log("Logged in as Regular User");</script>';
+                $_SESSION['user_id'] = $userRow['user_id'];
+                header('location: ../index.php');
+                exit();
             } else {
+                session_destroy();
+
+                session_name("no_user_session");
+                session_start();
+
                 $invalid = 1;
             }
-        } else {
-            $no_user = 1;
         }
     }
-    if ($invalid) {
-        echo '<div class="alert alert-danger warning" style="text-align:center; font-size: 1.2rem;">
-                    <strong><i class="fa-solid fa-triangle-exclamation" style="margin-right: 12px";></i>Incorrect e-mail or password!</strong>
-                </div>';
-    }
+}
 
-    if ($no_user) {
-        echo '<div class="alert alert-danger warning" style="text-align:center; font-size: 1.2rem;">
-                    <strong><i class="fa-solid fa-triangle-exclamation" style="margin-right: 12px";></i>No user found!</strong>
-                    </div>';
-    }
-
+if ($invalid) {
+    echo '<div class="alert alert-danger warning" style="text-align:center; font-size: 1.2rem;">
+                <strong><i class="fa-solid fa-triangle-exclamation" style="margin-right: 12px";></i>Incorrect e-mail or password!</strong>
+            </div>';
+}
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">

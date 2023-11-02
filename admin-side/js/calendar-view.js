@@ -1,114 +1,146 @@
-    console.log("calendar-view.js is executing");
+document.addEventListener("DOMContentLoaded", function () {
+    const dayNum = document.querySelector(".days-calendar");
+    const curDateNum = document.querySelector(".current-newDate");
+    const previousNextIcon = document.querySelectorAll(".icons button");
+    const dateFilterSelect = document.getElementById("filter-select");
 
-    document.addEventListener("DOMContentLoaded", function () {
-        const dayNum = document.querySelector(".days-calendar");
-        const curDateNum = document.querySelector(".current-newDate");
-        const previousNextIcon = document.querySelectorAll(".icons button");
-        const dateFilterSelect = document.querySelectorAll(".date-btn");
+    let currentYr = new Date().getFullYear();
+    let currentMth = new Date().getMonth() + 1;
+    let data;
 
-
-
-        dateFilterSelect.forEach(button => {
-            button.addEventListener("click", () => {
-              dateFilterSelect.forEach(btn => {
-                btn.classList.remove("active");
-              });
-          
-              button.classList.add("active");
-            });
-          });
+    const monthArray = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+    ];
 
 
-        let newDate = new Date();
-        let currentYr = newDate.getFullYear();
-        let currentMth = newDate.getMonth();
+    function renderCalendar() {
+        console.log('Rendering calendar with data:', data);
+        const firstDayOfMonth = new Date(currentYr, currentMth - 1, 1).getDay();
+        const lastDateOfMonth = new Date(currentYr, currentMth, 0).getDate();
+        const lastDayOfMonth = new Date(currentYr, currentMth - 1, lastDateOfMonth).getDay();
+        const lastDateOfLastMonth = new Date(currentYr, currentMth - 1, 0).getDate();
+        let liTag = "";
 
-        const monthArray = [
-            "January", "February", "March", "April", "May", "June",
-            "July", "August", "September", "October", "November", "December"
-        ];
-
-        function renderCalendar() {
-            console.log("Render calendar");
-            const firstDayOfMonth = new Date(currentYr, currentMth, 1).getDay();
-            const lastDateOfMonth = new Date(currentYr, currentMth + 1, 0).getDate();
-            const lastDayOfMonth = new Date(currentYr, currentMth, lastDateOfMonth).getDay();
-            const lastDateOfLastMonth = new Date(currentYr, currentMth, 0).getDate();
-            let liTag = "";
-        
-            for (let i = firstDayOfMonth; i > 0; i--) {
-                liTag += `<li class="inactive">
-                            <div class="day-num">${lastDateOfLastMonth - i + 1}</div>
-                            <div class="color-coding">
-                                <span class="color-guide reserve">
-                                    <i class="fa-solid fa-clipboard-list reserve-con"></i>
-                                    Reserves
-                                    <div class="total-list-count">12</div>
-                                </span>
-                                <span class="color-guide appoint">
-                                    <i class="fa-solid fa-calendar-check appoint-con"></i>
-                                    Appoints
-                                </span>
-                            </div>
-                        </li>`;
-            }
-        
-            for (let i = 1; i <= lastDateOfMonth; i++) {
-                const isToday = i === newDate.getDate() && currentMth === new Date().getMonth() && currentYr === new Date().getFullYear() ? "active" : "";
-                liTag += `<li class="${isToday}">
-                            <div class="day-num">${i}</div>
-                            <div class="color-coding">
-                                <span class="color-guide reserve">
-                                    <i class="fa-solid fa-clipboard-list reserve-con"></i>
-                                    Reserves
-                                    <div class="total-list-count">12</div>
-                                </span>
-                                <span class="color-guide appoint">
-                                    <i class="fa-solid fa-calendar-check appoint-con"></i>
-                                    Appoints
-                                </span>
-                            </div>
-                        </li>`;
-            }
-        
-            for (let i = lastDayOfMonth; i < 6; i++) {
-                liTag += `<li class="inactive">
-                            <div class="day-num">${i - lastDayOfMonth + 1}</div>
-                            <div class="color-coding">
-                                <span class="color-guide reserve">
-                                    <i class="fa-solid fa-clipboard-list reserve-con"></i>
-                                    Reserves
-                                    <div class="total-list-count">12</div>
-                                </span>
-                                <span class="color-guide appoint">
-                                    <i class="fa-solid fa-calendar-check appoint-con"></i>
-                                    Appoints
-                                </span>
-                            </div>
-                        </li>`;
-            }
-        
-        
-            curDateNum.innerText = `${monthArray[currentMth]} ${currentYr}`;
-            dayNum.innerHTML = liTag;
+        for (let i = firstDayOfMonth; i > 0; i--) {
+            const dayNum = lastDateOfLastMonth - i + 1;
+            const dateKey = `${currentYr}-${currentMth - 1}-${dayNum < 10 ? '0' + dayNum : dayNum}`;
+            const appointCount = data[dateKey] ? data[dateKey]['appoint_count'] : 0;
+            const reserveCount = data[dateKey] ? data[dateKey]['reserve_count'] : 0;
+            liTag += `<li class="inactive">
+                <div class="day-num">${dayNum}</div>
+                <div class="color-coding">
+                    ${reserveCount > 0 ? `
+                        <span class="color-guide reserve">
+                            <i class="fa-solid fa-clipboard-list reserve-con"></i>
+                            Reserves
+                            <div class="total-list-count">${reserveCount}</div>
+                        </span>
+                    ` : ''}
+                    ${appointCount > 0 ? `
+                        <span class="color-guide appoint">
+                            <i class="fa-solid fa-calendar-check appoint-con"></i>
+                            Appoints
+                        </span>
+                    ` : ''}
+                </div>
+            </li>`;
         }
-        
 
-        renderCalendar();
+        for (let i = 1; i <= lastDateOfMonth; i++) {
+            const isToday = i === new Date().getDate() && currentMth === new Date().getMonth() + 1 && currentYr === new Date().getFullYear() ? "active" : "";
+            const dateKey = `${currentYr}-${currentMth}-${i < 10 ? '0' + i : i}`;
+            const appointCount = data[dateKey] ? data[dateKey]['appoint_count'] : 0;
+            const reserveCount = data[dateKey] ? data[dateKey]['reserve_count'] : 0;
+            liTag += `<li class="${isToday}">
+                <div class="day-num">${i}</div>
+                <div class="color-coding">
+                    ${reserveCount > 0 ? `
+                        <span class="color-guide reserve">
+                            <i class="fa-solid fa-clipboard-list reserve-con"></i>
+                            Reserves
+                            <div class="total-list-count">${reserveCount}</div>
+                        </span>
+                    ` : ''}
+                    ${appointCount > 0 ? `
+                        <span class="color-guide appoint">
+                            <i class="fa-solid fa-calendar-check appoint-con"></i>
+                            Appoints
+                        </span>
+                    ` : ''}
+                </div>
+            </li>`;
+        }
 
-        previousNextIcon.forEach(icon => {
-            icon.addEventListener("click", () => {
-                currentMth = icon.id === "prev" ? currentMth - 1 : currentMth + 1;
+        for (let i = lastDayOfMonth; i < 6; i++) {
+            const dayNum = i - lastDayOfMonth + 1;
+            const dateKey = `${currentYr}-${currentMth + 1}-${dayNum < 10 ? '0' + dayNum : dayNum}`;
+            const appointCount = data[dateKey] ? data[dateKey]['appoint_count'] : 0;
+            const reserveCount = data[dateKey] ? data[dateKey]['reserve_count'] : 0;
+            liTag += `<li class="inactive">
+                <div class="day-num">${dayNum}</div>
+                <div class="color-coding">
+                    ${reserveCount > 0 ? `
+                        <span class "color-guide reserve">
+                            <i class="fa-solid fa-clipboard-list reserve-con"></i>
+                            Reserves
+                            <div class="total-list-count">${reserveCount}</div>
+                        </span>
+                    ` : ''}
+                    ${appointCount > 0 ? `
+                        <span class="color-guide appoint">
+                            <i class="fa-solid fa-calendar-check appoint-con"></i>
+                            Appoints
+                        </span>
+                    ` : ''}
+                </div>
+            </li>`;
+        }
 
-                if (currentMth < 0 || currentMth > 11) {
-                    newDate = new Date(currentYr, currentMth, new Date().getDate());
-                    currentYr = newDate.getFullYear();
-                    currentMth = newDate.getMonth();
-                } else {
-                    newDate = new Date();
-                }
+        curDateNum.innerText = `${monthArray[currentMth - 1]} ${currentYr}`;
+        dayNum.innerHTML = liTag;
+    }
 
+    function fetchData(filter) {
+        fetch(`./month-sched-view-query.php?filter=${filter}`)
+            .then(response => response.json())
+            .then(calendarData => {
+                console.log('Fetched data:', calendarData);
+                data = calendarData;
                 renderCalendar();
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
             });
+    }
+
+    fetchData('all');
+
+    dateFilterSelect.addEventListener("change", () => {
+        console.log('Filter changed');
+        const selectedFilter = dateFilterSelect.value;
+        fetchData(selectedFilter);
+    });
+    
+
+    previousNextIcon.forEach(icon => {
+        icon.addEventListener("click", () => {
+            if (icon.id === "prev-btn") {
+                currentMth--;
+                if (currentMth < 1) {
+                    currentYr--;
+                    currentMth = 12;
+                }
+            } else {
+                currentMth++;
+                if (currentMth > 12) {
+                    currentYr++;
+                    currentMth = 1;
+                }
+                const filter = dateFilterSelect.value;
+                fetchData(filter);
+            }
+            renderCalendar();
         });
     });
+});

@@ -1,8 +1,11 @@
 <?php
-require_once("../connection.php");
-session_name("user_session");
-session_start();
+    require_once("../connection.php");
+    require_once("fetch_packages.php");
+    session_name("user_session");
+    session_start();
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,8 +28,10 @@ session_start();
 </head>
 
 <body style="overflow-x: hidden;">
-    <?php include("guest_navbar.php"); ?>
-
+    <?php
+        include("packages_modal.php");
+        include("guest_navbar.php");
+        ?>
     <section class="reception-reserve reserve">
         <div class="res-header">
             <h4 class="reservation-name">Reception </h4>
@@ -53,19 +58,19 @@ session_start();
         </ul>
         <div class="img-grid" id="photoArray">
             <div class="images">
-                <img src="../images/img10.jpg">
+                <img src="../images/img17.jpg">
+            </div>
+            <div class="images">
+                <img src="../images/IMG20230907154303.jpg">
+            </div>
+            <div class="images">
+                <img src="../images/img1.jpg">
             </div>
             <div class="images">
                 <img src="../images/img25.jpg">
             </div>
             <div class="images">
-                <img src="../images/img18.jpg">
-            </div>
-            <div class="images">
-                <img src="../images/img17.jpg">
-            </div>
-            <div class="images">
-                <img src="../images/img3.jpg">
+                <img src="../images/img9.jpg">
             </div>
         </div>
         <div class="img-carousel">
@@ -92,20 +97,57 @@ session_start();
                 <div class="package-list">
                     <div class="card-package">
                         <div class="left-side-package">
-                            <img src="/images/IMG20230907152614.jpg" alt="" class="package-image">
-                            <div class="reserve-btn-section">
-                                <button class="reserve-now">
-                                <i class="fa-solid fa-book-open"></i>Book now
-                                </button>
-                            </div>
-
+                            <img src="/images/catering_package.png" alt="" class="package-image" style="border-radius: 25px;">
                         </div>
                         <div class="right-side-package">
                             <div class="package-title">
                                 <div class="package-header">
-                                    <h5>Lunduyan Retreat Package</h5>
+                                    <h5>CATERING PACKAGE</h5>
                                 </div>
                             </div>
+                            <div class="ammenity-info">
+                                <?php
+                                    $cateringPackage = getPackageDetails('Catering Package');
+                                    if ($cateringPackage) {
+                                        echo '<p class="price">₱' . number_format($cateringPackage['price'], 2) . ' Per Venue</p>';
+                                        echo '<p class="package-description">' . $cateringPackage['description'] . '</p>';
+                                    }
+                                ?>
+                            </div>
+                            <div class="desktop-view-button">
+                                <a href="#" class="button-view-details" id="openCateringButton">Views Package Details</a>
+                            </div>
+                            <!-- <div class="responsive-package-buttons">
+                                <a href="#" onclick="openModal('cateringPackageModal')" class="button-view-details">View Package Details</a>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="card-package">
+                        <div class="left-side-package">
+                            <img src="../images/venue_package.png" alt="" class="package-image" style="border-radius: 25px;">
+                        </div>
+                        <div class="right-side-package">
+                            <div class="package-title">
+                                <div class="package-header">
+                                    <h5>VENUE-ONLY PACKAGE</h5>
+                                </div>
+                            </div>
+                            <div class="ammenity-info">
+                                <?php
+                                    $venuePackage = getPackageDetails('Venue-Only Package');
+                                    if ($venuePackage) {
+                                        echo '<p class="price">₱' . number_format($venuePackage['price'], 2) . ' Per Venue</p>';
+                                        echo '<p class="package-description">' . $venuePackage['description'] . '</p>';
+                                    }
+                                ?>
+                            </div>
+                            <div class="desktop-view-button">
+                                <a href="#" class="button-view-details" id="openVenueButton">View Package Details</a>
+                            </div>
+                                <!-- <div class="responsive-package-buttons">
+                                    <a href="#" onclick="openModal('venuePackageModal')" class="button-view-details">View Package Details</a>
+                                </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -115,4 +157,5 @@ session_start();
 
     <?php include("guest_footer.php"); ?>
     <script src="./js/services_photos.js"></script>
+    <script src="./js/package_modal.js"></script>
 </body>

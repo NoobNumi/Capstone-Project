@@ -23,7 +23,7 @@
 ?>
 <div class="guest-sidebar">
     <div class="logo-details">
-        <a href="index.php" class="logo" style="text-decoration: none;">
+        <a href="../index.php" class="logo" style="text-decoration: none;">
             <img class="logo-img" src="../images/logo_trinitas.png">
             <h1 class="logo-name">Trinitas</h1>
         </a>

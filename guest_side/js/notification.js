@@ -40,7 +40,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     
     function hideMessageCount() {
-        // Update the display based on the current page
         if (isIndexPage) {
             updateNavbarSideDisplay("none");
         } else {

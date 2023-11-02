@@ -56,7 +56,7 @@ $allAppointments = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="semi-navigation col">
                 <ul>
                     <li class="navigation-btn">
-                        <a href="index.php">
+                        <a href="../index.php">
                             <i class="fa-solid fa-house">
                                 <span class="tooltip-text">
                                     HOME

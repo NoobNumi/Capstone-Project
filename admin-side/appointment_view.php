@@ -1,11 +1,22 @@
 <?php
 session_name("admin_session");
 session_start();
-require_once("../connection.php");
-if (!isset($_SESSION['admin_id'])) {
-    header("location: admin_login.php");
-}
+if (isset($_SESSION['admin_id'])) {
+    require_once("../connection.php");
+    require "fetch_counts_query.php";
+} else {
+    session_destroy();
 
+    session_name("assistant_manager_session");
+    session_start();
+    if (isset($_SESSION['asst_id'])) {
+        require_once("../connection.php");
+        require "fetch_counts_query.php";
+    } else {
+        header("location: ../guest_side/login.php");
+        exit;
+    }
+}
 $appointmentId = '';
 
 try {
@@ -44,12 +55,12 @@ try {
 
 <body style="overflow-x: hidden;">
     <?php
-        include("./admin_sidebar.php");
-        include("./appointment_details_view.php");
-        include("./confirm_delete_modal.php");
-        require("logout_modal.php");
+    include("./admin_sidebar.php");
+    include("./appointment_details_view.php");
+    include("./confirm_delete_modal.php");
+    require("logout_modal.php");
     ?>
-    <section class="appointments-list">
+    <section class="appointments-list admin-sidebar-open">
         <div class="admin-appoint-header">
             <div class="right-section">
                 <h4 class="admin-title">Appointments</h4>
@@ -82,7 +93,7 @@ try {
 
                 if ($status === 'confirmed' || $status === 'pending' || $status === 'cancelled') {
                     $appointmentsExist = true;
-                    echo '<div class="notification-card searchable-card">';
+                    echo '<div class="notification-card appoint searchable-card">';
                     echo '<div class="first-section">';
                     echo '<img src="https://static.independent.co.uk/s3fs-public/thumbnails/image/2014/12/05/18/Ed-Sheeran.jpg">';
                     echo '<div class="guest-details-admin">';
@@ -136,10 +147,10 @@ try {
             ?>
         </div>
     </section>
-    <script src="./js/sidebar-animation.js"></script>
     <script>
         const appointmentList = document.querySelector('.appointments-list');
         appointmentList.scrollTop = 0;
+
         function scrollToBottom() {
             appointmentList.scrollTop = appointmentList.scrollHeight;
         }
@@ -148,6 +159,8 @@ try {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="./js/search_and_filter_appoint.js"></script>
     <script src="./js/users.js"></script>
+    <script src="./js/sidebar-closing.js"></script>
+    <script src="./js/sidebar-animation.js"></script>
     <!-- the appointment_details.js is where the javascript is -->
     <script src="./js/appointment_details.js"> </script>
 </body>

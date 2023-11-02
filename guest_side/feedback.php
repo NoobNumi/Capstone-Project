@@ -40,10 +40,8 @@ if (empty($feedbackText) || empty($rating)) {
             $userLastName = $user['last_name'];
             $userName = $userFirstName . ' ' . $userLastName;
 
-            // Set to 1 if switched to anonymous, 0 if not
             $isAnonymous = isset($_POST['anonymous']) ? 1 : 0; 
 
-            // Insert the feedback into the database along with the anonymous flag and timestamp
             $insertStmt = $pdo->prepare("INSERT INTO feedback (user_id, name, feedback_message, rating, anonymous, timestamp) VALUES (:user_id, :name, :feedback_message, :rating, :anonymous, :timestamp)");
             $insertStmt->bindParam(':user_id', $_SESSION['user_id']);
             $insertStmt->bindParam(':name', $userName);

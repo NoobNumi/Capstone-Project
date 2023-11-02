@@ -1,13 +1,24 @@
 <?php
 session_name("admin_session");
 session_start();
-require_once("../connection.php");
-if (!isset($_SESSION['admin_id'])) {
-    header("location: admin_login.php");
-}
+if (isset($_SESSION['admin_id'])) {
+    require_once("../connection.php");
+    require "fetch_counts_query.php";
+} else {
+    session_destroy();
 
-require "fetch_counts_query.php";
+    session_name("assistant_manager_session");
+    session_start();
+    if (isset($_SESSION['asst_id'])) {
+        require_once("../connection.php");
+        require "fetch_counts_query.php";
+    } else {
+        header("location: ../guest_side/login.php");
+        exit;
+    }
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -51,8 +62,11 @@ require "fetch_counts_query.php";
                     </p>
                 </a>
             </div>
-            <div class="col middle-col">
-                <a href="#">
+            <?php
+            if (isset($_SESSION['admin_id'])) {      
+            ?>
+            <div class="col first-col">
+                <a href="reservation-view.php">
                     <div class="container-header">
                         <span class="container-name">
                             Reservations
@@ -60,13 +74,22 @@ require "fetch_counts_query.php";
                         <i class="fa-solid fa-clipboard-list"></i>
                     </div>
                     <p class="total-number">
-                        18
+                        <?php echo $totalReservations; ?>
                     </p>
-                    <span class="sub-number">
-                        3
-                    </span>
+                    <?php if ($totalPendingReservations > 0) { ?>
+                        <div class="pending-services">
+                            <span class="sub-text">Pending:</span>
+                            <span class="sub-number">
+                                <?php echo $totalPendingReservations; ?>
+                            </span>
+                        </div>
+                    <?php } ?>
                 </a>
-            </div>
+                </div>
+            <?php } elseif (isset($_SESSION['asst_id'])) {
+                //SHOULD DISPLAY NONE
+            }
+            ?>
             <div class="col middle-col">
                 <a href="appointment_view.php">
                     <div class="container-header">
@@ -78,11 +101,18 @@ require "fetch_counts_query.php";
                     <p class="total-number">
                         <?php echo $appointmentCount; ?>
                     </p>
-                    <span class="sub-number">
-                        <?php echo $pendingAppointmentsCount; ?>
-                    </span>
+                    <?php if ($pendingAppointmentsCount > 0) { ?>
+                        <div class="pending-services">
+                            <span class="sub-text">Pending:</span>
+                            <span class="sub-number">
+                                <?php echo $pendingAppointmentsCount; ?>
+                            </span>
+                        </div>
+
+                    <?php } ?>
                 </a>
             </div>
+
             <div class="col middle-col">
                 <a href="#">
                     <div class="container-header">

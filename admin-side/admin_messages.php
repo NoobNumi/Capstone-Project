@@ -4,7 +4,7 @@ session_start();
 error_reporting(E_ALL);
 require_once("../connection.php");
 if (!isset($_SESSION['admin_id'])) {
-    header("location: admin_login.php");
+    header("location: ../guest_side/login.php");
     exit;
 }
 

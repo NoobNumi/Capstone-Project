@@ -1,5 +1,5 @@
 <?php
-    $currentPage = basename($_SERVER['PHP_SELF']);
+$currentPage = basename($_SERVER['PHP_SELF']);
 ?>
 
 <div class="admin-sidebar">
@@ -18,21 +18,29 @@
     <ul class="admin-navbar">
         <p class="menu-name">Menu</p>
         <li <?php echo ($currentPage === 'admin_home.php') ? 'class="active"' : ''; ?>>
-            <a href="admin_home.php?admin_id=<?php echo $_SESSION['admin_id']; ?>">
+            <a href="admin_home.php?<?php echo isset($_SESSION['admin_id']) ? 'admin_id=' . $_SESSION['admin_id'] : 'asst_id=' . $_SESSION['asst_id']; ?>">
                 <i class="fa-regular fa-compass"></i>
                 <span class="links-names" style="margin-left: -3px;">Dashboard</span>
             </a>
         </li>
-        <li <?php echo ($currentPage === 'admin_messages.php') ? 'class="active"' : ''; ?>>
-            <a href="admin_messages.php?admin_id=<?php echo $_SESSION['admin_id']; ?>">
-                <i class="fa-regular fa-message"></i>
-                <span class="count-color"> </span>
-                <span class="links-names">Messages</span>
-                <span class="notif-count" id="unread-count"></span>
+        <?php if(isset($_SESSION['admin_id'])): ?>
+            <li <?php echo ($currentPage === 'admin_messages.php') ? 'class="active"' : ''; ?>>
+                <a href="admin_messages.php?admin_id=<?php echo $_SESSION['admin_id']; ?>">
+                    <i class="fa-regular fa-message"></i>
+                    <span class="count-color"> </span>
+                    <span class="links-names">Messages</span>
+                    <span class="notif-count" id="unread-count"></span>
+                </a>
+            </li>
+        <?php endif; ?>
+        <li <?php echo ($currentPage === 'post.php') ? 'class="active"' : ''; ?>>
+            <a href="post.php?<?php echo isset($_SESSION['admin_id']) ? 'admin_id='.$_SESSION['admin_id'] : 'asst_id='.$_SESSION['asst_id']; ?>">
+                <i class="fa-regular fa-pen-to-square"></i>
+                <span class="links-names" style="margin-left: 3px">Post</span>
             </a>
         </li>
         <li <?php echo ($currentPage === 'calendar.php') ? 'class="active"' : ''; ?>>
-            <a href="calendar.php?admin_id=<?php echo $_SESSION['admin_id']; ?>">
+            <a href="calendar.php?<?php echo isset($_SESSION['admin_id']) ? 'admin_id='.$_SESSION['admin_id'] : 'asst_id='.$_SESSION['asst_id']; ?>">
                 <i class="fa-regular fa-calendar"></i>
                 <span class="links-names" style="margin-left: 3px">Calendar</span>
             </a>
@@ -44,12 +52,21 @@
             </a>
         </li>
         <li class="admin-profile">
-            <div class="admin-profile-details">
-                <img src="../images/nun.png">
-                <span class="guest-name">
-                    Admin
-                </span>
-            </div>
+            <?php if(isset($_SESSION['admin_id'])): ?>
+                <div class="admin-profile-details">
+                    <img src="../images/nun.png">
+                    <span class="guest-name">
+                        Admin
+                    </span>
+                </div>
+            <?php elseif(isset($_SESSION['asst_id'])): ?>
+                <div class="admin-profile-details">
+                    <img src="../images/assist_nun.png">
+                    <span class="guest-name">
+                        Assistant
+                    </span>
+                </div>
+            <?php endif; ?>
             <span class="material-symbols-outlined logout" id="logout_click">
                 logout
             </span>
