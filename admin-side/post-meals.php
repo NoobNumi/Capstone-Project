@@ -53,6 +53,7 @@ try {
     <?php
     include "./admin_sidebar.php";
     include "./meal-view.php";
+    include "./add-meal.php";
     ?>
 
     <section class="post-meals">

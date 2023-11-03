@@ -2924,7 +2924,8 @@ section.reviews {
 }
 
 /* ------------------------------------------------ MEAL VIEW MODAL -------------------------------------------- */
-.meal-view-modal {
+.meal-view-modal,
+.add-meal-section {
     height: 100vh;
     width: 100%;
     align-items: center;
@@ -2935,7 +2936,8 @@ section.reviews {
     position: absolute;
 }
 
-.meal-view-header{
+.meal-view-header,
+.add-meal-header{
     display: flex;
     width: 100%;
 }
@@ -2946,12 +2948,14 @@ section.reviews {
     font-size: 20px;
 }
 
-.meal-view-header .close-button-details{
+.meal-view-header .close-button-details
+.add-meal-header .close-button-details{
     cursor: pointer;
     font-size: 20px;
 }
 
-.meal-view-container {
+.meal-view-container,
+.add-meal-modal {
     background-color: #fff;
     width: 30%;
     padding: 10px 14px;
@@ -2962,19 +2966,22 @@ section.reviews {
     justify-content: center;
 }
 
-.meal-view-content{
+.meal-view-content,
+.add-meal-content{
     width: 100%;
     flex-direction: column;
     justify-content: space-between;
 }
 
-.meal-view-center {
+.meal-view-center,
+.add-meal-center {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
 }
 
+.add-meal-center img,
 .meal-view-center img {
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
@@ -2999,6 +3006,7 @@ section.reviews {
     cursor: pointer;
 }
 
+.add-meal-center i,
 .meal-view-center i {
     display: flex;
     align-items: end;
@@ -3006,12 +3014,29 @@ section.reviews {
     font-size: 40px;
     color: #fff;
 }
+
+.add-meal-image{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+    height: 50px;
+    background-color: #f7cc00;
+    margin-bottom: 10px;
+    color: #303030;
+    font-weight: 600;
+    border-radius: 10px
+}
+
 .input-details-view{
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-.edit-meal-details{
+.edit-meal-details,
+.add-meal-details{
     margin-top: 20px;
     display: flex;
     flex-direction: column;
@@ -3035,8 +3060,17 @@ section.reviews {
     gap: 10px;
 }
 
+.add-button{
+    text-align: center;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    font-size: 14px;
+}
+
 .option-buttons .save-btn,
-.option-buttons .del-btn{
+.option-buttons .del-btn,
+.add-button{
     width: 100%;
     border: none;
     outline: none;
@@ -3046,12 +3080,15 @@ section.reviews {
     font-weight: 600;
 }
 
-.option-buttons .save-btn{
+.option-buttons .save-btn,
+.add-button{
     background-color: #235789;
     color: #fff;
+    text-align: center;
 }
 
-.option-buttons .save-btn:hover{
+.option-buttons .save-btn:hover,
+.add-button:hover{
     background-color: #14324e;
     transition: 0.5s ease;
 }

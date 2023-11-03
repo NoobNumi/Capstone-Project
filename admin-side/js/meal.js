@@ -38,10 +38,10 @@ $(document).ready(function () {
         form.removeClass('update-meal-form');
         form.addClass('delete-meal-form');
         const mealId = $(this).data('meal-id');
-        
+
         deleteMeal(mealId);
     });
-    
+
 
     function showModal() {
         $('.meal-view-modal').css('display', 'flex');
@@ -86,12 +86,12 @@ $(document).ready(function () {
         const formData = new FormData(form[0]);
         console.log('Form Data:', formData);
         const imageInput = document.getElementById('imageInput');
-    
+
         if (form.hasClass('update-meal-form')) {
             if (imageInput.files.length > 0) {
                 formData.append('meal_image', imageInput.files[0]);
             }
-    
+
             $.ajax({
                 url: form.attr('action'),
                 type: 'POST',
@@ -105,7 +105,7 @@ $(document).ready(function () {
                         title: 'Success',
                         text: 'Meal successfully updated',
                         icon: 'success',
-                        timer: 3000
+                        timer: 2500
                     }).then(() => {
                         location.reload();
                     });
@@ -120,7 +120,7 @@ $(document).ready(function () {
         }
     });
 
-    
+
     function deleteMeal(mealId) {
         Swal.fire({
             title: 'Confirm Deletion',
@@ -143,7 +143,7 @@ $(document).ready(function () {
                                 text: 'The meal has been deleted.',
                                 icon: 'success',
                                 showConfirmButton: false,
-                                timer: 5000
+                                timer: 2500
                             }).then(() => {
                                 location.reload();
                                 hideModal();
@@ -160,6 +160,40 @@ $(document).ready(function () {
             }
         });
     }
-    
 
+
+    $('.add-btn').click(function () {
+        $('input[name="meal_name"]').val('');
+        $('.add-meal-section').css('display', 'flex');
+        $('.add-meal-section').css('position', 'fixed');
+        $('body').css('overflow', 'hidden');
+
+        populateCategorySelect();
+
+    });
+
+    $('#close_addButton').click(function () {
+        $('.add-meal-section').css('display', 'none');
+        $('body').css('overflow-y', 'auto');
+
+        populateCategorySelect();
+
+    });
+
+    function populateCategorySelect() {
+        const categorySelect = document.querySelector('select[name="category_add_id"]');
+        categorySelect.innerHTML = '';
+
+        fetch('fetch_categories.php')
+            .then(response => response.json())
+            .then(categories => {
+                categories.forEach(category => {
+                    const option = document.createElement('option');
+                    option.value = category.mealCat_id;
+                    option.text = category.mealCat_name;
+                    categorySelect.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Error fetching categories:', error));
+    }
 });
