@@ -321,7 +321,7 @@ section.admin-dashboard {
 
 .row-cols-2 {
     left: 185px;
-    width: calc(100% - 160px);
+    width: calc(100% - 139px);
 }
 
 
@@ -362,7 +362,7 @@ section.admin-dashboard {
     color: #235789;
 }
 
-.pending-services{
+.pending-services {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -1335,7 +1335,7 @@ button.btn-admin-login:hover {
     overflow: hidden;
 }
 
-.admin-sidebar .reserve-appoint-header{
+.admin-sidebar .reserve-appoint-header {
     left: 87px;
     width: calc(100% - 97px);
 }
@@ -1394,7 +1394,7 @@ button.btn-admin-login:hover {
     border-radius: 10px;
 }
 
-.post-meals .meal-table{
+.post-meals .meal-table {
     width: inherit;
     background-color: #ffff;
     padding: 10px 14px;
@@ -1403,20 +1403,21 @@ button.btn-admin-login:hover {
 }
 
 
-.meal-table tr{
+.meal-table tr {
     display: flex;
     align-items: center;
     justify-content: center;
     height: 50px;
 }
 
-.meal-table td, th{
+.meal-table td,
+th {
     width: 100%;
     display: flex;
     align-items: center;
     text-align: center;
     justify-content: center;
-    
+
 }
 
 .search-bar-admin input {
@@ -1426,6 +1427,7 @@ button.btn-admin-login:hover {
     width: inherit;
     font-size: 16px;
 }
+
 .admin-appoint-header .left-section,
 .reserve-appoint-header .left-section {
     display: flex;
@@ -1438,7 +1440,7 @@ button.btn-admin-login:hover {
     width: 100%;
 }
 
-.admin-meal-header .left-section{
+.admin-meal-header .left-section {
     display: flex;
     flex-direction: row;
     align-items: baseline;
@@ -1449,7 +1451,7 @@ button.btn-admin-login:hover {
     width: auto;
 }
 
-.left-section .add-btn{
+.left-section .add-btn {
     width: 100px;
     height: 30px;
     border: none;
@@ -1523,7 +1525,7 @@ button.btn-admin-login:hover {
     width: auto;
 }
 
-.reservations-list .second-section{
+.reservations-list .second-section {
     left: 200px;
     display: flex;
     align-items: center;
@@ -1533,7 +1535,7 @@ button.btn-admin-login:hover {
     gap: 10px;
 }
 
-.second-section .section-content{
+.second-section .section-content {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     width: 100%;
@@ -1556,7 +1558,8 @@ button.btn-admin-login:hover {
 
 .appoint-details .date,
 .reservation-details .date,
-.price, .service {
+.price,
+.service {
     font-weight: 500;
     font-size: 16px;
 }
@@ -1616,7 +1619,7 @@ span.status.cancelled {
     color: #fff;
 }
 
-.view-btn{
+.view-btn {
     background-color: #235789;
     border-radius: 35px;
     cursor: pointer;
@@ -1670,7 +1673,7 @@ span.status.cancelled {
         width: 100%;
     }
 
-    .appointments-list .notification-list{
+    .appointments-list .notification-list {
         display: flex;
         width: 100%;
         overflow-y: auto;
@@ -1708,14 +1711,14 @@ span.status.cancelled {
         margin: 15px 0 15px 0;
     }
 
-    .reservations-list .second-section{    
+    .reservations-list .second-section {
         display: flex;
         flex-direction: row;
         gap: 12px;
         left: 0;
     }
 
-    .second-section .section-content{
+    .second-section .section-content {
         grid-template-columns: 1fr 1fr;
         gap: 20px;
     }
@@ -1732,7 +1735,7 @@ span.status.cancelled {
 
     .date,
     .service,
-    .price{
+    .price {
         font-size: 14px;
     }
 
@@ -1769,23 +1772,23 @@ span.status.cancelled {
 
 @media screen and (max-width: 768px) {
 
-    section.appointments-list{
+    section.appointments-list {
         left: 100px;
         width: calc(100%-67px);
         position: relative;
     }
 
     section.reservations-list,
-    .post-meals{
+    .post-meals {
         left: 64px;
         width: calc(100% - 93px);
     }
 
-    .post-meals .admin-meal-header{
+    .post-meals .admin-meal-header {
         flex-direction: column;
     }
 
-    .admin-meal-header .left-section{
+    .admin-meal-header .left-section {
         width: 100%;
         justify-content: space-between;
     }
@@ -1805,11 +1808,11 @@ span.status.cancelled {
 
     }
 
-    .reservations-list .notification-card{
+    .reservations-list .notification-card {
         width: 100%;
     }
 
-    .reservations-list .second-section{
+    .reservations-list .second-section {
         margin: 40px 0;
         grid-template-columns: 2fr 1fr;
     }
@@ -1820,7 +1823,8 @@ span.status.cancelled {
     .service {
         font-size: 13px;
     }
-    .second-section .section-content{
+
+    .second-section .section-content {
         grid-template-columns: 1fr 1fr;
         gap: 20px;
     }
@@ -1835,26 +1839,26 @@ span.status.cancelled {
         /* overflow: hidden; */
         overflow-y: scroll;
     }
-    
 
-    .meal-table tbody{
+
+    .meal-table tbody {
         overflow-x: auto;
         max-width: 523px;
         padding: 10px 14px;
         width: 1000px;
     }
 
-    .meal-table tr th{
+    .meal-table tr th {
         font-size: 14px;
     }
 
-    .meal-table tr td{
+    .meal-table tr td {
         flex-wrap: nowrap;
-        font-size: 14px ;
+        font-size: 14px;
         /* white-space: nowrap; */
     }
 
-    .view-btn{
+    .view-btn {
         width: 50px;
         height: 25px;
         display: inline;
@@ -2150,32 +2154,33 @@ header .current-date {
 }
 
 
-.sched-calendar-view .filtering{
+.sched-calendar-view .filtering {
     display: flex;
     gap: 10px;
 }
 
-.filtering .date-btn{
-    cursor: pointer;;
+.filtering .date-btn {
+    cursor: pointer;
+    ;
     padding: 10px;
     border-radius: 10px;
     transition: 0.5s ease;
 }
 
-.sched-calendar-view .icons{
+.sched-calendar-view .icons {
     display: flex;
     gap: 10px;
-    align-items: center ;
+    align-items: center;
 }
 
 
-.sched-calendar-view .icons button{
+.sched-calendar-view .icons button {
     border: none;
     outline: none;
     background-color: transparent;
 }
 
-.date-btn.active{
+.date-btn.active {
     background-color: #ffcc5f;
 }
 
@@ -2249,17 +2254,18 @@ header .current-date {
     display: flex;
     flex-direction: column;
 }
-.no-service-text{
+
+.no-service-text {
     padding: 10px 7px 14px;
     list-style: none;
 }
 
-.no-service-text p{
+.no-service-text p {
     background-color: white;
     color: #6f6f6f;
 }
 
-.important-details .record-type{
+.important-details .record-type {
     font-size: 15px;
     font-weight: 400;
     color: #235789;
@@ -2328,17 +2334,18 @@ header .current-date {
     flex-flow: column;
 }
 
-p.current-newDate{
+p.current-newDate {
     font-weight: 600;
     font-size: 17px;
 }
-.days-calendar li .day-num{
+
+.days-calendar li .day-num {
     width: 100%;
     display: flex;
     justify-content: end;
 }
 
-.color-coding .color-guide{
+.color-coding .color-guide {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -2346,24 +2353,24 @@ p.current-newDate{
     gap: 10px;
     padding: 0 5px;
     height: 20px;
-    width: 100% ;
+    width: 100%;
     border-radius: 5px;
 }
 
-.color-coding{
+.color-coding {
     display: flex;
     flex-direction: column;
     width: 100%;
     gap: 3px;
 }
 
-.color-coding .reserve{
-    display: flex;    
+.color-coding .reserve {
+    display: flex;
     background-color: #a2b0f8;
     color: #303030;
 }
 
-.color-coding .appoint{
+.color-coding .appoint {
     background-color: #fed86b;
 }
 
@@ -2687,7 +2694,7 @@ section.reviews {
 /* -------------------------------------------- ADMIN AND RESERVATION DETAILS VIEW -------------------------------------------------------- */
 
 
-.appointment-details-view{
+.appointment-details-view {
     display: none;
     align-items: center;
     height: 100vh;
@@ -2699,8 +2706,8 @@ section.reviews {
 
 }
 
-.reservation-details-view{
-    display: none; 
+.reservation-details-view {
+    display: none;
     align-items: center;
     height: 100vh;
     width: 100%;
@@ -2730,6 +2737,7 @@ section.reviews {
     justify-content: end;
     font-size: 20px;
 }
+
 .reservation-details-content-header,
 .appointment-details-content-header {
     display: flex;
@@ -2755,12 +2763,12 @@ section.reviews {
     margin-bottom: 30px;
 }
 
-.guest-pfp{
+.guest-pfp {
     width: 70px;
     height: 70px;
 }
 
-.reservation-details-content  .section-three,
+.reservation-details-content .section-three,
 .appointment-details-content .section-three {
     margin-bottom: 30px;
     display: flex;
@@ -2797,33 +2805,34 @@ section.reviews {
 }
 
 .appointment-stat i.fa-clock,
-.reservation-stat i.fa-clock{
+.reservation-stat i.fa-clock {
     color: #f0ac1b;
 }
 
 .appointment-stat i.fa-circle-check,
-.reservation-stat i.fa-circle-check{
+.reservation-stat i.fa-circle-check {
     color: #69B756;
 }
 
 .appointment-stat i.fa-ban,
-.reservation-stat i.fa-ban{
+.reservation-stat i.fa-ban {
     color: #f73b3b;
 }
 
 
 @media screen and (max-width: 768px) {
+
     .reservation-details-modal,
     .appointment-details-modal {
         width: 90%
     }
 
-    .reservation-details-content .section-two{
+    .reservation-details-content .section-two {
         display: grid;
         align-items: center;
         grid-template-columns: 2fr 1fr;
         gap: 10px;
-    }   
+    }
 
 }
 
@@ -2856,13 +2865,13 @@ section.reviews {
     font-size: 20px;
 }
 
-.warning-icon{
+.warning-icon {
     color: #f73b3b;
     font-size: 50px;
     margin: 20px 0;
 }
 
-.question-text{
+.question-text {
     font-size: 20px;
     font-weight: 600;
     text-align: center;
@@ -2937,19 +2946,18 @@ section.reviews {
 }
 
 .meal-view-header,
-.add-meal-header{
+.add-meal-header {
     display: flex;
     width: 100%;
 }
 
-.edit-details{
+.edit-details {
     white-space: nowrap;
     font-weight: 600;
     font-size: 20px;
 }
 
-.meal-view-header .close-button-details
-.add-meal-header .close-button-details{
+.meal-view-header .close-button-details .add-meal-header .close-button-details {
     cursor: pointer;
     font-size: 20px;
 }
@@ -2967,7 +2975,7 @@ section.reviews {
 }
 
 .meal-view-content,
-.add-meal-content{
+.add-meal-content {
     width: 100%;
     flex-direction: column;
     justify-content: space-between;
@@ -3015,7 +3023,7 @@ section.reviews {
     color: #fff;
 }
 
-.add-meal-image{
+.add-meal-image {
     width: 100%;
     display: flex;
     align-items: center;
@@ -3030,37 +3038,39 @@ section.reviews {
     border-radius: 10px
 }
 
-.input-details-view{
+.input-details-view {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
+
 .edit-meal-details,
-.add-meal-details{
+.add-meal-details {
     margin-top: 20px;
     display: flex;
     flex-direction: column;
     width: 70%;
 }
 
-.input-details-view input{
+.input-details-view input {
     border: none;
     outline: none;
     background-color: #e0e0e0;
 }
-.input-details-view select{
+
+.input-details-view select {
     width: 36%;
 }
 
 .input-details-view input,
 .input-details-view select,
 .option-buttons .save-btn,
-.option-buttons .del-btn{
+.option-buttons .del-btn {
     padding: 10px 13px;
     gap: 10px;
 }
 
-.add-button{
+.add-button {
     text-align: center;
     align-items: center;
     display: flex;
@@ -3070,7 +3080,7 @@ section.reviews {
 
 .option-buttons .save-btn,
 .option-buttons .del-btn,
-.add-button{
+.add-button {
     width: 100%;
     border: none;
     outline: none;
@@ -3081,25 +3091,670 @@ section.reviews {
 }
 
 .option-buttons .save-btn,
-.add-button{
+.add-button {
     background-color: #235789;
     color: #fff;
     text-align: center;
 }
 
 .option-buttons .save-btn:hover,
-.add-button:hover{
+.add-button:hover {
     background-color: #14324e;
     transition: 0.5s ease;
 }
 
-.option-buttons .del-btn:hover{
+.option-buttons .del-btn:hover {
     background-color: #c20114;
     color: #fff;
     transition: 0.5s ease;
 }
 
-.edit-meal-details .option-buttons{
+.edit-meal-details .option-buttons {
     width: 100%;
     display: flex;
+}
+
+/* ------------------------------------------------------ NOTIFICATION PART -------------------------------------------- */
+.notification-open {
+    display: flex;
+    align-items: end;
+    justify-content: start;
+    /* width: 100%; */
+    padding-left: 20px;
+    position: fixed;
+    right: 2%;
+    height: 100vh;
+    flex-direction: column;
+    z-index: 999;
+}
+
+.notif-bar {
+    background-color: #fff;
+    padding: 10px 14px;
+    width: 380px;
+    border-radius: 10px;
+    height: 85%;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+    display: none;
+}
+
+.notif-bar-btn {
+    font-size: 20px;
+    border: none;
+    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    color: #ffff;
+    background-color: #235789;
+    cursor: pointer;
+    border-radius: 50%;
+    margin-top: 10px;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.notif-bar-header,
+.notif-types {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 20px 14px;
+    width: auto;
+}
+
+.notif-types {
+    font-size: 15px;
+    letter-spacing: -0.5px;
+}
+
+.notif-bar-header h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0;
+}
+
+.notif-bar-header span {
+    color: #235789;
+    cursor: pointer;
+}
+
+.notif-types .notif-name {
+    cursor: pointer;
+    width: auto;
+    max-width: 100px;
+}
+
+.notif-name-slider {
+    position: absolute;
+    top: 22%;
+    width: 100px;
+    height: 2px;
+    background-color: #4A66F4;
+    transform-origin: 0 0;
+    transition: transform .25s;
+}
+
+.time-period {
+    font-size: 14px;
+    color: #303030;
+    font-weight: 600;
+    margin: 10px 14px;
+    width: 100%
+}
+
+.notification-list {
+    list-style: none;
+    margin: 10px;
+    overflow-y: auto;
+    height: 500px;
+    padding-left: 0;
+}
+
+.notif-details {
+    display: flex;
+    padding: 10px;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.notif-details:hover {
+    background-color: #e3e3e3;
+    transition: 0.5s ease;
+}
+
+.notif-details img {
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+}
+
+.notif-left-side {
+    display: flex;
+    align-items: flex-start;
+    width: 180px;
+    gap: 10px;
+}
+
+.notifier-name {
+    font-weight: 700;
+}
+
+.notif-about {
+    flex-wrap: wrap;
+    font-size: 14px;
+}
+
+.unread-dot {
+    color: #235789;
+    display: inline-block;
+    background-color: #235789;
+    height: 10px;
+    width: 10px;
+    padding: 5px;
+    margin-right: 15px;
+    border-radius: 50%;
+}
+
+.notif-number {
+    margin-top: 5px;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    right: 17px;
+    font-size: 13px;
+    width: 15px;
+    height: 13px;
+    padding: 12px;
+    border-radius: 50%;
+    background-color: #F76C6C;
+    color: #ffff;
+    font-weight: 600;
+    transition: opacity 0.5s ease;
+    position: fixed;
+    z-index: 999;
+}
+
+@media screen and (max-width: 768px) {
+
+    .notification-open{
+        top: 0;
+    }
+    .notif-number{
+        right: 2px;
+    }
+
+    .notif-bar {
+        height: 100%;
+    }
+
+    .notification-list {
+        height: 570px;
+    }
+    .notif-name-slider{
+        top: 24%;
+    }
+}
+
+/* ---------------------------------------------- POSTING ANNOUNCEMENTS --------------------------------------------- */
+
+section.announcements {
+    padding: 20px 300px 20px 300px;
+}
+
+.posts span {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    cursor: pointer;
+}
+
+.post-img img {
+    object-fit: cover;
+    object-position: center;
+    cursor: pointer;
+}
+
+.posted {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.posted p {
+    color: gray;
+    font-size: 12px;
+}
+
+.profile-settings {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.post-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.post-actions p {
+    font-size: 14px;
+}
+
+.post-react,
+.post-comment,
+.post-share {
+    display: flex;
+    gap: 5px;
+    cursor: pointer;
+}
+
+#like_react {
+    font-variation-settings:
+        'FILL' 0,
+        'wght' 700,
+        'GRAD' 200,
+        'opsz' 48
+}
+
+#like_react.clicked {
+    color: #ef5656;
+    font-variation-settings:
+        'FILL' 1,
+        'wght' 700,
+        'GRAD' 200,
+        'opsz' 48
+}
+
+.comment-details {
+    display: flex;
+    gap: 5px;
+}
+
+.comment-line,
+.comment-details {
+    display: none;
+}
+
+.comment-details img {
+    width: 40px;
+    height: 40px;
+}
+
+.comment-field {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.comment-field textarea {
+    outline: none;
+    border: none;
+    width: 100%;
+    resize: none;
+}
+
+.comment-field {
+    border: 1px solid #cdcdce;
+    width: 100vw;
+}
+
+.send_comment {
+    color: #235789;
+    cursor: pointer;
+}
+
+.reach-bottom-text p {
+    color: #a2a2a3;
+    padding: 50px;
+    font-size: 14px;
+    text-align: center;
+}
+
+
+.posts {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.posts h1 {
+    font-weight: 600;
+    font-size: 25px;
+    margin-top: 20px;
+}
+
+.post-card {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 20px;
+}
+
+.post-img {
+    display: flex;
+    margin-top: 20px;
+    gap: 5px;
+}
+
+.post-card hr {
+    margin: 20px 0 20px 0;
+
+}
+
+.share-post-modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+}
+
+.share-modal-main {
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+}
+
+
+.share-button-container {
+    border-radius: 20px;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    list-style: none;
+    padding: 20px;
+    width: 25%;
+    overflow: hidden;
+}
+
+.share-button-container ul {
+    padding-left: 0;
+}
+
+
+.share-actions-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.share-actions-top p.close {
+    font-size: 29px;
+    cursor: pointer;
+}
+
+.share-post-modal li {
+    cursor: pointer;
+    display: flex;
+    justify-content: left;
+    padding: 20px;
+    gap: 10px;
+}
+
+li.social-media-share {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+li.social-media-share i {
+    padding: 20px;
+    border-radius: 50%;
+}
+
+li.social-media-share i.fa-facebook {
+    color: #fff;
+    background-color: #1778F2;
+}
+
+li.social-media-share i.fa-twitter {
+    color: #fff;
+    background-color: #1c9ceb;
+}
+
+li.social-media-share i.fa-instagram {
+    color: #fff;
+    background: #f09433;
+    background: -moz-linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    background: -webkit-linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f09433', endColorstr='#bc1888', GradientType=1);
+}
+
+li.social-media-share i.fa-tiktok {
+    color: #fff;
+    background-color: black;
+}
+
+li.social-media-share i:hover {
+    transform: scale(1.1) translateY(-1px);
+    transition: all 0.5s;
+}
+
+li.copy-clipboard {
+    display: flex;
+    justify-content: center;
+    transition: all 0.3s;
+    border-radius: 10px;
+}
+
+li.copy-clipboard:hover {
+    color: #fff;
+    background-color: #235789;
+}
+
+.create-post{
+    display: none;
+    justify-content: center;
+    width: 100%;
+    height: 100vh;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    position: absolute;
+}
+.create-post-modal{
+    width: 30%;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.create-post-modal header{
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    display: flex;
+    margin-bottom: 14px;
+    gap: 12px;
+    
+}
+
+.create-post-modal .create-title{
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.create-post-modal header .fa-xmark{
+    cursor: pointer;
+}
+
+.post-container {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: 10px;
+    background-color: #fff;
+    padding: 10px 14px;
+    margin: 10px 0;
+    border-radius: 10px;
+    height: 100px;
+    cursor: pointer;
+}
+
+
+.dummy-input {
+    background-color: #ededed;
+    padding: 10px 14px;
+    border-radius: 10px;
+    width: 100%;
+    cursor: pointer;
+}
+
+.dummy-input input {
+    border: none;
+    outline: none;
+    background-color: transparent;
+    width: 100%;
+    cursor: pointer;
+}
+
+.create-post-form{
+    position: relative;
+}
+
+.create-post-form .profile-pic img{
+    height: 40px;
+    width: 40px;
+}
+
+
+.create-post-button,
+.create-post-button .btn-view{
+    width: 100%;
+}
+
+.create-post-button .btn-view{
+    border: none;
+    outline: none;
+    height: 35px;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: 600;
+    background-color: #235789;
+}
+
+.create-post-button .btn-view:hover{
+    transition: 0.5s ease;
+    background-color: #142f49;
+}
+
+
+.create-post-form textarea{
+    width: 100%;
+    margin-top: 10px;
+    border-radius: 10px;
+    padding: 10px 14px;
+    border: none;
+    outline: none;
+    background-color: #ededed;
+    font-size: 14px;
+}
+
+.photo-display-all{
+    height: 200px;
+    overflow-y: auto;
+    display: none;
+}
+
+:is(.photo-display-all)::-webkit-scrollbar {
+    width: 0px;
+}
+
+
+
+.photo-container{
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 5px;
+}
+
+.photo-container i{
+    position: relative;
+    background-color: #303030;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    color: #ffff;
+    border-radius: 50%;
+    justify-content: center;
+    cursor: pointer;
+    top: 32px;
+}
+
+.photo-container img{
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+    background-size: cover;
+    background-position: center;
+    height: 150px;
+    border-radius: 10px;
+}
+
+.add-photos{
+    width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+    margin-bottom: 5px;
+    font-size: 13px;
+    white-space: nowrap;
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background-color: #ededed;
+    position: relative;
+    cursor: pointer;
+}
+
+
+@media only screen and (max-width: 1066px) {
+    section.announcements {
+        padding: unset;
+
+    }
+
+    .posts {
+        margin-top: 10px;
+        padding: 10px;
+    }
+
+    .post-card {
+        background-color: #fff;
+        border-radius: 0;
+    }
+
+
+}
+
+@media screen and (max-width: 768px) {
+
+    .create-post-modal{
+        width: 60%;
+    }
+    section.announcements {
+        left: 65px;
+        position: relative;
+        width: 81%;
+        top: 54px;
+
+    }
 }

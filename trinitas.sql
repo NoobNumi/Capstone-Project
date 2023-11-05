@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 02, 2023 at 07:53 AM
+-- Generation Time: Nov 05, 2023 at 09:17 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -72,6 +72,55 @@ INSERT INTO `amenities` (`amenity_id`, `amenity_name`, `amenity_icon`) VALUES
 (13, 'Free Parking in Premises', 'fa-solid fa-car-side'),
 (14, 'Gazebo', 'fa-solid fa-house'),
 (15, 'Other Guest may be here', 'fa-solid fa-people-group');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `announcements`
+--
+
+CREATE TABLE `announcements` (
+  `announcement_id` int(255) NOT NULL,
+  `post_content` text NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `is_read` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `announcement_comment`
+--
+
+CREATE TABLE `announcement_comment` (
+  `announcement_comment_id` int(11) NOT NULL,
+  `announcement_id` int(11) NOT NULL,
+  `comment` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `announcement_image`
+--
+
+CREATE TABLE `announcement_image` (
+  `announce_img_id` int(11) NOT NULL,
+  `announcement_id` int(11) NOT NULL,
+  `img_url_path` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `announcement_react`
+--
+
+CREATE TABLE `announcement_react` (
+  `announcement_react_id` int(11) NOT NULL,
+  `announcement_id` int(11) NOT NULL,
+  `react_value` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -152,22 +201,24 @@ CREATE TABLE `appointment_record` (
   `appoint_sched_date` varchar(100) NOT NULL,
   `appoint_sched_time` varchar(1000) NOT NULL,
   `appoint_description` text NOT NULL,
-  `appoint_status` enum('pending','confirmed','cancelled') NOT NULL
+  `appoint_status` enum('pending','confirmed','cancelled') NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `is_read` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `appointment_record`
 --
 
-INSERT INTO `appointment_record` (`appoint_id`, `user_id`, `first_name`, `last_name`, `street_add`, `city_municipality`, `province`, `postal_code`, `contact_no`, `appoint_sched_date`, `appoint_sched_time`, `appoint_description`, `appoint_status`) VALUES
-(1001, 10001, 'Ed', 'Sheeran', 'New York Street', 'Legazpi', 'Albay', 5403, '09123456789', 'October 27 2023', '4:00 PM', 'testing only', 'confirmed'),
-(1002, 10001, 'Taylor', ' Swift', 'Batungbakal Street', 'New York', 'New York', 5403, '123456', 'October 19 2023', '4:00 PM', 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sint exercitationem a dolore dolores libero, aut corporis alias consequuntur dolorem dignissimos pariatur atque consequatur, sunt voluptate earum laborum distinctio maiores eius!', 'confirmed'),
-(1003, 10001, 'Satoru', 'Gojo', 'Street di matirhan', 'Legazpi', 'Masbate', 5403, '09123455667', 'October 31 2023', '4:00 PM', 'para sa pag test lang heheheheheheheheheheheheeheheheheheheheheheheheheheheheheheheheheh', 'cancelled'),
-(1004, 10005, 'Enn', 'Numi', 'Batungbakal Street', 'Dimasalang', 'Masbate', 1234, '0912345677889', 'October 1 2023', '4:00 PM', 'Test', 'confirmed'),
-(1005, 10005, 'Juan', 'Dela Cruz', 'Street di matirhan', 'sassas', 'sasA', 0, 'sasas', 'October 27 2023', '4:00 PM', 'The quick brown fox jumps over the lazy dog heheheeheh heheheheh eheheheh heeehe ehdkhsd hehjdy 8cdgh eThe qyic shjad  dthsdb sdysidb dysai ncdy fiufaufdd iffuis dafnej ruci dthe quick brown fox jumps over the lazy dog hehehe dii pa dintapos hays brownout pa talaga nubayan hays jusko jaaaaaaaaaaaaaa', 'confirmed'),
-(1006, 10005, 'Hello ', 'World', 'New York Street', 'Legazpi', 'Albay', 1234, '09123456789', 'October 27 2023', '4:00 PM', '121323434444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444443535 33333333333333333333345666 555555555555555555555554 53333333333335 4353333333333 46546 65466666666666666665', 'cancelled'),
-(1008, 1001, 'Human', 'Being', 'National Road Street', 'Masbate', 'Masbate', 54086, '09123', 'October 20 2023', '4:00 PM', 'Test', 'cancelled'),
-(1009, 10005, 'Pedro', 'Dela Cruz', 'Batungbakal Street', 'Legazpi', 'Albay', 5403, '0912345677889', 'October 27 2023', '4:00 PM', 'wala lang ', 'confirmed');
+INSERT INTO `appointment_record` (`appoint_id`, `user_id`, `first_name`, `last_name`, `street_add`, `city_municipality`, `province`, `postal_code`, `contact_no`, `appoint_sched_date`, `appoint_sched_time`, `appoint_description`, `appoint_status`, `timestamp`, `is_read`) VALUES
+(1001, 10001, 'Ed', 'Sheeran', 'New York Street', 'Legazpi', 'Albay', 5403, '09123456789', 'October 27 2023', '4:00 PM', 'testing only', 'confirmed', '2023-11-03 12:23:12', 0),
+(1002, 10001, 'Taylor', ' Swift', 'Batungbakal Street', 'New York', 'New York', 5403, '123456', 'October 19 2023', '4:00 PM', 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sint exercitationem a dolore dolores libero, aut corporis alias consequuntur dolorem dignissimos pariatur atque consequatur, sunt voluptate earum laborum distinctio maiores eius!', 'confirmed', '2023-11-03 12:23:12', 0),
+(1003, 10001, 'Satoru', 'Gojo', 'Street di matirhan', 'Legazpi', 'Masbate', 5403, '09123455667', 'October 31 2023', '4:00 PM', 'para sa pag test lang heheheheheheheheheheheheeheheheheheheheheheheheheheheheheheheheheh', 'cancelled', '2023-11-03 12:23:12', 0),
+(1004, 10005, 'Enn', 'Numi', 'Batungbakal Street', 'Dimasalang', 'Masbate', 1234, '0912345677889', 'October 1 2023', '4:00 PM', 'Test', 'confirmed', '2023-11-03 12:23:12', 0),
+(1005, 10005, 'Juan', 'Dela Cruz', 'Street di matirhan', 'sassas', 'sasA', 0, 'sasas', 'October 27 2023', '4:00 PM', 'The quick brown fox jumps over the lazy dog heheheeheh heheheheh eheheheh heeehe ehdkhsd hehjdy 8cdgh eThe qyic shjad  dthsdb sdysidb dysai ncdy fiufaufdd iffuis dafnej ruci dthe quick brown fox jumps over the lazy dog hehehe dii pa dintapos hays brownout pa talaga nubayan hays jusko jaaaaaaaaaaaaaa', 'confirmed', '2023-11-03 12:23:12', 0),
+(1006, 10005, 'Hello ', 'World', 'New York Street', 'Legazpi', 'Albay', 1234, '09123456789', 'October 27 2023', '4:00 PM', '121323434444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444443535 33333333333333333333345666 555555555555555555555554 53333333333335 4353333333333 46546 65466666666666666665', 'cancelled', '2023-11-03 12:23:12', 0),
+(1008, 1001, 'Human', 'Being', 'National Road Street', 'Masbate', 'Masbate', 54086, '09123', 'October 20 2023', '4:00 PM', 'Test', 'cancelled', '2023-11-03 12:23:12', 0),
+(1009, 10005, 'Pedro', 'Dela Cruz', 'Batungbakal Street', 'Legazpi', 'Albay', 5403, '0912345677889', 'October 27 2023', '4:00 PM', 'wala lang ', 'confirmed', '2023-11-03 12:23:12', 0);
 
 -- --------------------------------------------------------
 
@@ -251,7 +302,9 @@ CREATE TABLE `feedback` (
 
 INSERT INTO `feedback` (`feedback_id`, `user_id`, `name`, `feedback_message`, `rating`, `anonymous`, `timestamp`) VALUES
 (1, 10001, 'testing_only test', 'Oks lang', 'Bad', '', '2023-10-20 02:25:02'),
-(2, 10005, 'Enn Numi', 'Ayoko na po', '2', '1', '2023-10-19 20:25:09');
+(2, 10005, 'Enn Numi', 'Ayoko na po', '2', '1', '2023-10-19 20:25:09'),
+(3, 10006, 'Mafuyu Asaina', 'too many bugs\r\n', '1', '1', '2023-11-03 02:26:33'),
+(4, 10006, 'Mafuyu Asaina', 'the h button wont work my name is spelled incorrectly\r\n', '1', '0', '2023-11-03 02:29:11');
 
 -- --------------------------------------------------------
 
@@ -270,7 +323,6 @@ CREATE TABLE `meals` (
 --
 
 INSERT INTO `meals` (`meal_id`, `meal_name`, `meal_img_path`) VALUES
-(1, 'Chicken and Mushroom Soup', '../uploads/BF_chicken_mushroom.jpg'),
 (2, 'Crab and Corn Soup', '/images/Meal_Photos/Breakfast/BF_Crab_Corn.jpg'),
 (3, 'Egg Soup', '/images/Meal_Photos/Breakfast/BF_Egg_Soup.jpg'),
 (4, 'Italian Pasta', '/images/Meal_Photos/Breakfast/BF_Italian Pasta.jpg'),
@@ -280,14 +332,18 @@ INSERT INTO `meals` (`meal_id`, `meal_name`, `meal_img_path`) VALUES
 (8, 'Pork Stir Fry with Mushroom', '/images/Meal_Photos/Lunch_Dinner/PorkStirwMushroom.jpg'),
 (10, 'Honey Glazed Chicken', '/images/Meal_Photos/Lunch_Dinner/HoneyGlazedChicken.jpg'),
 (11, 'Korean Chicken with Sesame Seeds', '/images/Meal_Photos/Lunch_Dinner/LD_KoreanwSesame.jpg'),
-(12, 'Fried Chicken', '/images/Meal_Photos/Lunch_Dinner/FriedChicken.jpg'),
 (13, 'Fish Fillet with White Sauce', '/images/Meal_Photos/Lunch_Dinner/LD_fish_whiteSouce.jpg'),
 (17, 'Mixed Vegetables with Butter', '/images/Meal_Photos/Lunch_Dinner/LD_MixedVegiesWButter.jpg'),
 (18, 'Stir Fry Mixed Vegetables with Oyster Sauce', '/images/Meal_Photos/Lunch_Dinner/MixedVegetableWOyster.jpg'),
-(19, 'Pako Salad', '/images/Meal_Photos/Lunch_Dinner/LD_PakoSalad.jpg'),
 (20, 'Mango Pudding', '/images/Meal_Photos/Dessert/DS_manggo_pudding.jpg'),
 (23, 'Iced Tea', '/images/Meal_Photos/Drinks/DK_Iced_tea.jpg'),
-(24, 'Cucumber Lemonade', '../uploads/DK_Cucumber.jpg');
+(25, 'Tapioca', '../uploads/DS_Tapioca2.jpg'),
+(27, 'Lumpiang', '../uploads/LD_Lumpia.jpg'),
+(29, 'Cucumber Lemonade', '../uploads/CucumberLemonade.jpeg'),
+(30, 'Chopsuey', '../uploads/Chopsuey.jpg'),
+(31, 'Fish Fillet with Lemon', '../uploads/LD_FishwLemon.jpg'),
+(32, 'Sweet and sour fish', '../uploads/6543cc8f3953d_LD_FishSweetSour.jpg'),
+(40, 'Buko Pandan', '../uploads/654418eaa2d3f_DS_Buko_Pandan.jpg');
 
 -- --------------------------------------------------------
 
@@ -327,7 +383,6 @@ CREATE TABLE `meal_sets` (
 --
 
 INSERT INTO `meal_sets` (`mealCat_id`, `meal_id`) VALUES
-(1, 1),
 (1, 2),
 (1, 3),
 (1, 4),
@@ -337,23 +392,29 @@ INSERT INTO `meal_sets` (`mealCat_id`, `meal_id`) VALUES
 (2, 8),
 (2, 10),
 (2, 11),
-(1, 12),
 (2, 13),
 (2, 17),
 (2, 18),
-(1, 19),
 (4, 23),
-(4, 24),
 (3, 7),
 (3, 8),
 (3, 10),
 (3, 11),
-(1, 12),
 (3, 13),
 (3, 17),
 (3, 18),
-(1, 19),
-(5, 20);
+(5, 20),
+(5, 25),
+(5, 26),
+(2, 27),
+(4, 29),
+(2, 30),
+(2, 31),
+(2, 32),
+(3, 34),
+(3, 35),
+(3, 36),
+(5, 40);
 
 -- --------------------------------------------------------
 
@@ -522,7 +583,16 @@ INSERT INTO `messages` (`message_id`, `sender_id`, `receiver_id`, `message`, `im
 (143, 10005, 1, '', '../uploads/653b7036d3769_WIN_20231027_16_09_04_Pro.jpg', '2023-10-27 08:09:26', 1, 0),
 (144, 1, 10005, 'aWlpaWg=', '', '2023-10-27 08:10:46', 1, 1),
 (145, 1, 10005, 'aWk=', '', '2023-10-27 08:13:47', 1, 1),
-(146, 10005, 1, 'aGVubG8=', '', '2023-11-01 03:08:06', 1, 0);
+(146, 10005, 1, 'aGVubG8=', '', '2023-11-01 03:08:06', 1, 0),
+(147, 10006, 1, 'ZWxsb3A=', '', '2023-11-03 09:25:13', 1, 0),
+(148, 10006, 1, 'ZWxsbw==', '', '2023-11-03 09:25:18', 1, 0),
+(149, 10006, 1, 'aGVsbG8=', '', '2023-11-03 09:25:23', 1, 0),
+(150, 10006, 1, 'aSB3b3VsZCBsaWtlIHR5byBhcHBvaW10Zw==', '', '2023-11-03 09:25:31', 1, 0),
+(151, 10006, 1, 'aSB3b3B1bGQgbGlrZSB0byByZW41IHRoZSBmaXI1c3p0IHBpYyBtcGxvenp6', '', '2023-11-03 09:25:47', 1, 0),
+(152, 10006, 1, '', '../uploads/6544bce38a7b5_DS_Tapioca_1.jpg', '2023-11-03 09:26:59', 1, 0),
+(153, 10006, 1, 'aSB3b3VsO2QgbGlrZSB0byByZXNlZXJ2ZSAgYSByb29tIHBsZWFzZQ==', '', '2023-11-03 09:28:24', 1, 0),
+(154, 10006, 1, 'dHlubXgg', '', '2023-11-03 09:28:26', 1, 0),
+(155, 10006, 1, 'dGhueA==', '', '2023-11-03 09:28:28', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -650,16 +720,18 @@ CREATE TABLE `reception_reservation_record` (
   `payment_method` enum('Pay-on-Site','GCash') NOT NULL,
   `payment_option` enum('Pay Full','Pay Half') DEFAULT NULL,
   `proof_of_payment` varchar(255) DEFAULT NULL,
-  `status` enum('pending','confirmed','cancelled','') NOT NULL
+  `status` enum('pending','confirmed','cancelled','') NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `is_read` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `reception_reservation_record`
 --
 
-INSERT INTO `reception_reservation_record` (`reception_id`, `user_id`, `first_name`, `last_name`, `street_add`, `city_municipality`, `province`, `postal_code`, `contact_no`, `check_in`, `check_out`, `price`, `payment_method`, `payment_option`, `proof_of_payment`, `status`) VALUES
-(1, 10005, 'Monkey', 'Luffy', 'P1', 'Pilar', 'Sorsogon', 4355, '091234578604', 'October 1 2023', 'October 26 2023', 4800, 'Pay-on-Site', '', NULL, 'confirmed'),
-(2, 10005, 'Satoru', 'Gojo', 'Tokyo', 'Japan', 'Japan', 1232, '09090391', 'October 3 2023', 'November 30 2023', 12323, 'GCash', '', 'cute me', 'pending');
+INSERT INTO `reception_reservation_record` (`reception_id`, `user_id`, `first_name`, `last_name`, `street_add`, `city_municipality`, `province`, `postal_code`, `contact_no`, `check_in`, `check_out`, `price`, `payment_method`, `payment_option`, `proof_of_payment`, `status`, `timestamp`, `is_read`) VALUES
+(1, 10005, 'Monkey', 'Luffy', 'P1', 'Pilar', 'Sorsogon', 4355, '091234578604', 'October 1 2023', 'October 26 2023', 4800, 'Pay-on-Site', '', NULL, 'confirmed', '2023-11-01 12:28:04', 0),
+(2, 10005, 'Satoru', 'Gojo', 'Tokyo', 'Japan', 'Japan', 1232, '09090391', 'October 3 2023', 'November 30 2023', 12323, 'GCash', '', 'cute me', 'confirmed', '2023-11-05 07:43:32', 0);
 
 -- --------------------------------------------------------
 
@@ -685,15 +757,17 @@ CREATE TABLE `recollection_reservation_record` (
   `payment_method` enum('Pay-on-Site','GCash') NOT NULL,
   `payment_option` enum('Pay Full','Pay Half') DEFAULT NULL,
   `proof_of_payment` varchar(255) DEFAULT NULL,
-  `status` enum('pending','confirmed','cancelled','') NOT NULL
+  `status` enum('pending','confirmed','cancelled','') NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `is_read` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `recollection_reservation_record`
 --
 
-INSERT INTO `recollection_reservation_record` (`recollection_id`, `user_id`, `first_name`, `last_name`, `street_add`, `city_municipality`, `province`, `postal_code`, `contact_no`, `guest_count`, `check_in`, `check_out`, `catering`, `price`, `payment_method`, `payment_option`, `proof_of_payment`, `status`) VALUES
-(1, 10005, 'Juan', 'Dela Cruz', 'Legazpi street', 'Legazpi City', 'Albay', 12342, '091234243', 12, 'November 2 2023', 'November 24 2023', 'Yes', 12000, '', '', 'image.png', 'confirmed');
+INSERT INTO `recollection_reservation_record` (`recollection_id`, `user_id`, `first_name`, `last_name`, `street_add`, `city_municipality`, `province`, `postal_code`, `contact_no`, `guest_count`, `check_in`, `check_out`, `catering`, `price`, `payment_method`, `payment_option`, `proof_of_payment`, `status`, `timestamp`, `is_read`) VALUES
+(1, 10005, 'Juan', 'Dela Cruz', 'Legazpi street', 'Legazpi City', 'Albay', 12342, '091234243', 12, 'November 2 2023', 'November 24 2023', 'Yes', 12000, '', '', 'image.png', 'confirmed', '2023-11-03 12:25:08', 0);
 
 -- --------------------------------------------------------
 
@@ -736,8 +810,17 @@ CREATE TABLE `retreat_reservation_record` (
   `payment_method` enum('Pay-on-Site','GCash') NOT NULL,
   `payment_option` enum('pay_full','pay_half') DEFAULT NULL,
   `proof_of_payment` varchar(255) DEFAULT NULL,
-  `status` enum('pending','confirmed','cancelled','') NOT NULL
+  `status` enum('pending','confirmed','cancelled','') NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `is_read` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `retreat_reservation_record`
+--
+
+INSERT INTO `retreat_reservation_record` (`retreat_id`, `user_id`, `first_name`, `last_name`, `street_add`, `city_municipality`, `province`, `postal_code`, `contact_no`, `guest_count`, `check_in`, `check_out`, `room_type`, `catering`, `price`, `payment_method`, `payment_option`, `proof_of_payment`, `status`, `timestamp`, `is_read`) VALUES
+(1, 10005, 'Jose', 'Rizal', 'Test Address', 'Dunno hehe', 'Masbate', 2123, '09123345678', 5, 'November 3 2023', 'November 6 2023', 'Lunduyan', 'No', 12000, 'GCash', 'pay_half', 'images', 'confirmed', '2023-11-04 13:03:17', 0);
 
 -- --------------------------------------------------------
 
@@ -776,15 +859,17 @@ CREATE TABLE `seminar_reservation_record` (
   `payment_method` enum('Pay-on_Site','GCash') NOT NULL,
   `payment_option` enum('Pay Full','Pay half') DEFAULT NULL,
   `proof_of_payment` varchar(255) DEFAULT NULL,
-  `status` enum('pending','confirmed','cancelled','') NOT NULL
+  `status` enum('pending','confirmed','cancelled','') NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `is_read` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `seminar_reservation_record`
 --
 
-INSERT INTO `seminar_reservation_record` (`seminar_id`, `user_id`, `last_name`, `first_name`, `street_add`, `province`, `city_municipality`, `postal_code`, `contact_no`, `guest_count`, `check_in`, `check_out`, `catering`, `price`, `payment_method`, `payment_option`, `proof_of_payment`, `status`) VALUES
-(1, 10003, 'Villamin', 'Niña Gillian', 'National Road St.', 'Masbate', 'Dimasalang', 3243, '091234578604', 3, 'November 15 2023', 'October 24 2023', 'Yes', 14400, '', NULL, NULL, 'confirmed');
+INSERT INTO `seminar_reservation_record` (`seminar_id`, `user_id`, `last_name`, `first_name`, `street_add`, `province`, `city_municipality`, `postal_code`, `contact_no`, `guest_count`, `check_in`, `check_out`, `catering`, `price`, `payment_method`, `payment_option`, `proof_of_payment`, `status`, `timestamp`, `is_read`) VALUES
+(1, 10003, 'Villamin', 'Niña Gillian', 'National Road St.', 'Masbate', 'Dimasalang', 3243, '091234578604', 3, 'November 15 2023', 'October 24 2023', 'Yes', 14400, '', NULL, NULL, 'confirmed', '2023-11-03 12:29:54', 0);
 
 -- --------------------------------------------------------
 
@@ -863,7 +948,9 @@ CREATE TABLE `training_reservation_record` (
   `payment_option` enum('Pay Full','Pay Half') DEFAULT NULL,
   `proof_of_payment` varchar(255) DEFAULT NULL,
   `reportId` int(11) NOT NULL,
-  `status` enum('pending','confirmed','cancelled','') NOT NULL
+  `status` enum('pending','confirmed','cancelled','') NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `is_read` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -888,7 +975,8 @@ INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `email`, `password`) 
 (10001, 'Nina Gillian', 'Villamin', 'nin@mail.com', '$2y$10$xkv9QC.aL5iHYrygOUoOT.zTYETdKlzaVUdIUUNCR8ueP7ZLCwbXe'),
 (10002, 'Satoru', 'Gojo', 'gojo@email.com', '$2y$10$2n61M2RneGq9n8K5.v2H/uiZmcQYtfUR/3kb9eU8s9ubdjhzAXhlC'),
 (10003, 'Crissa', 'Olavario', 'crissa@email.com', '$2y$10$tkD/QbBiSwaMZJJo6eQ8XOS9PP30c7lLut3D5N1PsG6TBIidxORFO'),
-(10005, 'Enn', 'Numi', 'numinum1128@gmail.com', '$2y$10$zZ00VRhHPA7M1z2do.g4ue9Ze0U666LZm0tXNzEYk0REINIOFuBOK');
+(10005, 'Enn', 'Numi', 'numinum1128@gmail.com', '$2y$10$zZ00VRhHPA7M1z2do.g4ue9Ze0U666LZm0tXNzEYk0REINIOFuBOK'),
+(10006, 'Mafuyu', 'Asaina', 'mafuyu@gmail.com', '$2y$10$oFNQRVU1DyW4X0k2dmBxa.qK34UBzziv7BFALIY/f9lfz8qzoymHK');
 
 --
 -- Indexes for dumped tables
@@ -905,6 +993,25 @@ ALTER TABLE `admin`
 --
 ALTER TABLE `amenities`
   ADD PRIMARY KEY (`amenity_id`);
+
+--
+-- Indexes for table `announcements`
+--
+ALTER TABLE `announcements`
+  ADD PRIMARY KEY (`announcement_id`);
+
+--
+-- Indexes for table `announcement_comment`
+--
+ALTER TABLE `announcement_comment`
+  ADD PRIMARY KEY (`announcement_comment_id`);
+
+--
+-- Indexes for table `announcement_image`
+--
+ALTER TABLE `announcement_image`
+  ADD PRIMARY KEY (`announce_img_id`),
+  ADD KEY `announcement_image_ibfk_1` (`announcement_id`);
 
 --
 -- Indexes for table `appoinment_report`
@@ -1091,6 +1198,24 @@ ALTER TABLE `amenities`
   MODIFY `amenity_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
+-- AUTO_INCREMENT for table `announcements`
+--
+ALTER TABLE `announcements`
+  MODIFY `announcement_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `announcement_comment`
+--
+ALTER TABLE `announcement_comment`
+  MODIFY `announcement_comment_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `announcement_image`
+--
+ALTER TABLE `announcement_image`
+  MODIFY `announce_img_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `appoinment_report`
 --
 ALTER TABLE `appoinment_report`
@@ -1130,13 +1255,13 @@ ALTER TABLE `category_descriptions`
 -- AUTO_INCREMENT for table `feedback`
 --
 ALTER TABLE `feedback`
-  MODIFY `feedback_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `feedback_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `meals`
 --
 ALTER TABLE `meals`
-  MODIFY `meal_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `meal_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `meal_category`
@@ -1148,7 +1273,7 @@ ALTER TABLE `meal_category`
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=147;
+  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=156;
 
 --
 -- AUTO_INCREMENT for table `packages`
@@ -1184,7 +1309,7 @@ ALTER TABLE `reservation_report`
 -- AUTO_INCREMENT for table `retreat_reservation_record`
 --
 ALTER TABLE `retreat_reservation_record`
-  MODIFY `retreat_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `retreat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `sales_report`
@@ -1214,11 +1339,17 @@ ALTER TABLE `training_reservation_record`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10006;
+  MODIFY `user_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10007;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `announcement_image`
+--
+ALTER TABLE `announcement_image`
+  ADD CONSTRAINT `announcement_image_ibfk_1` FOREIGN KEY (`announcement_id`) REFERENCES `announcements` (`announcement_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `appoinment_report`

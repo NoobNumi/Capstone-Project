@@ -1,8 +1,8 @@
 <?php
 session_name("admin_session");
 session_start();
+require_once("../connection.php");
 if (isset($_SESSION['admin_id'])) {
-    require_once("../connection.php");
     require "fetch_counts_query.php";
 } else {
     session_destroy();
@@ -10,7 +10,6 @@ if (isset($_SESSION['admin_id'])) {
     session_name("assistant_manager_session");
     session_start();
     if (isset($_SESSION['asst_id'])) {
-        require_once("../connection.php");
         require "fetch_counts_query.php";
     } else {
         header("location: ../guest_side/login.php");
@@ -38,6 +37,7 @@ if (isset($_SESSION['admin_id'])) {
     <?php
     include("add-sched-modal.php");
     include("admin_sidebar.php");
+    include("notification-bar.php");
     ?>
     <section class="admin-dashboard">
         <div class="charts">
@@ -153,8 +153,8 @@ if (isset($_SESSION['admin_id'])) {
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script src="./js/charts.js"></script>
 <script src="./js/sidebar-animation.js"></script>
+<script src="./js/sidebar-closing.js"></script>
+<script src="./js/notification-bar.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
-
-
 </html>

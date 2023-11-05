@@ -95,7 +95,7 @@ if (isset($_SESSION['admin_id'])) {
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="post-announcements.php">
                     <i class="fa-solid fa-bullhorn"></i>
                     <span>Announcements</span>
                 </a>
