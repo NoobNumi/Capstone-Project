@@ -9,18 +9,81 @@ if (!isset($_SESSION['admin_id'])) {
 $reservationType = '';
 
 try {
-    $sql = "SELECT * FROM (
-                SELECT reception_id AS res_id, 'reception' AS type, first_name, last_name, check_in AS date_time, status, price FROM reception_reservation_record
-                UNION ALL
-                SELECT recollection_id, 'recollection', first_name, last_name, check_in, status, price FROM recollection_reservation_record
-                UNION ALL
-                SELECT retreat_id, 'retreat', first_name, last_name, check_in, status, price FROM retreat_reservation_record
-                UNION ALL
-                SELECT seminar_id, 'seminar', first_name, last_name, check_in, status, price FROM seminar_reservation_record
-                UNION ALL
-                SELECT training_id, 'training', first_name, last_name, check_in, status, price FROM training_reservation_record
-            ) AS all_reservations
-            ORDER BY STR_TO_DATE(date_time, '%M %d %Y') DESC";
+    $sql = "SELECT 
+                r.reception_id AS res_id, 
+                r.user_id, 
+                r.first_name, 
+                r.last_name, 
+                u.profile_picture, 
+                r.check_in, 
+                r.status, 
+                r.price, 
+                'reception' AS type 
+            FROM reception_reservation_record r
+            JOIN users u ON r.user_id = u.user_id
+
+            UNION ALL
+
+            SELECT 
+                r.recollection_id AS res_id, 
+                r.user_id, 
+                r.first_name, 
+                r.last_name, 
+                u.profile_picture, 
+                r.check_in, 
+                r.status, 
+                r.price, 
+                'recollection' 
+            FROM recollection_reservation_record r
+            JOIN users u ON r.user_id = u.user_id
+
+            UNION ALL
+
+            SELECT 
+                r.retreat_id AS res_id, 
+                r.user_id, 
+                r.first_name, 
+                r.last_name, 
+                u.profile_picture, 
+                r.check_in, 
+                r.status, 
+                r.price, 
+                'retreat' 
+            FROM retreat_reservation_record r
+            JOIN users u ON r.user_id = u.user_id
+
+            UNION ALL
+
+            SELECT 
+                r.seminar_id AS res_id, 
+                r.user_id, 
+                r.first_name, 
+                r.last_name, 
+                u.profile_picture, 
+                r.check_in, 
+                r.status, 
+                r.price, 
+                'seminar' 
+            FROM seminar_reservation_record r
+            JOIN users u ON r.user_id = u.user_id
+
+            UNION ALL
+
+            SELECT 
+                r.training_id AS res_id, 
+                r.user_id, 
+                r.first_name, 
+                r.last_name, 
+                u.profile_picture, 
+                r.check_in, 
+                r.status, 
+                r.price, 
+                'training' 
+            FROM training_reservation_record r
+            JOIN users u ON r.user_id = u.user_id
+
+            ORDER BY STR_TO_DATE(check_in, '%M %d %Y') DESC";
+
     $result = $conn->query($sql);
 } catch (PDOException $e) {
     die("Error fetching data: " . $e->getMessage());
@@ -97,13 +160,14 @@ try {
                 $reservationType = $row['type'];
                 $userName = $row["first_name"] . " " . $row["last_name"];
                 $status = $row["status"];
-                $dateTime = $row["date_time"];
+                $dateTime = $row["check_in"];
                 $price = $row["price"];
+                $profilePicture = $row["profile_picture"];
 
                 $reservationsExist = true;
                 echo '<div class="notification-card reserve searchable-card">';
                 echo '<div class="first-section">';
-                echo '<img src="https://static.independent.co.uk/s3fs-public/thumbnails/image/2014/12/05/18/Ed-Sheeran.jpg">';
+                echo '<img src="../guest_side/' . $profilePicture . '" alt="Profile Picture">';
                 echo '<div class="guest-details-admin">';
                 echo '<span class="guest">' . $userName . '</span>';
                 echo '<span class="status ' . $status . '" data-status="' . $status . '">';

@@ -63,10 +63,7 @@
                     </label>
                 </div>
                 <div class="reserve-flex">
-                    <label>
-                        <input required="" placeholder="" type="text" class="input" name="contact_no">
-                        <span>Meal</span>
-                    </label>
+                   <a href="select_package.php" class="btn-discover reserve">Proceed</a>
                 </div>
             </form>
         </div>

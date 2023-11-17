@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 05, 2023 at 09:17 AM
+-- Generation Time: Nov 17, 2023 at 03:03 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -61,8 +61,8 @@ INSERT INTO `amenities` (`amenity_id`, `amenity_name`, `amenity_icon`) VALUES
 (2, '9 Single Beds per Room', 'fa-solid fa-bed'),
 (3, '2 Single Beds per Room\r\n(3 Rooms)', 'fa-solid fa-bed'),
 (4, '1 Single Bed (1 Room)', 'fa-solid fa-bed'),
-(5, 'Aircon', 'fa-solid fa-air-conditioner'),
-(6, 'Electric Fan', 'fa-solid fa-air-conditioner'),
+(5, 'Aircon', 'fa-solid fa-wind'),
+(6, 'Electric Fan', 'fa-solid fa-fan'),
 (7, 'Chapel Venue', 'fa-solid fa-church'),
 (8, 'Trinitas Venue', 'fa-solid fa-church'),
 (9, 'Comfort Room', 'fa-solid fa-restroom'),
@@ -180,7 +180,11 @@ INSERT INTO `appointment_availability` (`available_appoint_id`, `date`, `time_sl
 (26, 'October 24, 2023', '4:00 PM', 'available'),
 (27, 'October 25, 2023', '4:00 PM', 'available'),
 (28, 'October 28, 2023', '4:00 PM', 'available'),
-(29, 'October 02, 2023', '4:00 PM', 'available');
+(29, 'October 02, 2023', '4:00 PM', 'available'),
+(30, 'November 01, 2023', '4:00 PM', 'available'),
+(31, 'October 13, 2023', '4:00 PM', 'available'),
+(32, 'October 13, 2023', '4:00 PM', 'available'),
+(33, 'October 13, 2023', '4:00 PM', 'available');
 
 -- --------------------------------------------------------
 
@@ -211,14 +215,7 @@ CREATE TABLE `appointment_record` (
 --
 
 INSERT INTO `appointment_record` (`appoint_id`, `user_id`, `first_name`, `last_name`, `street_add`, `city_municipality`, `province`, `postal_code`, `contact_no`, `appoint_sched_date`, `appoint_sched_time`, `appoint_description`, `appoint_status`, `timestamp`, `is_read`) VALUES
-(1001, 10001, 'Ed', 'Sheeran', 'New York Street', 'Legazpi', 'Albay', 5403, '09123456789', 'October 27 2023', '4:00 PM', 'testing only', 'confirmed', '2023-11-03 12:23:12', 0),
-(1002, 10001, 'Taylor', ' Swift', 'Batungbakal Street', 'New York', 'New York', 5403, '123456', 'October 19 2023', '4:00 PM', 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sint exercitationem a dolore dolores libero, aut corporis alias consequuntur dolorem dignissimos pariatur atque consequatur, sunt voluptate earum laborum distinctio maiores eius!', 'confirmed', '2023-11-03 12:23:12', 0),
-(1003, 10001, 'Satoru', 'Gojo', 'Street di matirhan', 'Legazpi', 'Masbate', 5403, '09123455667', 'October 31 2023', '4:00 PM', 'para sa pag test lang heheheheheheheheheheheheeheheheheheheheheheheheheheheheheheheheheh', 'cancelled', '2023-11-03 12:23:12', 0),
-(1004, 10005, 'Enn', 'Numi', 'Batungbakal Street', 'Dimasalang', 'Masbate', 1234, '0912345677889', 'October 1 2023', '4:00 PM', 'Test', 'confirmed', '2023-11-03 12:23:12', 0),
-(1005, 10005, 'Juan', 'Dela Cruz', 'Street di matirhan', 'sassas', 'sasA', 0, 'sasas', 'October 27 2023', '4:00 PM', 'The quick brown fox jumps over the lazy dog heheheeheh heheheheh eheheheh heeehe ehdkhsd hehjdy 8cdgh eThe qyic shjad  dthsdb sdysidb dysai ncdy fiufaufdd iffuis dafnej ruci dthe quick brown fox jumps over the lazy dog hehehe dii pa dintapos hays brownout pa talaga nubayan hays jusko jaaaaaaaaaaaaaa', 'confirmed', '2023-11-03 12:23:12', 0),
-(1006, 10005, 'Hello ', 'World', 'New York Street', 'Legazpi', 'Albay', 1234, '09123456789', 'October 27 2023', '4:00 PM', '121323434444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444443535 33333333333333333333345666 555555555555555555555554 53333333333335 4353333333333 46546 65466666666666666665', 'cancelled', '2023-11-03 12:23:12', 0),
-(1008, 1001, 'Human', 'Being', 'National Road Street', 'Masbate', 'Masbate', 54086, '09123', 'October 20 2023', '4:00 PM', 'Test', 'cancelled', '2023-11-03 12:23:12', 0),
-(1009, 10005, 'Pedro', 'Dela Cruz', 'Batungbakal Street', 'Legazpi', 'Albay', 5403, '0912345677889', 'October 27 2023', '4:00 PM', 'wala lang ', 'confirmed', '2023-11-03 12:23:12', 0);
+(1, 10002, 'Satoru ', 'Gojo', 'Basta Street', 'Legazpi', 'Masbate', 34223, '09123355384', 'November 13 2023', '4:00 PM', 'This is for the purpose of testing. \"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in repreh', 'cancelled', '2023-11-16 15:41:07', 0);
 
 -- --------------------------------------------------------
 
@@ -283,6 +280,28 @@ INSERT INTO `category_descriptions` (`description_id`, `description`, `descripti
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `chart`
+--
+
+CREATE TABLE `chart` (
+  `id` int(11) NOT NULL,
+  `count` varchar(100) NOT NULL,
+  `type` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `chart`
+--
+
+INSERT INTO `chart` (`id`, `count`, `type`) VALUES
+(2, '12', 'Seminar'),
+(3, '34', 'Receptions'),
+(4, '41', 'Recollections'),
+(5, '55', 'Training');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `feedback`
 --
 
@@ -304,7 +323,8 @@ INSERT INTO `feedback` (`feedback_id`, `user_id`, `name`, `feedback_message`, `r
 (1, 10001, 'testing_only test', 'Oks lang', 'Bad', '', '2023-10-20 02:25:02'),
 (2, 10005, 'Enn Numi', 'Ayoko na po', '2', '1', '2023-10-19 20:25:09'),
 (3, 10006, 'Mafuyu Asaina', 'too many bugs\r\n', '1', '1', '2023-11-03 02:26:33'),
-(4, 10006, 'Mafuyu Asaina', 'the h button wont work my name is spelled incorrectly\r\n', '1', '0', '2023-11-03 02:29:11');
+(4, 10006, 'Mafuyu Asaina', 'the h button wont work my name is spelled incorrectly\r\n', '1', '0', '2023-11-03 02:29:11'),
+(5, 10007, 'Juan  Cruz', 'aaa', '4', '1', '2023-11-08 18:26:02');
 
 -- --------------------------------------------------------
 
@@ -315,6 +335,7 @@ INSERT INTO `feedback` (`feedback_id`, `user_id`, `name`, `feedback_message`, `r
 CREATE TABLE `meals` (
   `meal_id` int(11) NOT NULL,
   `meal_name` varchar(255) NOT NULL,
+  `type` varchar(100) NOT NULL,
   `meal_img_path` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -322,28 +343,28 @@ CREATE TABLE `meals` (
 -- Dumping data for table `meals`
 --
 
-INSERT INTO `meals` (`meal_id`, `meal_name`, `meal_img_path`) VALUES
-(2, 'Crab and Corn Soup', '/images/Meal_Photos/Breakfast/BF_Crab_Corn.jpg'),
-(3, 'Egg Soup', '/images/Meal_Photos/Breakfast/BF_Egg_Soup.jpg'),
-(4, 'Italian Pasta', '/images/Meal_Photos/Breakfast/BF_Italian Pasta.jpg'),
-(5, 'Pesto Pasta', '/images/Meal_Photos/Breakfast/BF_Pesto_Pasta.jpg'),
-(6, 'Tuna Pasta', '/images/Meal_Photos/Breakfast/BF_Tuna_Pasta.jpg'),
-(7, 'Pork Barbeque', '/images/Meal_Photos/Lunch_Dinner/PorkBBQ.jpg'),
-(8, 'Pork Stir Fry with Mushroom', '/images/Meal_Photos/Lunch_Dinner/PorkStirwMushroom.jpg'),
-(10, 'Honey Glazed Chicken', '/images/Meal_Photos/Lunch_Dinner/HoneyGlazedChicken.jpg'),
-(11, 'Korean Chicken with Sesame Seeds', '/images/Meal_Photos/Lunch_Dinner/LD_KoreanwSesame.jpg'),
-(13, 'Fish Fillet with White Sauce', '/images/Meal_Photos/Lunch_Dinner/LD_fish_whiteSouce.jpg'),
-(17, 'Mixed Vegetables with Butter', '/images/Meal_Photos/Lunch_Dinner/LD_MixedVegiesWButter.jpg'),
-(18, 'Stir Fry Mixed Vegetables with Oyster Sauce', '/images/Meal_Photos/Lunch_Dinner/MixedVegetableWOyster.jpg'),
-(20, 'Mango Pudding', '/images/Meal_Photos/Dessert/DS_manggo_pudding.jpg'),
-(23, 'Iced Tea', '/images/Meal_Photos/Drinks/DK_Iced_tea.jpg'),
-(25, 'Tapioca', '../uploads/DS_Tapioca2.jpg'),
-(27, 'Lumpiang', '../uploads/LD_Lumpia.jpg'),
-(29, 'Cucumber Lemonade', '../uploads/CucumberLemonade.jpeg'),
-(30, 'Chopsuey', '../uploads/Chopsuey.jpg'),
-(31, 'Fish Fillet with Lemon', '../uploads/LD_FishwLemon.jpg'),
-(32, 'Sweet and sour fish', '../uploads/6543cc8f3953d_LD_FishSweetSour.jpg'),
-(40, 'Buko Pandan', '../uploads/654418eaa2d3f_DS_Buko_Pandan.jpg');
+INSERT INTO `meals` (`meal_id`, `meal_name`, `type`, `meal_img_path`) VALUES
+(2, 'Crab and Corn Soup', 'breakfast', '../images/Meal_Photos/Breakfast/BF_Crab_Corn.jpg'),
+(3, 'Egg Soup', 'breakfast', '../images/Meal_Photos/Breakfast/BF_Egg_Soup.jpg'),
+(4, 'Italian Pasta', 'breakfast', '../images/Meal_Photos/Breakfast/BF_Italian Pasta.jpg'),
+(5, 'Pesto Pasta', 'breakfast', '../images/Meal_Photos/Breakfast/BF_Pesto_Pasta.jpg'),
+(6, 'Tuna Pasta', 'breakfast', '../images/Meal_Photos/Breakfast/BF_Tuna_Pasta.jpg'),
+(7, 'Pork Barbeque', 'ld', '../images/Meal_Photos/Lunch_Dinner/PorkBBQ.jpg'),
+(8, 'Pork Stir Fry with Mushroom', 'ld', '../images/Meal_Photos/Lunch_Dinner/PorkStirwMushroom.jpg'),
+(10, 'Honey Glazed Chicken', 'ld', '../images/Meal_Photos/Lunch_Dinner/HoneyGlazedChicken.jpg'),
+(11, 'Korean Chicken with Sesame Seeds', 'ld', '../images/Meal_Photos/Lunch_Dinner/LD_KoreanwSesame.jpg'),
+(13, 'Fish Fillet with White Sauce', 'ld', '../images/Meal_Photos/Lunch_Dinner/LD_fish_whiteSouce.jpg'),
+(17, 'Mixed Vegetables with Butter', 'ld', '../images/Meal_Photos/Lunch_Dinner/LD_MixedVegiesWButter.jpg'),
+(18, 'Stir Fry Mixed Vegetables with Oyster Sauce', 'ld', '../images/Meal_Photos/Lunch_Dinner/MixedVegetableWOyster.jpg'),
+(20, 'Mango Pudding', 'dessert', '../images/Meal_Photos/Dessert/DS_manggo_pudding.jpg'),
+(23, 'Iced Tea', 'drinks', '../images/Meal_Photos/Drinks/DK_Iced_tea.jpg'),
+(25, 'Tapioca', 'dessert', '../uploads/DS_Tapioca2.jpg'),
+(27, 'Lumpiang', 'ld', '../uploads/LD_Lumpia.jpg'),
+(29, 'Cucumber Lemonade', 'drinks', '../uploads/CucumberLemonade.jpeg'),
+(30, 'Chopsuey', 'ld', '../uploads/Chopsuey.jpg'),
+(31, 'Fish Fillet with Lemon', 'ld', '../uploads/LD_FishwLemon.jpg'),
+(32, 'Sweet and sour fish', 'ld', '../uploads/6543cc8f3953d_LD_FishSweetSour.jpg'),
+(40, 'Buko Pandan', 'dessert', '../uploads/654418eaa2d3f_DS_Buko_Pandan.jpg');
 
 -- --------------------------------------------------------
 
@@ -414,7 +435,8 @@ INSERT INTO `meal_sets` (`mealCat_id`, `meal_id`) VALUES
 (3, 34),
 (3, 35),
 (3, 36),
-(5, 40);
+(5, 40),
+(1, 41);
 
 -- --------------------------------------------------------
 
@@ -566,7 +588,7 @@ INSERT INTO `messages` (`message_id`, `sender_id`, `receiver_id`, `message`, `im
 (126, 1, 10001, 'dGVzdA==', '', '2023-10-01 13:57:02', 1, 1),
 (127, 1, 10001, 'dGVzdA==', '', '2023-10-01 13:57:10', 1, 1),
 (128, 1, 10001, 'Li4u', '', '2023-10-01 14:55:26', 1, 1),
-(129, 1, 10002, 'aG95', '', '2023-10-01 15:00:23', 0, 1),
+(129, 1, 10002, 'aG95', '', '2023-10-01 15:00:23', 1, 1),
 (130, 10001, 1, 'YXpkYXM=', '', '2023-10-01 15:33:47', 1, 0),
 (131, 1, 10001, 'dGVzdGluZw==', '', '2023-10-01 15:42:33', 1, 1),
 (132, 1, 10001, 'Li4uLi4uLi4uLi4u', '', '2023-10-01 15:46:45', 1, 1),
@@ -592,7 +614,9 @@ INSERT INTO `messages` (`message_id`, `sender_id`, `receiver_id`, `message`, `im
 (152, 10006, 1, '', '../uploads/6544bce38a7b5_DS_Tapioca_1.jpg', '2023-11-03 09:26:59', 1, 0),
 (153, 10006, 1, 'aSB3b3VsO2QgbGlrZSB0byByZXNlZXJ2ZSAgYSByb29tIHBsZWFzZQ==', '', '2023-11-03 09:28:24', 1, 0),
 (154, 10006, 1, 'dHlubXgg', '', '2023-11-03 09:28:26', 1, 0),
-(155, 10006, 1, 'dGhueA==', '', '2023-11-03 09:28:28', 1, 0);
+(155, 10006, 1, 'dGhueA==', '', '2023-11-03 09:28:28', 1, 0),
+(156, 10007, 1, 'c2FtcGxl', '', '2023-11-06 03:29:54', 1, 0),
+(157, 10007, 1, 'YWFhYQ==', '', '2023-11-08 05:47:27', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -605,6 +629,7 @@ CREATE TABLE `packages` (
   `service_id` int(11) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   `price` decimal(10,2) DEFAULT NULL,
+  `type` varchar(100) NOT NULL,
   `description` text DEFAULT NULL,
   `image_path` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -613,14 +638,14 @@ CREATE TABLE `packages` (
 -- Dumping data for table `packages`
 --
 
-INSERT INTO `packages` (`package_id`, `service_id`, `name`, `price`, `description`, `image_path`) VALUES
-(1, 1, 'Casa Maria Retreat Package', 1200.00, 'Food and Accommodation', '/images/casaMariaPackage.png'),
-(2, 1, 'Lunduyan Retreat Package', -99999.00, 'Food and Accommodation', '/images/lunduyanPackage.png'),
-(3, 2, 'Recollection Package', 400.00, 'Food and Accommodation &\nNo Overnight', '/images/recollection_package.png'),
-(4, 3, 'Catering Package', 8000.00, 'Additional 450.00 per Head for Cater', '/images/catering_package.png'),
-(5, 3, 'Venue-Only Package', 8000.00, 'Accommodation', '/images/venue_package.png'),
-(6, 4, 'Training Package', 400.00, 'Food and Accommodation &\nNo Overnight', '/images/training_package.png'),
-(7, 5, 'Seminar Package', 400.00, 'Food and Accommodation &\nNo Overnight', '/images/seminar_package.png');
+INSERT INTO `packages` (`package_id`, `service_id`, `name`, `price`, `type`, `description`, `image_path`) VALUES
+(1, 1, 'Casa Maria Retreat Package', 1200.00, 'retreat', 'Food and Accommodation', '/images/casaMariaPackage.png'),
+(2, 1, 'Lunduyan Retreat Package', 2000.00, 'retreat', 'Food and Accommodation', '/images/lunduyanPackage.png'),
+(3, 2, 'Recollection Package', 400.00, 'recollection', 'Food and Accommodation &\nNo Overnight', '/images/recollection_package.png'),
+(4, 3, 'Catering Package', 8000.00, 'reception', 'Additional 450.00 per Head for Cater', '/images/catering_package.png'),
+(5, 3, 'Venue-Only Package', 8000.00, 'reception', 'Accommodation', '/images/venue_package.png'),
+(6, 4, 'Training Package', 400.00, 'training', 'Food and Accommodation &\nNo Overnight', '/images/training_package.png'),
+(7, 5, 'Seminar Package', 400.00, 'seminar', 'Food and Accommodation &\nNo Overnight', '/images/seminar_package.png');
 
 -- --------------------------------------------------------
 
@@ -709,19 +734,25 @@ CREATE TABLE `reception_reservation_record` (
   `user_id` int(11) NOT NULL,
   `first_name` varchar(255) NOT NULL,
   `last_name` varchar(255) NOT NULL,
-  `street_add` varchar(255) NOT NULL,
-  `city_municipality` varchar(255) NOT NULL,
-  `province` varchar(255) NOT NULL,
-  `postal_code` int(4) NOT NULL,
   `contact_no` varchar(255) NOT NULL,
+  `guest` varchar(255) NOT NULL,
   `check_in` varchar(1000) NOT NULL,
   `check_out` varchar(1000) NOT NULL,
+  `package` varchar(200) NOT NULL,
+  `type` varchar(100) NOT NULL,
   `price` float NOT NULL,
+  `transaction_num` varchar(15) NOT NULL,
+  `breakfast` varchar(100) NOT NULL,
+  `lunch` varchar(100) NOT NULL,
+  `dinner` varchar(100) NOT NULL,
+  `dessert` varchar(100) NOT NULL,
+  `drinks` varchar(100) NOT NULL,
+  `total` varchar(50) NOT NULL,
   `payment_method` enum('Pay-on-Site','GCash') NOT NULL,
   `payment_option` enum('Pay Full','Pay Half') DEFAULT NULL,
   `proof_of_payment` varchar(255) DEFAULT NULL,
   `status` enum('pending','confirmed','cancelled','') NOT NULL,
-  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `timestamp` date NOT NULL DEFAULT current_timestamp(),
   `is_read` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -729,9 +760,8 @@ CREATE TABLE `reception_reservation_record` (
 -- Dumping data for table `reception_reservation_record`
 --
 
-INSERT INTO `reception_reservation_record` (`reception_id`, `user_id`, `first_name`, `last_name`, `street_add`, `city_municipality`, `province`, `postal_code`, `contact_no`, `check_in`, `check_out`, `price`, `payment_method`, `payment_option`, `proof_of_payment`, `status`, `timestamp`, `is_read`) VALUES
-(1, 10005, 'Monkey', 'Luffy', 'P1', 'Pilar', 'Sorsogon', 4355, '091234578604', 'October 1 2023', 'October 26 2023', 4800, 'Pay-on-Site', '', NULL, 'confirmed', '2023-11-01 12:28:04', 0),
-(2, 10005, 'Satoru', 'Gojo', 'Tokyo', 'Japan', 'Japan', 1232, '09090391', 'October 3 2023', 'November 30 2023', 12323, 'GCash', '', 'cute me', 'confirmed', '2023-11-05 07:43:32', 0);
+INSERT INTO `reception_reservation_record` (`reception_id`, `user_id`, `first_name`, `last_name`, `contact_no`, `guest`, `check_in`, `check_out`, `package`, `type`, `price`, `transaction_num`, `breakfast`, `lunch`, `dinner`, `dessert`, `drinks`, `total`, `payment_method`, `payment_option`, `proof_of_payment`, `status`, `timestamp`, `is_read`) VALUES
+(1, 10002, 'Satoru', 'Gojo', '09128348214', '3', 'November 25 2023', 'December 23 2023', 'Catering Package', 'reception', 8000, 'ALSQX01734', 'Crab and Corn Soup', 'Pork Stir Fry with Mushroom', 'Fish Fillet with White Sauce', 'Mango Pudding', 'Cucumber Lemonade', '672000', 'GCash', NULL, 'gcash-7-11-payment-success.png', 'pending', '2023-11-17', 0);
 
 -- --------------------------------------------------------
 
@@ -744,16 +774,20 @@ CREATE TABLE `recollection_reservation_record` (
   `user_id` int(11) NOT NULL,
   `first_name` varchar(255) NOT NULL,
   `last_name` varchar(255) NOT NULL,
-  `street_add` varchar(255) NOT NULL,
-  `city_municipality` varchar(255) NOT NULL,
-  `province` varchar(255) NOT NULL,
-  `postal_code` int(4) NOT NULL,
   `contact_no` varchar(255) NOT NULL,
-  `guest_count` int(255) NOT NULL,
+  `guest` varchar(255) NOT NULL,
   `check_in` varchar(1000) NOT NULL,
   `check_out` varchar(1000) NOT NULL,
-  `catering` enum('Yes','No') NOT NULL,
+  `package` varchar(200) NOT NULL,
+  `type` varchar(100) NOT NULL,
   `price` float NOT NULL,
+  `transaction_num` varchar(15) NOT NULL,
+  `breakfast` varchar(100) NOT NULL,
+  `lunch` varchar(100) NOT NULL,
+  `dinner` varchar(100) NOT NULL,
+  `dessert` varchar(100) NOT NULL,
+  `drinks` varchar(100) NOT NULL,
+  `total` varchar(50) NOT NULL,
   `payment_method` enum('Pay-on-Site','GCash') NOT NULL,
   `payment_option` enum('Pay Full','Pay Half') DEFAULT NULL,
   `proof_of_payment` varchar(255) DEFAULT NULL,
@@ -762,12 +796,55 @@ CREATE TABLE `recollection_reservation_record` (
   `is_read` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `recollection_reservation_record`
+-- Table structure for table `reservation`
 --
 
-INSERT INTO `recollection_reservation_record` (`recollection_id`, `user_id`, `first_name`, `last_name`, `street_add`, `city_municipality`, `province`, `postal_code`, `contact_no`, `guest_count`, `check_in`, `check_out`, `catering`, `price`, `payment_method`, `payment_option`, `proof_of_payment`, `status`, `timestamp`, `is_read`) VALUES
-(1, 10005, 'Juan', 'Dela Cruz', 'Legazpi street', 'Legazpi City', 'Albay', 12342, '091234243', 12, 'November 2 2023', 'November 24 2023', 'Yes', 12000, '', '', 'image.png', 'confirmed', '2023-11-03 12:25:08', 0);
+CREATE TABLE `reservation` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `first_name` varchar(200) NOT NULL,
+  `last_name` varchar(200) NOT NULL,
+  `contact` varchar(15) NOT NULL,
+  `guest` varchar(15) NOT NULL,
+  `date_to` varchar(100) NOT NULL,
+  `date_from` varchar(100) NOT NULL,
+  `package` varchar(200) NOT NULL,
+  `price` varchar(100) NOT NULL,
+  `transaction_num` varchar(50) NOT NULL,
+  `breakfast` varchar(100) NOT NULL,
+  `lunch` varchar(100) NOT NULL,
+  `dinner` varchar(100) NOT NULL,
+  `dessert` varchar(100) NOT NULL,
+  `drinks` varchar(100) NOT NULL,
+  `payment_type` varchar(200) NOT NULL,
+  `image` varchar(200) NOT NULL,
+  `status` int(11) NOT NULL,
+  `book_date` date DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `reservation`
+--
+
+INSERT INTO `reservation` (`id`, `user_id`, `first_name`, `last_name`, `contact`, `guest`, `date_to`, `date_from`, `package`, `price`, `transaction_num`, `breakfast`, `lunch`, `dinner`, `dessert`, `drinks`, `payment_type`, `image`, `status`, `book_date`) VALUES
+(46, 10007, 'Juan ', 'Cruz', '123', '5', 'November 30 2023', 'November 25 2023', 'Lunduyan Retreat Package', '2000.00', 'VIG241', 'Crab and Corn Soup', 'Pork Stir Fry with Mushroom', 'Honey Glazed Chicken', 'Mango Pudding', 'Iced Tea', 'Gcash', 'Untitled design (10).png', 1, '2023-11-13'),
+(47, 10007, 'Juan ', 'Cruz', '123', '5', 'December 04 2023', 'November 30 2023', 'Recollection Package', '400.00', 'IYN304', 'Egg Soup', 'Fish Fillet with White Sauce', 'Pork Stir Fry with Mushroom', 'Mango Pudding', 'Iced Tea', 'Gcash', 'Untitled design (10).png', 1, '2023-11-13'),
+(48, 10007, 'Juan ', 'Cruz', '123', '5', 'December 03 2023', 'November 18 2023', 'Lunduyan Retreat Package', '2000.00', 'BSK102', 'Crab and Corn Soup', 'Pork Stir Fry with Mushroom', 'Pork Stir Fry with Mushroom', 'Mango Pudding', 'Iced Tea', '', '', 0, '2023-11-13'),
+(49, 10007, 'Juan ', 'Cruz', '123', '5', 'December 03 2023', 'November 30 2023', 'Lunduyan Retreat Package', '2000.00', 'BVD102', 'Crab and Corn Soup', 'Pork Stir Fry with Mushroom', 'Honey Glazed Chicken', 'Tapioca', 'Iced Tea', '', '', 0, '2023-11-13'),
+(50, 10007, 'Juan ', 'Cruz', '123', '0', 'November 25 2023', 'November 11 2023', 'Lunduyan Retreat Package', '2000.00', 'UVT132', 'Crab and Corn Soup', 'Pork Barbeque', 'Pork Barbeque', 'Mango Pudding', 'Iced Tea', '', '', 0, '2023-11-13'),
+(51, 10007, 'Juan ', 'Cruz', '123', '6', 'November 25 2023', 'November 11 2023', 'Casa Maria Retreat Package', '1200.00', 'TKI042', 'Crab and Corn Soup', 'Pork Barbeque', 'Pork Barbeque', 'Mango Pudding', 'Iced Tea', '', '', 0, '2023-11-13'),
+(52, 10007, 'Juan ', 'Cruz', '123', '10', 'November 25 2023', 'November 25 2023', 'Venue-Only Package', '8000.00', 'WVE130', 'Crab and Corn Soup', 'Pork Barbeque', 'Pork Barbeque', 'Mango Pudding', 'Iced Tea', '', '', 0, '2023-11-13'),
+(53, 10007, 'Juan ', 'Cruz', '123', '25', 'November 25 2023', 'November 25 2023', 'Seminar Package', '400.00', 'ZYM340', 'Crab and Corn Soup', 'Pork Barbeque', 'Pork Barbeque', 'Mango Pudding', 'Iced Tea', '', '', 0, '2023-11-13'),
+(54, 10007, 'Juan ', 'Cruz', '123', '7', 'November 25 2023', 'November 25 2023', 'Seminar Package', '400.00', 'YZH312', 'Crab and Corn Soup', 'Pork Barbeque', 'Pork Barbeque', 'Mango Pudding', 'Iced Tea', '', '', 0, '2023-11-13'),
+(55, 10007, 'Juan ', 'Cruz', '123', '0', 'November 04 2023', 'November 01 2023', 'Seminar Package', '400.00', 'YNC402', 'Crab and Corn Soup', 'Pork Barbeque', 'Pork Barbeque', 'Mango Pudding', 'Iced Tea', '', '', 0, '2023-11-13'),
+(56, 10007, 'Juan ', 'Cruz', '123', '5', 'November 04 2023', 'November 02 2023', 'Seminar Package', '400.00', 'CBE041', 'Crab and Corn Soup', 'Pork Barbeque', 'Pork Barbeque', 'Mango Pudding', 'Iced Tea', '', '', 0, '2023-11-13'),
+(57, 10007, 'Juan ', 'Cruz', '123', '5', 'November 04 2023', 'November 01 2023', 'Seminar Package', '400.00', 'RTP214', 'Crab and Corn Soup', 'Pork Barbeque', 'Pork Stir Fry with Mushroom', 'Mango Pudding', 'Iced Tea', '', '', 0, '2023-11-13'),
+(58, 10007, 'Juan ', 'Cruz', '123', '5', 'November 17 2023', 'November 11 2023', 'Casa Maria Retreat Package', '1200.00', 'ZBS034', '', '', '', '', '', '', '', 0, '2023-11-14'),
+(59, 10007, 'Juan ', 'Cruz', '123', '5', 'November 03 2023', 'November 02 2023', 'Casa Maria Retreat Package', '1200.00', 'JLM240', '', '', '', '', '', '', '', 0, '2023-11-14'),
+(60, 10007, 'Juan ', 'Cruz', '123', '5', 'November 11 2023', 'November 10 2023', 'Casa Maria Retreat Package', '1200.00', 'RFU032', 'Crab and Corn Soup', 'Pork Barbeque', '', '', '', '', '', 0, '2023-11-14');
 
 -- --------------------------------------------------------
 
@@ -796,19 +873,22 @@ CREATE TABLE `retreat_reservation_record` (
   `user_id` int(11) NOT NULL,
   `first_name` varchar(255) NOT NULL,
   `last_name` varchar(255) NOT NULL,
-  `street_add` varchar(255) NOT NULL,
-  `city_municipality` varchar(255) NOT NULL,
-  `province` varchar(255) NOT NULL,
-  `postal_code` int(4) NOT NULL,
   `contact_no` varchar(255) NOT NULL,
-  `guest_count` int(11) NOT NULL,
+  `guest` varchar(255) NOT NULL,
   `check_in` varchar(1000) NOT NULL,
   `check_out` varchar(1000) NOT NULL,
-  `room_type` enum('Casa Maria','Lunduyan','Attic') NOT NULL,
-  `catering` enum('Yes','No') NOT NULL,
+  `package` varchar(200) NOT NULL,
+  `type` varchar(100) NOT NULL,
   `price` float NOT NULL,
+  `transaction_num` varchar(15) NOT NULL,
+  `breakfast` varchar(100) NOT NULL,
+  `lunch` varchar(100) NOT NULL,
+  `dinner` varchar(100) NOT NULL,
+  `dessert` varchar(100) NOT NULL,
+  `drinks` varchar(100) NOT NULL,
+  `total` varchar(100) NOT NULL,
   `payment_method` enum('Pay-on-Site','GCash') NOT NULL,
-  `payment_option` enum('pay_full','pay_half') DEFAULT NULL,
+  `payment_option` enum('Pay Full','Pay Half') DEFAULT NULL,
   `proof_of_payment` varchar(255) DEFAULT NULL,
   `status` enum('pending','confirmed','cancelled','') NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
@@ -819,8 +899,11 @@ CREATE TABLE `retreat_reservation_record` (
 -- Dumping data for table `retreat_reservation_record`
 --
 
-INSERT INTO `retreat_reservation_record` (`retreat_id`, `user_id`, `first_name`, `last_name`, `street_add`, `city_municipality`, `province`, `postal_code`, `contact_no`, `guest_count`, `check_in`, `check_out`, `room_type`, `catering`, `price`, `payment_method`, `payment_option`, `proof_of_payment`, `status`, `timestamp`, `is_read`) VALUES
-(1, 10005, 'Jose', 'Rizal', 'Test Address', 'Dunno hehe', 'Masbate', 2123, '09123345678', 5, 'November 3 2023', 'November 6 2023', 'Lunduyan', 'No', 12000, 'GCash', 'pay_half', 'images', 'confirmed', '2023-11-04 13:03:17', 0);
+INSERT INTO `retreat_reservation_record` (`retreat_id`, `user_id`, `first_name`, `last_name`, `contact_no`, `guest`, `check_in`, `check_out`, `package`, `type`, `price`, `transaction_num`, `breakfast`, `lunch`, `dinner`, `dessert`, `drinks`, `total`, `payment_method`, `payment_option`, `proof_of_payment`, `status`, `timestamp`, `is_read`) VALUES
+(1, 10002, 'Satoru', 'Gojo', '09123456789', '3', 'November 24 2023', 'December 21 2023', 'Lunduyan Retreat Package', 'retreat', 2000, 'UFMZV87621', 'Crab and Corn Soup', 'Pork Barbeque', 'Fish Fillet with White Sauce', 'Mango Pudding', 'Cucumber Lemonade', '', 'Pay-on-Site', NULL, NULL, 'confirmed', '2023-11-14 15:21:47', 0),
+(2, 10002, 'Satoru', 'Gojo', '0945457778', '2', 'November 25 2023', 'December 30 2023', 'Lunduyan Retreat Package', 'retreat', 2000, 'CYKPG40362', 'Crab and Corn Soup', 'Fish Fillet with White Sauce', 'Stir Fry Mixed Vegetables with Oyster Sauce', 'Tapioca', 'Iced Tea', '', 'Pay-on-Site', NULL, NULL, 'cancelled', '2023-11-16 15:05:57', 0),
+(3, 10002, 'Satoru', 'Gojo', '09123456', '2', 'November 29 2023', 'December 29 2023', 'Casa Maria Retreat Package', 'retreat', 1200, 'RJWUP54603', 'Crab and Corn Soup', 'Fish Fillet with White Sauce', 'Lumpiang', 'Buko Pandan', 'Cucumber Lemonade', '72000', 'GCash', NULL, 'Gcash-Reference-Number-sample.jpg', 'pending', '2023-11-16 16:17:38', 0),
+(4, 10002, 'Satoru', 'Gojo', '867696987', '2', 'November 25 2023', 'December 29 2023', 'Casa Maria Retreat Package', 'retreat', 1200, 'OTNEJ65812', 'Crab and Corn Soup', 'Pork Stir Fry with Mushroom', 'Fish Fillet with White Sauce', 'Tapioca', 'Cucumber Lemonade', '81600', 'GCash', NULL, 'Z2Nhc2gtNy0xMS1wYXltZW50LXN1Y2Nlc3MucG5n', 'confirmed', '2023-11-17 01:43:29', 0);
 
 -- --------------------------------------------------------
 
@@ -835,6 +918,14 @@ CREATE TABLE `sales_report` (
   `sales_report_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `sales_report`
+--
+
+INSERT INTO `sales_report` (`sales_report_id`, `report_id`, `total_sales`, `sales_report_date`) VALUES
+(1, 1, 78, '2023-11-04'),
+(2, 2, 56, '2023-11-05');
+
 -- --------------------------------------------------------
 
 --
@@ -844,32 +935,29 @@ CREATE TABLE `sales_report` (
 CREATE TABLE `seminar_reservation_record` (
   `seminar_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `last_name` varchar(255) NOT NULL,
   `first_name` varchar(255) NOT NULL,
-  `street_add` varchar(255) NOT NULL,
-  `province` varchar(255) NOT NULL,
-  `city_municipality` varchar(255) NOT NULL,
-  `postal_code` int(4) NOT NULL,
+  `last_name` varchar(255) NOT NULL,
   `contact_no` varchar(255) NOT NULL,
-  `guest_count` int(11) NOT NULL,
+  `guest` varchar(255) NOT NULL,
   `check_in` varchar(1000) NOT NULL,
   `check_out` varchar(1000) NOT NULL,
-  `catering` enum('Yes','No') NOT NULL,
+  `package` varchar(200) NOT NULL,
+  `type` varchar(100) NOT NULL,
   `price` float NOT NULL,
-  `payment_method` enum('Pay-on_Site','GCash') NOT NULL,
-  `payment_option` enum('Pay Full','Pay half') DEFAULT NULL,
+  `transaction_num` varchar(15) NOT NULL,
+  `breakfast` varchar(100) NOT NULL,
+  `lunch` varchar(100) NOT NULL,
+  `dinner` varchar(100) NOT NULL,
+  `dessert` varchar(100) NOT NULL,
+  `drinks` varchar(100) NOT NULL,
+  `total` varchar(50) NOT NULL,
+  `payment_method` enum('Pay-on-Site','GCash') NOT NULL,
+  `payment_option` enum('Pay Full','Pay Half') DEFAULT NULL,
   `proof_of_payment` varchar(255) DEFAULT NULL,
   `status` enum('pending','confirmed','cancelled','') NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `is_read` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `seminar_reservation_record`
---
-
-INSERT INTO `seminar_reservation_record` (`seminar_id`, `user_id`, `last_name`, `first_name`, `street_add`, `province`, `city_municipality`, `postal_code`, `contact_no`, `guest_count`, `check_in`, `check_out`, `catering`, `price`, `payment_method`, `payment_option`, `proof_of_payment`, `status`, `timestamp`, `is_read`) VALUES
-(1, 10003, 'Villamin', 'Niña Gillian', 'National Road St.', 'Masbate', 'Dimasalang', 3243, '091234578604', 3, 'November 15 2023', 'October 24 2023', 'Yes', 14400, '', NULL, NULL, 'confirmed', '2023-11-03 12:29:54', 0);
 
 -- --------------------------------------------------------
 
@@ -881,6 +969,7 @@ CREATE TABLE `services` (
   `service_id` int(11) NOT NULL,
   `service_name` varchar(255) NOT NULL,
   `price_range` varchar(255) NOT NULL,
+  `service_description` text NOT NULL,
   `img_path` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -888,12 +977,12 @@ CREATE TABLE `services` (
 -- Dumping data for table `services`
 --
 
-INSERT INTO `services` (`service_id`, `service_name`, `price_range`, `img_path`) VALUES
-(1, 'Retreat', '800.00 - 1200.00', '../images/retreat_img.png'),
-(2, 'Recollection', '400.00', '../images/recollection.jpg'),
-(3, 'Reception', '8000.00', '../images/img17.jpg'),
-(4, 'Training', '400.00', 'https://scontent.fmnl9-4.fna.fbcdn.net/v/t39.30808-6/313948058_135956659225210_1082207828745443346_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=5614bc&_nc_eui2=AeGtSeVctdF4HbjoB3D9ajg45UxqUpV4T4DlTGpSlXhPgGUcNfmR9E6d-xTtUDiZRL-vBOGzu21Hw__3GGoMuepv&_nc_ohc=_G67Wz7Kf'),
-(5, 'Seminar', '400.00', '../images/seminar_pic.jpg');
+INSERT INTO `services` (`service_id`, `service_name`, `price_range`, `service_description`, `img_path`) VALUES
+(1, 'Retreat', '800.00 - 1200.00', 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quis, natus laboriosam. Possimus totam eligendi cupiditate tempore, expedita quibusdam nobis sit labore exercitationem facere atque, rem dignissimos!', '../images/another_imageBG.png'),
+(2, 'Recollection', '400.00', 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quis, natus laboriosam. Possimus totam eligendi cupiditate tempore, expedita quibusdam nobis sit labore exercitationem facere atque, rem dignissimos!', '../images/IMG20230907154303.jpg'),
+(3, 'Reception', '8000.00', 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quis, natus laboriosam. Possimus totam eligendi cupiditate tempore, expedita quibusdam nobis sit labore exercitationem facere atque, rem dignissimos!', '../images/img17.jpg'),
+(4, 'Training', '400.00', 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quis, natus laboriosam. Possimus totam eligendi cupiditate tempore, expedita quibusdam nobis sit labore exercitationem facere atque, rem dignissimos!', '../images/IMG20230907152638.jpg'),
+(5, 'Seminar', '400.00', 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quis, natus laboriosam. Possimus totam eligendi cupiditate tempore, expedita quibusdam nobis sit labore exercitationem facere atque, rem dignissimos!', '../images/IMG20230907152638.jpg');
 
 -- --------------------------------------------------------
 
@@ -927,6 +1016,31 @@ INSERT INTO `service_descriptions` (`service_id`, `description_id`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `souvenir_items`
+--
+
+CREATE TABLE `souvenir_items` (
+  `item_id` int(11) NOT NULL,
+  `item_name` varchar(255) DEFAULT NULL,
+  `souvenir_description` text DEFAULT NULL,
+  `souvenir_img_path` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `souvenir_items`
+--
+
+INSERT INTO `souvenir_items` (`item_id`, `item_name`, `souvenir_description`, `souvenir_img_path`) VALUES
+(1, 'Birth Stones', 'The lorem text the section that contains header with having open functionality. Lorem dolor sit amet consectetur adipisicing elit.', '../images/prod1.jpg'),
+(2, 'Rosaries', 'The lorem text the section that contains header with having open functionality. Lorem dolor sit amet consectetur adipisicing elit.', '../images/prod2.jpg'),
+(3, 'Rosary Bracelets', 'The lorem text the section that contains header with having open functionality. Lorem dolor sit amet consectetur adipisicing elit.', '../images/prod4.jpg'),
+(4, 'Books', 'The lorem text the section that contains header with having open functionality. Lorem dolor sit amet consectetur adipisicing elit.', '../images/prod9.jpg'),
+(5, 'Bags', 'The lorem text the section that contains header with having open functionality. Lorem dolor sit amet consectetur adipisicing elit.', '../images/prod11.jpg'),
+(6, 'Tumblers', 'The lorem text the section that contains header with having open functionality. Lorem dolor sit amet consectetur adipisicing elit.', '../images/prod8.jpg');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `training_reservation_record`
 --
 
@@ -935,19 +1049,23 @@ CREATE TABLE `training_reservation_record` (
   `user_id` int(11) NOT NULL,
   `first_name` varchar(255) NOT NULL,
   `last_name` varchar(255) NOT NULL,
-  `street_add` varchar(255) NOT NULL,
-  `city_municipality` varchar(255) NOT NULL,
-  `province` varchar(255) NOT NULL,
-  `postal_code` int(4) NOT NULL,
   `contact_no` varchar(255) NOT NULL,
+  `guest` varchar(255) NOT NULL,
   `check_in` varchar(1000) NOT NULL,
   `check_out` varchar(1000) NOT NULL,
-  `catering` enum('Yes','No') NOT NULL,
+  `package` varchar(200) NOT NULL,
+  `type` varchar(100) NOT NULL,
   `price` float NOT NULL,
+  `transaction_num` varchar(15) NOT NULL,
+  `breakfast` varchar(100) NOT NULL,
+  `lunch` varchar(100) NOT NULL,
+  `dinner` varchar(100) NOT NULL,
+  `dessert` varchar(100) NOT NULL,
+  `drinks` varchar(100) NOT NULL,
+  `total` varchar(50) NOT NULL,
   `payment_method` enum('Pay-on-Site','GCash') NOT NULL,
   `payment_option` enum('Pay Full','Pay Half') DEFAULT NULL,
   `proof_of_payment` varchar(255) DEFAULT NULL,
-  `reportId` int(11) NOT NULL,
   `status` enum('pending','confirmed','cancelled','') NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `is_read` tinyint(1) NOT NULL
@@ -964,195 +1082,53 @@ CREATE TABLE `users` (
   `first_name` varchar(255) NOT NULL,
   `last_name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL
+  `password` varchar(255) NOT NULL,
+  `profile_picture` varchar(255) NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `email`, `password`) VALUES
-(10001, 'Nina Gillian', 'Villamin', 'nin@mail.com', '$2y$10$xkv9QC.aL5iHYrygOUoOT.zTYETdKlzaVUdIUUNCR8ueP7ZLCwbXe'),
-(10002, 'Satoru', 'Gojo', 'gojo@email.com', '$2y$10$2n61M2RneGq9n8K5.v2H/uiZmcQYtfUR/3kb9eU8s9ubdjhzAXhlC'),
-(10003, 'Crissa', 'Olavario', 'crissa@email.com', '$2y$10$tkD/QbBiSwaMZJJo6eQ8XOS9PP30c7lLut3D5N1PsG6TBIidxORFO'),
-(10005, 'Enn', 'Numi', 'numinum1128@gmail.com', '$2y$10$zZ00VRhHPA7M1z2do.g4ue9Ze0U666LZm0tXNzEYk0REINIOFuBOK'),
-(10006, 'Mafuyu', 'Asaina', 'mafuyu@gmail.com', '$2y$10$oFNQRVU1DyW4X0k2dmBxa.qK34UBzziv7BFALIY/f9lfz8qzoymHK');
+INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `email`, `password`, `profile_picture`, `timestamp`) VALUES
+(10002, 'Satoru', 'Gojo', 'gojo@email.com', '$2y$10$2n61M2RneGq9n8K5.v2H/uiZmcQYtfUR/3kb9eU8s9ubdjhzAXhlC', 'profile_pictures/gojo.jpg', '2023-11-14 14:42:18'),
+(10005, 'Enn', 'Numi', 'numinum1128@gmail.com', '$2y$10$zZ00VRhHPA7M1z2do.g4ue9Ze0U666LZm0tXNzEYk0REINIOFuBOK', 'profile_pictures/bocchi pfp.jpg', '2023-11-11 02:13:33'),
+(10006, 'Mafuyu', 'Asaina', 'mafuyu@gmail.com', '$2y$10$oFNQRVU1DyW4X0k2dmBxa.qK34UBzziv7BFALIY/f9lfz8qzoymHK', 'profile_pictures/asahina-dp.jpg', '2023-11-13 09:13:06');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `admin`
---
-ALTER TABLE `admin`
-  ADD PRIMARY KEY (`admin_id`);
-
---
--- Indexes for table `amenities`
---
-ALTER TABLE `amenities`
-  ADD PRIMARY KEY (`amenity_id`);
-
---
--- Indexes for table `announcements`
---
-ALTER TABLE `announcements`
-  ADD PRIMARY KEY (`announcement_id`);
-
---
--- Indexes for table `announcement_comment`
---
-ALTER TABLE `announcement_comment`
-  ADD PRIMARY KEY (`announcement_comment_id`);
-
---
--- Indexes for table `announcement_image`
---
-ALTER TABLE `announcement_image`
-  ADD PRIMARY KEY (`announce_img_id`),
-  ADD KEY `announcement_image_ibfk_1` (`announcement_id`);
-
---
--- Indexes for table `appoinment_report`
---
-ALTER TABLE `appoinment_report`
-  ADD PRIMARY KEY (`appoint_report_id`),
-  ADD KEY `appoint_id` (`appoint_id`);
-
---
--- Indexes for table `appointment_availability`
---
-ALTER TABLE `appointment_availability`
-  ADD PRIMARY KEY (`available_appoint_id`);
-
---
 -- Indexes for table `appointment_record`
 --
 ALTER TABLE `appointment_record`
-  ADD PRIMARY KEY (`appoint_id`),
-  ADD KEY `appoinment_record_ibfk_1` (`user_id`);
-
---
--- Indexes for table `assistant_manager`
---
-ALTER TABLE `assistant_manager`
-  ADD PRIMARY KEY (`asst_id`);
-
---
--- Indexes for table `cancellation_report`
---
-ALTER TABLE `cancellation_report`
-  ADD PRIMARY KEY (`cancellation_id`),
-  ADD KEY `appoint_id` (`appoint_id`),
-  ADD KEY `reservation_id` (`retreat_id`),
-  ADD KEY `recollection_id2` (`recollection_id`),
-  ADD KEY `reception_id2` (`reception_id`),
-  ADD KEY `seminar_id2` (`seminar_id`),
-  ADD KEY `training_id2` (`training_id`);
-
---
--- Indexes for table `category_descriptions`
---
-ALTER TABLE `category_descriptions`
-  ADD PRIMARY KEY (`description_id`);
-
---
--- Indexes for table `feedback`
---
-ALTER TABLE `feedback`
-  ADD PRIMARY KEY (`feedback_id`),
-  ADD KEY `user_id` (`user_id`);
-
---
--- Indexes for table `meals`
---
-ALTER TABLE `meals`
-  ADD PRIMARY KEY (`meal_id`);
-
---
--- Indexes for table `meal_category`
---
-ALTER TABLE `meal_category`
-  ADD PRIMARY KEY (`mealCat_id`);
-
---
--- Indexes for table `meal_sets`
---
-ALTER TABLE `meal_sets`
-  ADD KEY `mealCat_id` (`mealCat_id`),
-  ADD KEY `meal_id` (`meal_id`);
-
---
--- Indexes for table `messages`
---
-ALTER TABLE `messages`
-  ADD PRIMARY KEY (`message_id`);
-
---
--- Indexes for table `packages`
---
-ALTER TABLE `packages`
-  ADD PRIMARY KEY (`package_id`);
-
---
--- Indexes for table `package_amenities`
---
-ALTER TABLE `package_amenities`
-  ADD KEY `package_id` (`package_id`),
-  ADD KEY `amenity_id` (`amenity_id`);
-
---
--- Indexes for table `product_details`
---
-ALTER TABLE `product_details`
-  ADD PRIMARY KEY (`prod_id`);
+  ADD PRIMARY KEY (`appoint_id`);
 
 --
 -- Indexes for table `reception_reservation_record`
 --
 ALTER TABLE `reception_reservation_record`
-  ADD PRIMARY KEY (`reception_id`),
-  ADD KEY `user_id4` (`user_id`);
+  ADD PRIMARY KEY (`reception_id`);
 
 --
 -- Indexes for table `recollection_reservation_record`
 --
 ALTER TABLE `recollection_reservation_record`
-  ADD PRIMARY KEY (`recollection_id`),
-  ADD KEY `user_id` (`user_id`);
-
---
--- Indexes for table `reservation_report`
---
-ALTER TABLE `reservation_report`
-  ADD PRIMARY KEY (`report_id`),
-  ADD KEY `retreat_id` (`retreat_id`),
-  ADD KEY `recollection_id` (`recollection_id`),
-  ADD KEY `seminar_id` (`seminar_id`),
-  ADD KEY `training_id` (`training_id`),
-  ADD KEY `reception_id` (`reception_id`);
+  ADD PRIMARY KEY (`recollection_id`);
 
 --
 -- Indexes for table `retreat_reservation_record`
 --
 ALTER TABLE `retreat_reservation_record`
-  ADD PRIMARY KEY (`retreat_id`),
-  ADD KEY `user_id` (`user_id`);
-
---
--- Indexes for table `sales_report`
---
-ALTER TABLE `sales_report`
-  ADD PRIMARY KEY (`sales_report_id`),
-  ADD KEY `reserve_id` (`report_id`);
+  ADD PRIMARY KEY (`retreat_id`);
 
 --
 -- Indexes for table `seminar_reservation_record`
 --
 ALTER TABLE `seminar_reservation_record`
-  ADD PRIMARY KEY (`seminar_id`),
-  ADD KEY `user_id` (`user_id`);
+  ADD PRIMARY KEY (`seminar_id`);
 
 --
 -- Indexes for table `services`
@@ -1161,19 +1137,16 @@ ALTER TABLE `services`
   ADD PRIMARY KEY (`service_id`);
 
 --
--- Indexes for table `service_descriptions`
+-- Indexes for table `souvenir_items`
 --
-ALTER TABLE `service_descriptions`
-  ADD KEY `service_id` (`service_id`),
-  ADD KEY `description_ID` (`description_id`);
+ALTER TABLE `souvenir_items`
+  ADD PRIMARY KEY (`item_id`);
 
 --
 -- Indexes for table `training_reservation_record`
 --
 ALTER TABLE `training_reservation_record`
-  ADD PRIMARY KEY (`training_id`),
-  ADD KEY `user_id` (`user_id`),
-  ADD KEY `reportId` (`reportId`);
+  ADD PRIMARY KEY (`training_id`);
 
 --
 -- Indexes for table `users`
@@ -1186,142 +1159,34 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT for table `admin`
---
-ALTER TABLE `admin`
-  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT for table `amenities`
---
-ALTER TABLE `amenities`
-  MODIFY `amenity_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
-
---
--- AUTO_INCREMENT for table `announcements`
---
-ALTER TABLE `announcements`
-  MODIFY `announcement_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `announcement_comment`
---
-ALTER TABLE `announcement_comment`
-  MODIFY `announcement_comment_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `announcement_image`
---
-ALTER TABLE `announcement_image`
-  MODIFY `announce_img_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `appoinment_report`
---
-ALTER TABLE `appoinment_report`
-  MODIFY `appoint_report_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `appointment_availability`
---
-ALTER TABLE `appointment_availability`
-  MODIFY `available_appoint_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
-
---
 -- AUTO_INCREMENT for table `appointment_record`
 --
 ALTER TABLE `appointment_record`
-  MODIFY `appoint_id` int(4) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1010;
-
---
--- AUTO_INCREMENT for table `assistant_manager`
---
-ALTER TABLE `assistant_manager`
-  MODIFY `asst_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `cancellation_report`
---
-ALTER TABLE `cancellation_report`
-  MODIFY `cancellation_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `category_descriptions`
---
-ALTER TABLE `category_descriptions`
-  MODIFY `description_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT for table `feedback`
---
-ALTER TABLE `feedback`
-  MODIFY `feedback_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `meals`
---
-ALTER TABLE `meals`
-  MODIFY `meal_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
-
---
--- AUTO_INCREMENT for table `meal_category`
---
-ALTER TABLE `meal_category`
-  MODIFY `mealCat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
-
---
--- AUTO_INCREMENT for table `messages`
---
-ALTER TABLE `messages`
-  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=156;
-
---
--- AUTO_INCREMENT for table `packages`
---
-ALTER TABLE `packages`
-  MODIFY `package_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
---
--- AUTO_INCREMENT for table `product_details`
---
-ALTER TABLE `product_details`
-  MODIFY `prod_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `appoint_id` int(4) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `reception_reservation_record`
 --
 ALTER TABLE `reception_reservation_record`
-  MODIFY `reception_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `reception_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `recollection_reservation_record`
 --
 ALTER TABLE `recollection_reservation_record`
-  MODIFY `recollection_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `reservation_report`
---
-ALTER TABLE `reservation_report`
-  MODIFY `report_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `recollection_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `retreat_reservation_record`
 --
 ALTER TABLE `retreat_reservation_record`
-  MODIFY `retreat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `sales_report`
---
-ALTER TABLE `sales_report`
-  MODIFY `sales_report_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `retreat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `seminar_reservation_record`
 --
 ALTER TABLE `seminar_reservation_record`
-  MODIFY `seminar_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `seminar_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `services`
@@ -1333,86 +1198,13 @@ ALTER TABLE `services`
 -- AUTO_INCREMENT for table `training_reservation_record`
 --
 ALTER TABLE `training_reservation_record`
-  MODIFY `training_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `training_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10007;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `announcement_image`
---
-ALTER TABLE `announcement_image`
-  ADD CONSTRAINT `announcement_image_ibfk_1` FOREIGN KEY (`announcement_id`) REFERENCES `announcements` (`announcement_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `appoinment_report`
---
-ALTER TABLE `appoinment_report`
-  ADD CONSTRAINT `appoint_id2` FOREIGN KEY (`appoint_id`) REFERENCES `appointment_record` (`appoint_id`) ON UPDATE CASCADE;
-
---
--- Constraints for table `appointment_record`
---
-ALTER TABLE `appointment_record`
-  ADD CONSTRAINT `user_id5` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON UPDATE CASCADE;
-
---
--- Constraints for table `cancellation_report`
---
-ALTER TABLE `cancellation_report`
-  ADD CONSTRAINT `appoint_id` FOREIGN KEY (`appoint_id`) REFERENCES `appointment_record` (`appoint_id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `reception_id2` FOREIGN KEY (`reception_id`) REFERENCES `reception_reservation_record` (`reception_id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `recollection_id2` FOREIGN KEY (`recollection_id`) REFERENCES `recollection_reservation_record` (`recollection_id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `retreat_id2` FOREIGN KEY (`retreat_id`) REFERENCES `retreat_reservation_record` (`retreat_id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `seminar_id2` FOREIGN KEY (`seminar_id`) REFERENCES `seminar_reservation_record` (`seminar_id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `training_id2` FOREIGN KEY (`training_id`) REFERENCES `training_reservation_record` (`training_id`) ON UPDATE CASCADE;
-
---
--- Constraints for table `feedback`
---
-ALTER TABLE `feedback`
-  ADD CONSTRAINT `user_id7` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON UPDATE CASCADE;
-
---
--- Constraints for table `reception_reservation_record`
---
-ALTER TABLE `reception_reservation_record`
-  ADD CONSTRAINT `user_id4` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON UPDATE CASCADE;
-
---
--- Constraints for table `reservation_report`
---
-ALTER TABLE `reservation_report`
-  ADD CONSTRAINT `reception_id` FOREIGN KEY (`reception_id`) REFERENCES `reception_reservation_record` (`reception_id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `recollection_id` FOREIGN KEY (`recollection_id`) REFERENCES `recollection_reservation_record` (`recollection_id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `retreat_id` FOREIGN KEY (`retreat_id`) REFERENCES `retreat_reservation_record` (`retreat_id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `seminar_id` FOREIGN KEY (`seminar_id`) REFERENCES `seminar_reservation_record` (`seminar_id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `training_id` FOREIGN KEY (`training_id`) REFERENCES `training_reservation_record` (`training_id`) ON UPDATE CASCADE;
-
---
--- Constraints for table `retreat_reservation_record`
---
-ALTER TABLE `retreat_reservation_record`
-  ADD CONSTRAINT `user_id2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON UPDATE CASCADE;
-
---
--- Constraints for table `sales_report`
---
-ALTER TABLE `sales_report`
-  ADD CONSTRAINT `report_id` FOREIGN KEY (`report_id`) REFERENCES `reservation_report` (`report_id`) ON UPDATE CASCADE;
-
---
--- Constraints for table `seminar_reservation_record`
---
-ALTER TABLE `seminar_reservation_record`
-  ADD CONSTRAINT `user_id1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON UPDATE CASCADE;
+  MODIFY `user_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10008;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

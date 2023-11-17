@@ -15,7 +15,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     function renderCalendar() {
-        console.log('Rendering calendar with data:', data);
         const firstDayOfMonth = new Date(currentYr, currentMth - 1, 1).getDay();
         const lastDateOfMonth = new Date(currentYr, currentMth, 0).getDate();
         const lastDayOfMonth = new Date(currentYr, currentMth - 1, lastDateOfMonth).getDay();
@@ -105,7 +104,6 @@ document.addEventListener("DOMContentLoaded", function () {
         fetch(`./month-sched-view-query.php?filter=${filter}`)
             .then(response => response.json())
             .then(calendarData => {
-                console.log('Fetched data:', calendarData);
                 data = calendarData;
                 renderCalendar();
             })
@@ -117,7 +115,6 @@ document.addEventListener("DOMContentLoaded", function () {
     fetchData('all');
 
     dateFilterSelect.addEventListener("change", () => {
-        console.log('Filter changed');
         const selectedFilter = dateFilterSelect.value;
         fetchData(selectedFilter);
     });

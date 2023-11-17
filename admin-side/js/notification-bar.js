@@ -4,7 +4,7 @@ $(document).ready(function () {
     const notifBar = $('.notif-bar');
     const notifBtn = $('.notif-bar-btn');
     const notifDetails = $('.notif-details');
-    
+
     function updateNotifications(selectedType) {
         notifDetails.each(function () {
             const notifType = $(this).data('type');
@@ -31,7 +31,6 @@ $(document).ready(function () {
         const selectedType = $(this).data('type');
         console.log('Selected Type:', selectedType);
 
-        // Update notifications based on the selected tab
         updateNotifications(selectedType);
     });
 
@@ -67,7 +66,6 @@ $(document).ready(function () {
             const selectedType = $(this).data('type');
             console.log('Selected Type:', selectedType);
 
-            // Update notifications based on the selected tab
             updateNotifications(selectedType);
         });
     })

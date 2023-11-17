@@ -54,7 +54,7 @@
         </li>
         <li class="guest-profile">
             <div class="guest-profile-details">
-                <img src="../images/guest.png">
+                <img src="<?php echo $user['profile_picture'];?>">
                 <span class="guest-name">
                     <?php echo $userFirstName; ?>
                 </span>

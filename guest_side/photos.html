@@ -5,35 +5,93 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/guest-style.css">
+    <link rel="stylesheet" href="./lightbox2-2.11.4\dist\css\lightbox.css">
+        
     <title>Photos</title>
+    
 </head>
 <body>
     <div class="content-below">
+
         <div class="logo">
             <h1 style="font-weight: 600; font-size: 30px">Our venues</h1>
+            <i class="fa-solid fa-xmark" id="GalleryCloseBtn"></i>
         </div>
+
         <div class="photos">
             <div class="column">
-                <img src="../images/bg_from_net.jpg" alt="" srcset="">
-                <img src="../images/img_from_net.jpg" alt="" srcset="">
-                <img src="../images/img1.jpg" alt="" srcset="">
+                <a href="javascript:void(0);" onclick="openModal('../images/bg_from_net.jpg')">
+                    <img src="../images/bg_from_net.jpg" alt="" srcset="">
+                </a>
+                <a href="javascript:void(0);" onclick="openModal('../images/bgImage.png')">
+                    <img src="../images/bgImage.png" alt="" srcset="">
+                </a>
+                <a href="javascript:void(0);" onclick="openModal('../images/img1.jpg')">
+                    <img src="../images/img1.jpg" alt="" srcset="">
+                </a>
             </div>
+
             <div class="column">
-                <img src="../images/newImage.jpg" alt="" srcset="">
-                <img src="../images/bg_from_net.jpg" alt="" srcset="">
-                <img src="../images/img_from_net.jpg" alt="" srcset="">
+                <a href="javascript:void(0);" onclick="openModal('../images/img_from_net.jpg')">
+                    <img src="../images/img_from_net.jpg" alt="" srcset="">
+                </a>
+                <a href="javascript:void(0);" onclick="openModal('../images/img18.jpg')">
+                    <img src="../images/img18.jpg" alt="" srcset="">
+                </a>
+                <a href="javascript:void(0);" onclick="openModal('../images/img20.jpg')">
+                    <img src="../images/img20.jpg" alt="" srcset="">
+                </a>
             </div>
+
             <div class="column">
-                <img src="../images/bg_from_net.jpg" alt="" srcset="">
-                <img src="../images/img_from_net.jpg" alt="" srcset="">
-                <img src="../images/bg_from_net.jpg" alt="" srcset="">
+                <a href="javascript:void(0);" onclick="openModal('../images/img17.jpg')">
+                    <img src="../images/img17.jpg" alt="" srcset="">
+                </a>
+                <a href="javascript:void(0);" onclick="openModal('../images/img26.jpg')">
+                    <img src="../images/img26.jpg" alt="" srcset="">
+                </a>
+                <a href="javascript:void(0);" onclick="openModal('../images/img10.jpg')">
+                    <img src="../images/img10.jpg" alt="" srcset="">
+                </a>
             </div>
+            
             <div class="column">
-                <img src="../images/bg_from_net.jpg" alt="" srcset="">
-                <img src="../images/img_from_net.jpg" alt="" srcset="">
-                <img src="../images/bg_from_net.jpg" alt="" srcset="">
+                <a href="javascript:void(0);" onclick="openModal('../images/img18.jpg')">
+                    <img src="../images/img24.jpg" alt="" srcset="">
+                </a>
+                <a href="javascript:void(0);" onclick="openModal('../images/img9.jpg')">
+                    <img src="../images/img9.jpg" alt="" srcset="">
+                </a>
+                <a href="javascript:void(0);" onclick="openModal('../images/img25.jpg')">
+                    <img src="../images/img25.jpg" alt="" srcset="">
+                </a>
             </div>
+            
         </div>
     </div>
+
+    <div id="imageModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img id="modalImage" class="modal-content">
+    </div>
+
+    <script src="./lightbox2-2.11.4/src/js/lightbox.js"></script>
+
+    <script>
+       
+        function openModal(imgSrc) {
+            var modal = document.getElementById('imageModal');
+            var modalImg = document.getElementById('modalImage');
+
+            modal.style.display = 'block';
+            modalImg.src = imgSrc;
+        }
+           
+           function closeModal() {
+            var modal = document.getElementById('imageModal');
+            modal.style.display = 'none';
+        }
+    </script>
+
 </body>
 </html>

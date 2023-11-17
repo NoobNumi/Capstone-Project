@@ -2,78 +2,88 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <?php
-    session_name("user_session");
-    session_start();
-    require_once("../connection.php");
-    $invalid = 0;
-    $user_exist = 0;
+session_name("user_session");
+session_start();
+require_once("../connection.php");
+$invalid = 0;
+$user_exist = 0;
 
-    if (isset($_POST['submit'])) {
-        $first_name = $_POST['first_name'];
-        $last_name = $_POST['last_name'];
-        $email = $_POST['email'];
-        $password = ($_POST['password']);
-        $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-        $cpassword = ($_POST['cpassword']);
+if (isset($_POST['submit'])) {
+    $first_name = $_POST['first_name'];
+    $last_name = $_POST['last_name'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+    $cpassword = $_POST['cpassword'];
 
-        if ($password === $cpassword) {
+    if ($password === $cpassword) {
+        $profilePicture = $_FILES['profile_picture']; // Retrieve the uploaded file information
+        $profilePictureName = $profilePicture['name'];
+        $profilePictureTmpName = $profilePicture['tmp_name'];
+        $profilePictureError = $profilePicture['error'];
 
-            $query = $conn->prepare("SELECT * FROM `users` WHERE first_name = ? AND last_name = ?");
-            $query->bindValue(1, $first_name);
-            $query->bindValue(2, $last_name);
-            $query->execute();
-            $row = $query->fetch(PDO::FETCH_ASSOC);
+        if ($profilePictureError === UPLOAD_ERR_OK) {
+            // Specify the directory to save the uploaded profile picture
+            $uploadDirectory = "profile_pictures/";
+            $uploadedFilePath = $uploadDirectory . $profilePictureName;
 
-            if ($query->rowCount() > 0) {
-                $user_exist = 1;
-            } else {
-                $query = "INSERT INTO users (first_name, last_name, email, password) VALUES (:first_name, :last_name, :email, :password)";
-                $run_query = $conn->prepare($query);
+            // Move the uploaded file to the directory
+            if (move_uploaded_file($profilePictureTmpName, $uploadedFilePath)) {
+                // File moved successfully
+                $query = $conn->prepare("SELECT * FROM `users` WHERE first_name = ? AND last_name = ?");
+                $query->bindValue(1, $first_name);
+                $query->bindValue(2, $last_name);
+                $query->execute();
+                $row = $query->fetch(PDO::FETCH_ASSOC);
 
-                $data = [
-                    ':first_name' => $first_name,
-                    ':last_name' => $last_name,
-                    ':email' => $email,
-                    ':password' => $passwordHash
+                if ($query->rowCount() > 0) {
+                    $user_exist = 1;
+                } else {
+                    // Insert user data into the database, including the profile picture file path
+                    $query = "INSERT INTO users (first_name, last_name, email, password, profile_picture) VALUES (:first_name, :last_name, :email, :password, :profile_picture)";
+                    $run_query = $conn->prepare($query);
 
-                ];
+                    $data = [
+                        ':first_name' => $first_name,
+                        ':last_name' => $last_name,
+                        ':email' => $email,
+                        ':password' => $passwordHash,
+                        ':profile_picture' => $uploadedFilePath  // Store the file path in the database
+                    ];
 
-                $query_execute = $run_query->execute($data);
-                if ($query_execute) {
-                    echo
-                    '<script>
-                    $(document).ready(function () {
-                            Swal.fire({
-                                title: "Success!",
-                                text: "You have successfully signed up!",
-                                icon: "success",
-                                showConfirmButton: false,
-                                timer: 2500
-                            }).then(() => {
-                                window.location.href = "login.php";
-                            });
-                        });
-                    </script>';
+                    $query_execute = $run_query->execute($data);
+
+                    if ($query_execute) {
+                        echo '<script>
+                                $(document).ready(function () {
+                                    Swal.fire({
+                                        title: "Success!",
+                                        text: "You have successfully signed up!",
+                                        icon: "success",
+                                        showConfirmButton: false,
+                                        timer: 2500
+                                    }).then(() => {
+                                        window.location.href = "login.php";
+                                    });
+                                });
+                            </script>';
+                    }
                 }
+            } else {
+                // Handle file upload error (e.g., display a message)
             }
         } else {
-            $invalid = 1;
+            // Handle file upload error (e.g., display a message)
         }
+    } else {
+        $invalid = 1;
     }
+}
 
-    if ($invalid) {
-        echo '<div class="alert alert-danger" style="text-align:center; font-size: 1.2rem;">
-                <strong><i class="fa-solid fa-triangle-exclamation" style="margin-right: 12px"></i>Passwords dont match!</strong>
-                </div>';
-    }
-    if ($user_exist) {
-        echo '<div class="alert alert-danger" style="text-align:center; font-size: 1.2rem;">
-                <strong><i class="fa-solid fa-triangle-exclamation" style="margin-right: 12px";></i>User already exists!</strong>
-                </div>';
-    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -84,7 +94,13 @@
     <link rel="stylesheet" href="./css/guest-style.css">
     <title>Signup</title>
 </head>
-<body>
+<style>
+    .file-name {
+            margin-left: 10px;
+        }
+</style>
+
+<body style="overflow-x: hidden;">
     <section class="signup-page">
 
         <div class="first-navbar">
@@ -94,7 +110,7 @@
             </div>
         </div>
         <div class="signup-form">
-            <form class="signup" action="" method="POST">
+            <form class="signup" action="" method="POST" enctype="multipart/form-data">
                 <p class="title">Sign up</p>
                 <p class="message">All Fields are required </p>
                 <div class="flex">
@@ -123,11 +139,15 @@
                         <span>Confirm password</span>
                     </label>
                 </div>
+
                 <div class="flex">
-                    <input type="checkbox" required>
-                    <label for="checkbox">
-                        <p class="terms-and-conditions">I have read and agreed to the terms and conditions</p>
-                    </label>
+                    <div class="file-input-wrapper">
+                        <label class="file-input-label" for="profilePicture">
+                            <i class="fas fa-image"></i> Choose Profile Picture
+                        </label>
+                        <input type="file" name="profile_picture" id="profilePicture" accept="image/*">
+                    </div>
+                    <span class="file-name" id="fileName"></span>
                 </div>
                 <button class="btn-login-signup" type="submit" name="submit">SIGN UP</button>
                 <p class="signin">Already have an acount ? <a href="login.php" style="text-decoration: none;">Login</a> </p>
@@ -141,6 +161,18 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+    <script>
+        document.getElementById('profilePicture').addEventListener('change', function () {
+            const fileNameDisplay = document.getElementById('fileName');
+            const input = this;
+
+            if (input.files.length > 0) {
+                fileNameDisplay.textContent = input.files[0].name;
+            } else {
+                fileNameDisplay.textContent = 'Nothing here';
+            }
+        });
+    </script>
 </body>
 
 </html>

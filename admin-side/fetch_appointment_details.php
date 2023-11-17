@@ -3,7 +3,10 @@ require_once("../connection.php");
 
 $appointmentId = $_GET['appoint_id'];
 
-$sql = "SELECT * FROM appointment_record WHERE appoint_id = :appointmentId";
+$sql = "SELECT a.*, u.profile_picture
+        FROM appointment_record a
+        JOIN users u ON a.user_id = u.user_id
+        WHERE appoint_id = :appointmentId";
 $stmt = $conn->prepare($sql);
 $stmt->bindParam(':appointmentId', $appointmentId, PDO::PARAM_INT);
 $stmt->execute();

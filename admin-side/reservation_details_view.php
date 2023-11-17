@@ -14,10 +14,16 @@
                     </span>
                 </div>
                 <div class="section-one">
-                    <img src="/images/guest.png" class="guest-pfp">
-                    <div class="name-detail">
-                        <span class="detail-title">Name:</span>
-                        <span id="guest-name-details"></span>
+                    <div class="user-details">
+                        <img src="" class="guest-pfp">
+                        <div class="name-detail">
+                            <span class="detail-title">Name:</span>
+                            <span id="guest-name-details"></span>
+                        </div>
+                    </div>
+                    <div class="reserve-inf">
+                        <span class="detail-title">Transaction Number:<span class="transact-num"></span></span>
+                        <span class="detail-title">Reservation Type: <span class="reserve-type-text"></span></span>
                     </div>
                 </div>
                 <div class="section-two">
@@ -33,8 +39,6 @@
                         <span class="detail-title">Check Out: <br></span>
                         <span id="guest-check-out"></span>
                     </span>
-                </div>
-                <div class="section-two">
                     <span class="guest-date-details">
                         <span class="detail-title">Price: <br>₱ </span>
                         <span id="guest-price"></span>
@@ -44,14 +48,13 @@
                         <span id="guest-payment-method"></span>
                     </span>
                     <span class="guest-date-details">
-                        <span class="detail-title">Proof of Payment: <br></span>
+                        <span class="detail-title" id="proofPaymentTitle">Proof of Payment: <br></span>
                         <span id="guest-proof-of-payment">
                             <i class="fa-regular fa-image"></i>
                             <a href="" class="payment-proof">View proof of payment</a>
                         </span>
                     </span>
                 </div>
-
                 <div class="option-note">
                     <span class="material-symbols-outlined info-icon">
                         info

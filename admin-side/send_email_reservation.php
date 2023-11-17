@@ -10,7 +10,7 @@ require('../PHPMailer-master/src/SMTP.php');
 require('../fpdf186/fpdf.php');
 
 if (isset($_GET['reservation_id']) && isset($_GET['reservation_type'])) {
-    $reservationId = $_GET['reservation_id'];
+    $reservationId = isset($_GET['reservation_id']) ? $_GET['reservation_id'] : (isset($_GET['id']) ? $_GET['id'] : null);
     $reservationType = $_GET['reservation_type'];
 
     $tableMapping = [

@@ -4,58 +4,94 @@ $type = isset($_GET['data-type']) ? $_GET['data-type'] : 'all';
 
 $query = "SELECT 
     'reservation' AS type, 
+    'reception' AS reservation_type,
     reception_id AS id, 
-    user_id, 
-    first_name, 
-    last_name, 
-    timestamp AS timestamp
-FROM reception_reservation_record
+    r.user_id, 
+    r.first_name, 
+    r.last_name, 
+    r.timestamp AS timestamp,
+    r.is_read,
+    u.profile_picture
+FROM reception_reservation_record r
+JOIN users u ON r.user_id = u.user_id
+
 UNION
+
 SELECT 
     'reservation' AS type, 
+    'recollection' AS reservation_type,
     recollection_id AS id, 
-    user_id, 
-    first_name, 
-    last_name, 
-    timestamp AS timestamp
-FROM recollection_reservation_record
+    r.user_id, 
+    r.first_name, 
+    r.last_name, 
+    r.timestamp AS timestamp,
+    r.is_read,
+    u.profile_picture
+FROM recollection_reservation_record r
+JOIN users u ON r.user_id = u.user_id
+
 UNION
+
 SELECT 
     'reservation' AS type, 
+    'retreat' AS reservation_type,
     retreat_id AS id, 
-    user_id, 
-    first_name, 
-    last_name, 
-    timestamp AS timestamp
-FROM retreat_reservation_record
+    r.user_id, 
+    r.first_name, 
+    r.last_name, 
+    r.timestamp AS timestamp,
+    r.is_read,
+    u.profile_picture
+FROM retreat_reservation_record r
+JOIN users u ON r.user_id = u.user_id
+
 UNION
+
 SELECT 
     'reservation' AS type, 
+    'seminar' AS reservation_type,
     seminar_id AS id, 
-    user_id, 
-    first_name, 
-    last_name, 
-    timestamp AS timestamp
-FROM seminar_reservation_record
+    r.user_id, 
+    r.first_name, 
+    r.last_name, 
+    r.timestamp AS timestamp,
+    r.is_read,
+    u.profile_picture
+FROM seminar_reservation_record r
+JOIN users u ON r.user_id = u.user_id
+
 UNION
+
 SELECT 
     'reservation' AS type, 
+    'training' AS reservation_type,
     training_id AS id, 
-    user_id, 
-    first_name, 
-    last_name, 
-    timestamp AS timestamp
-FROM training_reservation_record
+    r.user_id, 
+    r.first_name, 
+    r.last_name, 
+    r.timestamp AS timestamp,
+    r.is_read,
+    u.profile_picture
+FROM training_reservation_record r
+JOIN users u ON r.user_id = u.user_id
+
 UNION
+
 SELECT 
     'appointment' AS type, 
+    '' AS reservation_type,
     appoint_id AS id, 
-    user_id, 
-    first_name, 
-    last_name, 
-    timestamp AS timestamp
-FROM appointment_record
+    a.user_id, 
+    a.first_name, 
+    a.last_name, 
+    a.timestamp AS timestamp,
+    a.is_read,
+    u.profile_picture
+FROM appointment_record a
+JOIN users u ON a.user_id = u.user_id
+
 ORDER BY timestamp DESC";
+
 
 $statement = $conn->prepare($query);
 $statement->execute();
@@ -64,7 +100,8 @@ $notifications = $statement->fetchAll(PDO::FETCH_ASSOC);
 $today = strtotime('today');
 $yesterday = strtotime('yesterday');
 
-function getTimePeriod($timestamp, $today, $yesterday) {
+function getTimePeriod($timestamp, $today, $yesterday)
+{
     if ($timestamp >= $today) {
         return 'Today';
     } elseif ($timestamp >= $yesterday) {
@@ -100,7 +137,6 @@ foreach ($notifications as $notification) {
                 <span class="notif-name active" data-type="all">All</span>
                 <span class="notif-name" data-type="reservations">Reservations</span>
                 <span class="notif-name" data-type="appointments">Appointments</span>
-                <div class="notif-name" data-type="posts">Posts</div>
                 <div class="notif-name-slider" role="presentation"></div>
             </div>
             <div class="notif-tags">
@@ -135,10 +171,15 @@ foreach ($notifications as $notification) {
                             $previousTimePeriod = $timePeriod;
 
                             $notifType = ($notification['type'] == 'appointment') ? 'appointments' : 'reservations';
+                            $dataId = $notification['id'];
+                            $reservationId = isset($notification['reservation_id']) ? $notification['reservation_id'] : $dataId;
+                            $reservationType = $notification['reservation_type'];
+                            $isRead = $notification['is_read'];
+
                     ?>
-                            <li class="notif-details" data-type="<?php echo $notifType; ?>">
+                            <li class="notif-details" data-type="<?php echo $notifType; ?>" data-id="<?php echo $dataId; ?>" data-reservation-id="<?php echo $reservationId; ?>" data-reservation-type="<?php echo $reservationType; ?>">
                                 <div class="notif-left-side">
-                                    <img src="../images/guest.png">
+                                    <img src="../guest_side/<?php echo $notification['profile_picture']; ?>">
                                     <p class="notif-about">
                                         <span class="notifier-name">
                                             <?php echo $notification['first_name'] . ' ' . $notification['last_name']; ?>
@@ -163,6 +204,7 @@ foreach ($notifications as $notification) {
                         }
                     }
                     ?>
+
                 </ul>
             </div>
         </div>

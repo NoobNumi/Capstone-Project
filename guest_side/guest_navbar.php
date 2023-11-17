@@ -1,3 +1,20 @@
+<?php
+// Check if the user is logged in
+if (isset($_SESSION['user_id'])) {
+    // Retrieve the user's profile picture path from the database
+    $user_id = $_SESSION['user_id'];
+    $sql = $conn->prepare("SELECT profile_picture FROM users WHERE user_id = :user_id");
+    $sql->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+    $sql->execute();
+
+    if ($sql->rowCount() > 0) {
+        $row = $sql->fetch(PDO::FETCH_ASSOC);
+        $_SESSION['user_profile_picture'] = $row['profile_picture'];
+    }
+}
+
+?>
+
 <div class="first-navbar">
     <a href="../index.php" class="logo" style="text-decoration: none;">
         <img src="../images/logo_trinitas.png">
@@ -19,11 +36,18 @@
                 </li>
                 <li><i class="fa-solid fa-user-plus fa-con"></i><a class="user-buttons" href="../guest_side/signup.php">Sign up</a></li>
             <?php } else { ?>
-                <li class="user-dropdown dropdown">
-                    <div class="profile-select" data-bs-toggle="dropdown">
-                        <img src="../images/guest.png" class="user-pfp" for="guest-link">
-                        <a href="#" style="display: none;" id="guest-link">Guest</a>
-                    </div>
+            <?php
+            if (isset($_SESSION['user_id'])) {
+                $profile_picture = isset($_SESSION['user_profile_picture']) ? $_SESSION['user_profile_picture'] : 'default_profile_picture.jpg';
+                echo '<div class="profile-select" data-bs-toggle="dropdown">';
+                echo '<img src="../guest_side/' . $profile_picture . '" class="user-profile-picture">';
+                echo '<a href="#" style="display: none;" id="guest-link">Guest</a>';
+                echo '</div>';
+            } else {
+                echo 'User is not logged in.'; // Add a message for debugging
+            }
+            ?>
+
                     <div class="dropdown-menu">
                         <?php
                             $user_id = $_SESSION['user_id'];
@@ -34,7 +58,7 @@
                                 $row = $sql->fetch(PDO::FETCH_ASSOC);
                             }
                         ?>
-                        <a class="dropdown-item dropdown-link-name" href="guest_side/guest_dashboard.php?user_id=<?php echo $_SESSION['user_id']; ?>"><i class="fa-solid fa-circle-user"></i> Profile</a>
+                        <a class="dropdown-item dropdown-link-name" href="guest_dashboard.php?user_id=<?php echo $_SESSION['user_id']; ?>"><i class="fa-solid fa-circle-user"></i> Profile</a>
                         <a class="dropdown-item dropdown-link-name" id="logout_click"><i class="fa-solid fa-right-from-bracket"></i>Logout</a>
                     </div>
                 </li>

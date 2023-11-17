@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             html += `
                         <li id="user-${user.user_id}" class="${user.li_class}">
                             <a href="admin-chat.php?user_id=${user.user_id}">
-                                <img src="../images/guest.png">
+                                <img src="../guest_side/${user.profile_picture}">
                                 <div class="msg-allText">
                                     <span class="guest-name">
                                         ${user.first_name} ${user.last_name}

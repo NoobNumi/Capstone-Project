@@ -25,9 +25,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             UNION ALL
             SELECT 'Appointment' AS type, user_id, first_name, last_name, street_add, city_municipality, province, postal_code, contact_no, NULL AS guest_count, appoint_sched_date AS check_in, appoint_sched_time AS check_out, appoint_description AS room_type, NULL AS catering, NULL AS price, appoint_status AS status, timestamp, is_read
             FROM appointment_record
-            UNION ALL
-            SELECT 'Announcement' AS type, user_id, NULL AS first_name, NULL AS last_name, NULL AS street_add, NULL AS city_municipality, NULL AS province, NULL AS postal_code, NULL AS contact_no, NULL AS guest_count, NULL AS check_in, NULL AS check_out, NULL AS room_type, NULL AS catering, NULL AS price, NULL AS status, timestamp, is_read
-            FROM announcements
             ORDER BY timestamp DESC
         ";
     } else {
@@ -37,9 +34,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 break;
             case 'Appointments':
                 $query = "SELECT 'Appointment' AS type, user_id, first_name, last_name, street_add, city_municipality, province, postal_code, contact_no, NULL AS guest_count, appoint_sched_date AS check_in, appoint_sched_time AS check_out, appoint_description AS room_type, NULL AS catering, NULL AS price, appoint_status AS status, timestamp, is_read FROM appointment_record";
-                break;
-            case 'Posts':
-                $query = "SELECT 'Announcement' AS type, user_id, NULL AS first_name, NULL AS last_name, NULL AS street_add, NULL AS city_municipality, NULL AS province, NULL AS postal_code, NULL AS contact_no, NULL AS guest_count, NULL AS check_in, NULL AS check_out, NULL AS room_type, NULL AS catering, NULL AS price, NULL AS status, timestamp, is_read FROM announcements";
                 break;
             default:
                 break;

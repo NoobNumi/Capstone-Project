@@ -1,8 +1,35 @@
 $(document).ready(function () {
+    const notifBar = $('.notif-bar');
+    $('.notif-details').click(function () {
+        const notifType = $(this).data('type');
+        const itemId = $(this).data('id');
+    
+        if (notifType === 'appointments') {
+            $.ajax({
+                url: 'fetch_appointment_details.php',
+                type: 'GET',
+                data: {
+                    appoint_id: itemId
+                },
+                success: function (response) {
+                    const appointment = JSON.parse(response);
+                    updateModalContent(appointment);
+    
+                    $('.confirm').attr('data-appointment-id', itemId);
+                    $('.cancel').attr('data-appointment-id', itemId);
+    
+                    showModal();
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log('AJAX error:', textStatus, errorThrown);
+                }
+            });
+        }
+    });
+    
     $('.notif-button').click(function (event) {
         event.preventDefault();
         const appointmentId = $(this).attr('data-appointment-id');
-        console.log('Notification button clicked with ID:', appointmentId);
 
         $.ajax({
             url: 'fetch_appointment_details.php',
@@ -31,7 +58,6 @@ $(document).ready(function () {
 
     $('.cancel').click(function () {
         const appointmentId = $(this).attr('data-appointment-id');
-        console.log('Cancel button clicked with ID:', appointmentId);
 
         hideModal();
         $('.confirm-modal-section').css('display', 'flex');
@@ -56,7 +82,6 @@ $(document).ready(function () {
 
     $('.confirm').click(function () {
         const appointmentId = $(this).attr('data-appointment-id');
-        console.log('Confirm button clicked with ID:', appointmentId);
         updateAppointmentStatus(appointmentId, 'confirmed');
         window.open('send_email_appointment.php?appoint_id=' + appointmentId, '_blank');
     });
@@ -65,6 +90,7 @@ $(document).ready(function () {
         $('.appointment-details-view').css('display', 'flex');
         $('.appointment-details-view').css('position', 'fixed');
         $('body').css('overflow', 'hidden');
+        notifBar.hide();
     }
 
     function hideModal() {
@@ -79,11 +105,19 @@ $(document).ready(function () {
     }
 
     function updateModalContent(appointment) {
-        $('#guest-name-details').text(appointment.first_name + ' ' + appointment.last_name);
-        $('#guest-date-details').text(appointment.appoint_sched_date);
-        $('#guest-time-details').text(appointment.appoint_sched_time);
-        $('#guest-agenda-details').text(appointment.appoint_description);
-
+        const guestNameElement = $('#guest-name-details');
+        const dateElement = $('#guest-date-details');
+        const timeElement = $('#guest-time-details');
+        const agendaElement = $('#guest-agenda-details');
+        const profilePictureElement = $('.guest-pfp');
+    
+        guestNameElement.text(appointment.first_name + ' ' + appointment.last_name);
+        dateElement.text(appointment.appoint_sched_date);
+        timeElement.text(appointment.appoint_sched_time);
+        agendaElement.text(appointment.appoint_description);
+        const profilePictureUrl = "../guest_side/" + appointment.profile_picture;
+        profilePictureElement.attr('src', profilePictureUrl);
+        
         const iconElement = $('.appointment-stat i');
 
         let iconClass;
@@ -139,7 +173,6 @@ $(document).ready(function () {
                 new_status: newStatus
             },
             success: function (response) {
-                console.log('Update appointment status response:', response);
                 const result = JSON.parse(response);
                 if (newStatus === 'confirmed' || newStatus === 'cancelled') {
                     displaySweetAlert(result.success, result, newStatus);
@@ -176,11 +209,6 @@ $(document).ready(function () {
             icon = 'error';
             text = typeof message === 'string' ? message : 'An error occurred';
         }
-
-        console.log('Displaying SweetAlert with:');
-        console.log('Title:', title);
-        console.log('Text:', text);
-        console.log('Icon:', icon);
 
         Swal.fire({
             title: title,

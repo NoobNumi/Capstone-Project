@@ -13,7 +13,7 @@ $admin_id = $_SESSION['admin_id'];
 
 try {
     $query = "
-    SELECT u.user_id, u.first_name, u.last_name, m.message, m.image_url, m.is_admin,
+    SELECT u.user_id, u.first_name, u.last_name, u.profile_picture, m.message, m.image_url, m.is_admin,
         CASE 
             WHEN m.is_admin = 1 THEN 1
             WHEN u.user_id = 1 AND m.is_admin != 1 THEN 0
@@ -90,7 +90,7 @@ try {
         $usersHtml .= "
         <li class='{$user['li_class']}'>
             <a href='admin-chat.php?user_id={$user['user_id']}'>
-                <img src='../images/guest.png'>
+                <img src='../guest_side/{$user['profile_picture']}'>
                 <div class='msg-allText'>
                     <span class='guest-name'>{$user['first_name']} {$user['last_name']}</span>
                     <p class='msg {$user['font_weight']}'>{$user['latest_message']}</p>

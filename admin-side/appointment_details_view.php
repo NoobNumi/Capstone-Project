@@ -14,7 +14,7 @@
                     </span>
                 </div>
                 <div class="section-one">
-                    <img src="/images/guest.png" class="guest-pfp">
+                    <img src="" class="guest-pfp">
                     <div class="name-detail">
                         <span class="detail-title">Name:</span>
                         <span id="guest-name-details"></span>
@@ -32,7 +32,7 @@
                 </div>
                 <div class="section-three">
                     <span class="detail-title">Agenda:</span>
-                    <p id="guest-agenda-details"></p>
+                    <p id="guest-agenda-details"><br></p>
                 </div>
                 <div class="option-note">
                     <span class="material-symbols-outlined info-icon">

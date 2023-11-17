@@ -1,5 +1,5 @@
 <?php
-require_once("connection.php");
+require_once("../connection.php");
 function getServiceDescriptions($serviceId) {
     $conn = new mysqli("localhost", "root", "", "trinitas");
 

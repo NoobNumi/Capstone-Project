@@ -153,7 +153,7 @@ ul.admin-navbar li a:hover {
 }
 
 
-.fa-regular,
+.fa-regular, .post-downlist .fa-solid,
 .links-names {
     color: #35435e;
 }
@@ -232,6 +232,22 @@ ul.admin-navbar li a:hover .fa-regular {
     overflow: hidden;
 }
 
+.post-downlist .downlist-menu {
+    position: relative;
+    max-height: 0;
+    overflow: hidden;
+    padding-left: 0;
+    transition: max-height 0.3s ease-in-out;
+}
+
+.post-downlist:hover .downlist-menu {
+    max-height: 400px;
+    padding-left: 0;
+}
+
+.downlist-menu li{
+    list-style: none;
+}
 @media screen and (max-width: 756px) {
     .admin-sidebar.closed {
         width: 55px;
@@ -294,7 +310,6 @@ section.admin-dashboard {
 
 .dashboard-header {
     display: flex;
-    width: inherit;
     justify-content: flex-end;
     align-items: center;
     height: 100px;
@@ -1335,6 +1350,20 @@ button.btn-admin-login:hover {
     overflow: hidden;
 }
 
+.post-users {
+    position: relative;
+    min-height: 100vh;
+    top: 0%;
+    left: 180px;
+    width: calc(100% - 170px);
+    margin: auto 15px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+}
+
 .admin-sidebar .reserve-appoint-header {
     left: 87px;
     width: calc(100% - 97px);
@@ -1343,7 +1372,8 @@ button.btn-admin-login:hover {
 
 .admin-appoint-header,
 .reserve-appoint-header,
-.admin-meal-header {
+.admin-meal-header,
+.admin-user-header {
     display: flex;
     justify-content: space-between;
     padding: 21px 0 0 0;
@@ -1394,23 +1424,33 @@ button.btn-admin-login:hover {
     border-radius: 10px;
 }
 
-.post-meals .meal-table {
-    width: inherit;
+.post-meals .meal-table,
+.post-users .user-table {
+    width: 100%;
     background-color: #ffff;
     padding: 10px 14px;
     border-radius: 10px;
-    margin-top: 110px;
 }
 
 
-.meal-table tr {
+.meal-table tr,
+.user-table tr {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 50px;
+    height: 70px;
 }
 
+.user-pfp{
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+}
+
+
 .meal-table td,
+th,
+.user-table td,
 th {
     width: 100%;
     display: flex;
@@ -1440,7 +1480,8 @@ th {
     width: 100%;
 }
 
-.admin-meal-header .left-section {
+.admin-meal-header .left-section,
+.admin-user-header .left-section {
     display: flex;
     flex-direction: row;
     align-items: baseline;
@@ -1464,7 +1505,7 @@ th {
 }
 
 
-:is(.notification-list, .post-meals)::-webkit-scrollbar {
+:is(.notification-list, .post-meals, .post-users)::-webkit-scrollbar {
     width: 0;
 }
 
@@ -1779,12 +1820,14 @@ span.status.cancelled {
     }
 
     section.reservations-list,
-    .post-meals {
+    .post-meals,
+    .post-users {
         left: 64px;
         width: calc(100% - 93px);
     }
 
-    .post-meals .admin-meal-header {
+    .post-meals .admin-meal-header,
+    .post-users .admin-user-header {
         flex-direction: column;
     }
 
@@ -1829,10 +1872,10 @@ span.status.cancelled {
         gap: 20px;
     }
 
-    .post-meals .meal-table {
+    .post-meals .meal-table,
+    .post-users .user-table {
         width: 100%;
         border-radius: 10px;
-        margin-top: 220px;
         position: relative;
         margin-left: auto;
         margin-right: auto;
@@ -1841,26 +1884,29 @@ span.status.cancelled {
     }
 
 
-    .meal-table tbody {
+    .meal-table tbody,
+    .user-table tbody {
         overflow-x: auto;
         max-width: 523px;
         padding: 10px 14px;
         width: 1000px;
     }
 
-    .meal-table tr th {
+    .meal-table tr th,
+    .user-table tr th {
         font-size: 14px;
     }
 
-    .meal-table tr td {
+    .meal-table tr td,
+    .user-table tr td {
         flex-wrap: nowrap;
         font-size: 14px;
         /* white-space: nowrap; */
     }
 
     .view-btn {
-        width: 50px;
-        height: 25px;
+        width: 79px;
+        height: 42px;
         display: inline;
         color: #fff;
         font-size: 12px;
@@ -2074,10 +2120,17 @@ header .current-date {
     border: none;
 }
 
-.option-buttons #cancel-button {
-    color: #333;
+.option-buttons #cancel-button:not([disabled]){
+    color: #303030;
     border: solid #959595 1px;
 }
+
+.option-buttons #cancel-button .disabled{
+    display: flex;
+    color: gray;
+    cursor: not-allowed;
+}
+
 
 
 @media screen and (max-width: 768px) {
@@ -2698,7 +2751,7 @@ section.reviews {
     display: none;
     align-items: center;
     height: 100vh;
-    width: calc(100% - 0);
+    width: 100%;
     justify-content: center;
     z-index: 2;
     position: absolute;
@@ -2717,13 +2770,18 @@ section.reviews {
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-
+.reservation-details-modal {
+    width: 50%;
+}
+.appointment-details-modal{
+    width: 30%;
+}
 .appointment-details-modal,
 .reservation-details-modal {
     background-color: #ffff;
     padding: 13px;
     border-radius: 10px;
-    width: 50%;
+    
 }
 
 .reservation-details-content,
@@ -2747,7 +2805,6 @@ section.reviews {
     margin-bottom: 20px;
 }
 
-.reservation-details-content .section-one,
 .appointment-details-content .section-one {
     display: flex;
     align-items: center;
@@ -2757,15 +2814,47 @@ section.reviews {
 
 .reservation-details-content .section-two,
 .appointment-details-content .section-two {
+    display: grid;
+    align-items: center;
+    gap: 25px;
+    margin-bottom: 30px;
+    grid-template-columns: 1fr 1fr;
+}
+
+
+.reservation-details-content .section-one{
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+}
+
+.section-one .user-details{
+    gap: 20px;
     margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+}
+
+.reserve-inf{
+    display: flex;
+    align-items: end;
+    flex-direction: column;
+    justify-content: end;
+    margin-bottom: 30px;
+}
+
+.transact-num,
+.reserve-type-text{
+    font-weight: 500;
+    color: #4b8d3b;
+    margin-left: 20px;
 }
 
 .guest-pfp {
     width: 70px;
     height: 70px;
+    border-radius: 50%;
 }
 
 .reservation-details-content .section-three,
@@ -2791,6 +2880,7 @@ section.reviews {
 .detail-title {
     font-weight: 700;
     font-size: 16px;
+    white-space: nowrap;
 }
 
 .option-note {
@@ -2818,7 +2908,11 @@ section.reviews {
 .reservation-stat i.fa-ban {
     color: #f73b3b;
 }
-
+@media screen and (max-width: 1176px) {
+    .appointment-details-modal {
+        width: 60%
+    }
+}
 
 @media screen and (max-width: 768px) {
 
@@ -2829,9 +2923,9 @@ section.reviews {
 
     .reservation-details-content .section-two {
         display: grid;
-        align-items: center;
-        grid-template-columns: 2fr 1fr;
-        gap: 10px;
+        align-items: flex-start;
+        grid-template-columns: 2fr 2fr;
+        gap: 20px;
     }
 
 }
@@ -3038,11 +3132,36 @@ section.reviews {
     border-radius: 10px
 }
 
+.discover-view-modal .input-details-view {
+    flex-direction: column;
+}
+
+.discover-view-modal .input-details-view input {
+    width: 100%;
+}
+
 .input-details-view {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
+
+.input-flex {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.discover-view-modal .input-details-view textarea {
+    width: 100%;
+    padding: 10px 14px;
+    margin: 10px 0;
+    height: 100px;
+    border: solid 1px #b3b3b3;
+    border-radius: 10px;
+    outline: none;
+}
+
 
 .edit-meal-details,
 .add-meal-details {
@@ -3113,6 +3232,7 @@ section.reviews {
     width: 100%;
     display: flex;
 }
+
 
 /* ------------------------------------------------------ NOTIFICATION PART -------------------------------------------- */
 .notification-open {
@@ -3260,6 +3380,10 @@ section.reviews {
     border-radius: 50%;
 }
 
+.notif-details.unread .unread-dot {
+    display: block;
+}
+
 .notif-number {
     margin-top: 5px;
     display: flex;
@@ -3282,10 +3406,11 @@ section.reviews {
 
 @media screen and (max-width: 768px) {
 
-    .notification-open{
+    .notification-open {
         top: 0;
     }
-    .notif-number{
+
+    .notif-number {
         right: 2px;
     }
 
@@ -3296,7 +3421,8 @@ section.reviews {
     .notification-list {
         height: 570px;
     }
-    .notif-name-slider{
+
+    .notif-name-slider {
         top: 24%;
     }
 }
@@ -3338,88 +3464,26 @@ section.announcements {
     flex-direction: row;
 }
 
-.post-actions {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 10px;
-}
-
-.post-actions p {
-    font-size: 14px;
-}
-
-.post-react,
-.post-comment,
-.post-share {
-    display: flex;
-    gap: 5px;
+.settings-icon span {
     cursor: pointer;
 }
 
-#like_react {
-    font-variation-settings:
-        'FILL' 0,
-        'wght' 700,
-        'GRAD' 200,
-        'opsz' 48
-}
-
-#like_react.clicked {
-    color: #ef5656;
-    font-variation-settings:
-        'FILL' 1,
-        'wght' 700,
-        'GRAD' 200,
-        'opsz' 48
-}
-
-.comment-details {
-    display: flex;
-    gap: 5px;
-}
-
-.comment-line,
-.comment-details {
-    display: none;
-}
-
-.comment-details img {
-    width: 40px;
-    height: 40px;
-}
-
-.comment-field {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px;
-    border-radius: 10px;
-}
-
-.comment-field textarea {
-    outline: none;
-    border: none;
+.drop-down-edit-menu {
+    position: absolute;
     width: 100%;
-    resize: none;
+    display: flex;
+    justify-content: end;
+    right: 250px;
 }
 
-.comment-field {
-    border: 1px solid #cdcdce;
-    width: 100vw;
+.menus-post {
+    width: 100px;
+    border-radius: 10px;
+    padding: 10px 14px;
+    background-color: #fff;
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px, rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;
+    list-style: none;
 }
-
-.send_comment {
-    color: #235789;
-    cursor: pointer;
-}
-
-.reach-bottom-text p {
-    color: #a2a2a3;
-    padding: 50px;
-    font-size: 14px;
-    text-align: center;
-}
-
 
 .posts {
     display: flex;
@@ -3453,8 +3517,8 @@ section.announcements {
 
 .share-post-modal {
     display: none;
-    position: fixed;
-    z-index: 1;
+    position: absolute;
+    z-index: 9999;
     padding-top: 100px;
     left: 0;
     top: 0;
@@ -3487,6 +3551,9 @@ section.announcements {
     padding-left: 0;
 }
 
+.separator p {
+    text-align: center;
+}
 
 .share-actions-top {
     display: flex;
@@ -3559,7 +3626,8 @@ li.copy-clipboard:hover {
     background-color: #235789;
 }
 
-.create-post{
+.create-post,
+.edit-post {
     display: none;
     justify-content: center;
     width: 100%;
@@ -3569,29 +3637,34 @@ li.copy-clipboard:hover {
     z-index: 999;
     position: absolute;
 }
-.create-post-modal{
+
+.create-post-modal,
+.edit-post-modal {
     width: 30%;
     background-color: #fff;
     padding: 20px;
     border-radius: 10px;
 }
 
-.create-post-modal header{
+.edit-post-modal header,
+.create-post-modal header {
     width: 100%;
     align-items: center;
     justify-content: space-between;
     display: flex;
     margin-bottom: 14px;
     gap: 12px;
-    
+
 }
 
-.create-post-modal .create-title{
+.edit-post-modal .edit-title,
+.create-post-modal .create-title {
     font-weight: 700;
     font-size: 20px;
 }
 
-.create-post-modal header .fa-xmark{
+.edit-post-modal header .fa-xmark,
+.create-post-modal header .fa-xmark {
     cursor: pointer;
 }
 
@@ -3625,22 +3698,25 @@ li.copy-clipboard:hover {
     cursor: pointer;
 }
 
-.create-post-form{
+.edit-post-form,
+.create-post-form {
     position: relative;
 }
 
-.create-post-form .profile-pic img{
+.-post-form .profile-pic img,
+.create-post-form .profile-pic img {
     height: 40px;
     width: 40px;
 }
 
 
-.create-post-button,
-.create-post-button .btn-view{
+.edit-post-button,
+.create-post-button {
     width: 100%;
 }
 
-.create-post-button .btn-view{
+.edit-post-button .btn-view,
+.create-post-button .btn-view {
     border: none;
     outline: none;
     height: 35px;
@@ -3648,15 +3724,19 @@ li.copy-clipboard:hover {
     color: #fff;
     font-weight: 600;
     background-color: #235789;
+    width: 100%;
+
 }
 
-.create-post-button .btn-view:hover{
+.edit-post-button .btn-view:hover,
+.create-post-button .btn-view:hover {
     transition: 0.5s ease;
     background-color: #142f49;
 }
 
 
-.create-post-form textarea{
+.edit-post-form textarea,
+.create-post-form textarea {
     width: 100%;
     margin-top: 10px;
     border-radius: 10px;
@@ -3665,27 +3745,31 @@ li.copy-clipboard:hover {
     outline: none;
     background-color: #ededed;
     font-size: 14px;
+    margin-bottom: 10px;
 }
 
-.photo-display-all{
+.photo-fetch-all,
+.photo-display-all {
     height: 200px;
     overflow-y: auto;
     display: none;
 }
 
-:is(.photo-display-all)::-webkit-scrollbar {
+:is(.photo-display-all, .photo-fetch-all)::-webkit-scrollbar {
     width: 0px;
 }
 
 
 
-.photo-container{
+.photo-fetch-container,
+.photo-container {
     width: 100%;
     border-radius: 10px;
     margin-bottom: 5px;
 }
 
-.photo-container i{
+.photo-fetch-container i,
+.photo-container i {
     position: relative;
     background-color: #303030;
     width: 30px;
@@ -3699,7 +3783,8 @@ li.copy-clipboard:hover {
     top: 32px;
 }
 
-.photo-container img{
+.photo-fetch-container img,
+.photo-container img {
     width: 100%;
     object-fit: cover;
     object-position: center;
@@ -3709,9 +3794,9 @@ li.copy-clipboard:hover {
     border-radius: 10px;
 }
 
-.add-photos{
+.add-photos,
+.replace-photos {
     width: 100%;
-    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
     margin-bottom: 5px;
     font-size: 13px;
     white-space: nowrap;
@@ -3723,6 +3808,70 @@ li.copy-clipboard:hover {
     background-color: #ededed;
     position: relative;
     cursor: pointer;
+    font-weight: 600;
+    border: solid #b6b6b6 1px;
+}
+
+.replace-photos:hover,
+.add-photos:hover {
+    background-color: #f7cc00;
+    color: #303030;
+    transition: 0.5s ease;
+}
+
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.image-item {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.image-item img {
+    width: 100%;
+    height: 100%;
+    max-height: 600px;
+    object-fit: cover;
+    object-position: center;
+    cursor: pointer;
+    background-size: cover;
+    background-position: center;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 24px;
+}
+
+.lightbox .lb-close {
+    top: 10px;
+    right: 10px;
+    position: fixed;
+}
+
+.more-photos {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    color: #fff;
+    font-size: 18px;
 }
 
 
@@ -3739,7 +3888,7 @@ li.copy-clipboard:hover {
 
     .post-card {
         background-color: #fff;
-        border-radius: 0;
+        border-radius: 10px;
     }
 
 
@@ -3747,14 +3896,383 @@ li.copy-clipboard:hover {
 
 @media screen and (max-width: 768px) {
 
-    .create-post-modal{
+    .edit-post-modal,
+    .create-post-modal {
         width: 60%;
     }
+
     section.announcements {
         left: 65px;
         position: relative;
         width: 81%;
         top: 54px;
 
+    }
+
+    .image-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+
+    .image-item {
+        height: 150px;
+        overflow: hidden;
+    }
+
+}
+
+/* ------------------------------------------------ discover VIEW MODAL -------------------------------------------- */
+.discover-view-modal,
+.add-discover-section {
+    height: 100vh;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    z-index: 2;
+    position: fixed;
+}
+
+
+.discover-view-header,
+.add-discover-header {
+    display: flex;
+    width: 100%;
+}
+
+.edit-details {
+    white-space: nowrap;
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.discover-view-header .close-button-details .add-discover-header .close-button-details {
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.discover-view-container,
+.add-discover-modal {
+    background-color: #fff;
+    width: 35%;
+    padding: 10px 14px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.discover-view-content,
+.add-discover-content {
+    width: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.discover-view-center,
+.add-discover-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.add-discover-center img,
+.discover-view-center img {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    height: 250px;
+    width: 70%;
+    object-fit: cover;
+    background-position: center;
+    object-position: center;
+    background-size: cover;
+}
+
+.change-photo {
+    height: 50px;
+    width: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    cursor: pointer;
+}
+
+.add-discover-center i,
+.discover-view-center i {
+    display: flex;
+    align-items: end;
+    bottom: 40px;
+    font-size: 40px;
+    color: #fff;
+}
+
+.add-discover-image {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+    height: 50px;
+    background-color: #f7cc00;
+    margin-bottom: 10px;
+    color: #303030;
+    font-weight: 600;
+    border-radius: 10px
+}
+
+.input-details-view {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.edit-discover-details,
+.add-discover-details {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+}
+
+.input-details-view input {
+    border: none;
+    outline: none;
+    background-color: #e0e0e0;
+}
+
+.input-details-view select {
+    width: 36%;
+}
+
+.input-details-view input,
+.input-details-view select,
+.option-buttons .save-btn,
+.option-buttons .del-btn {
+    padding: 10px 13px;
+    gap: 10px;
+}
+
+.add-button {
+    text-align: center;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    font-size: 14px;
+}
+
+.option-buttons .save-btn,
+.option-buttons .del-btn,
+.add-button {
+    width: 100%;
+    border: none;
+    outline: none;
+    margin-top: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.option-buttons .save-btn,
+.add-button {
+    background-color: #235789;
+    color: #fff;
+    text-align: center;
+}
+
+.option-buttons .save-btn:hover,
+.add-button:hover {
+    background-color: #14324e;
+    transition: 0.5s ease;
+}
+
+.option-buttons .del-btn:hover {
+    background-color: #c20114;
+    color: #fff;
+    transition: 0.5s ease;
+}
+
+.edit-discover-details .option-buttons {
+    width: 100%;
+    display: flex;
+}
+
+.post-discover {
+    position: relative;
+    min-height: 100vh;
+    top: 50%;
+    left: 180px;
+    width: calc(100% - 170px);
+    margin: auto 15px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+}
+
+.admin-discover-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 21px 0 0 0;
+    gap: 20px;
+    width: 80%;
+    position: fixed;
+    top: 0;
+    background-color: #ededed;
+    z-index: 1;
+    transition: all 0.5s ease;
+}
+
+
+.right-section .admin-title {
+    font-weight: 600;
+    line-height: 20px;
+    font-size: 25px;
+}
+
+
+.center-section {
+    width: 100%;
+}
+
+.center-section .search-bar-admin {
+    width: 100%;
+    background-color: #dedede;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0 10px 10px;
+    border-radius: 10px;
+}
+
+.post-discover .discover-table {
+    width: 100%;
+    background-color: #ffff;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border-collapse: collapse;
+}
+
+
+.discover-table tr {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+}
+
+.discover-table td,
+th {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.search-bar-admin input {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    width: inherit;
+    font-size: 16px;
+}
+
+.admin-discover-header .left-section {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 10px;
+    justify-content: flex-end;
+    color: #adadad;
+    cursor: pointer;
+    width: auto;
+}
+
+
+
+
+:is(.post-meals)::-webkit-scrollbar {
+    width: 0;
+}
+
+.table-container {
+    left: 8px;
+    position: relative;
+    width: calc(100% - 124px);
+    overflow-y: scroll;
+    height: 500px;
+    position: relative;
+    margin-top: 110px;
+}
+
+.discover-table .title-discover {
+    height: 100px;
+}
+
+
+
+@media screen and (max-width: 1294px) {
+
+    .discover-view-container,
+    .add-discover-modal {
+        background-color: #fff;
+        width: 60%;
+    }
+
+}
+
+@media only screen and (max-width: 768px) {
+    .post-discover .discover-table {
+        border-collapse: collapse;
+        width: 100%;
+        max-width: 100vw;
+        padding: 10px 14px;
+        margin-top: 20px;
+        z-index: 1;
+    }
+
+    .post-discover {
+        left: 54px;
+        width: 100%;
+    }
+
+    .admin-discover-header {
+        flex-direction: column;
+        left: 66px;
+        width: calc(100% - 66px);
+    }
+
+    .discover-table .title-discover {
+        white-space: nowrap;
+        display: flex;
+        align-items: center;
+        height: 100px;
+        padding: 10px 14px;
+    }
+
+    .discover-table td,
+    th {
+        width: 300px;
+    }
+
+    .table-container {
+        left: 0;
+        position: relative;
+        margin-top: 200px;
+        width: 100%;
+        overflow-x: scroll;
+    }
+
+    .admin-discover-header .left-section {
+        justify-content: space-between;
     }
 }

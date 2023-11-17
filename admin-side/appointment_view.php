@@ -20,11 +20,18 @@ if (isset($_SESSION['admin_id'])) {
 $appointmentId = '';
 
 try {
-    $sql = "SELECT * FROM appointment_record ORDER BY STR_TO_DATE(appoint_sched_date, '%M %d %Y') DESC";
+    $sql = "SELECT 
+                a.*, 
+                u.profile_picture
+            FROM appointment_record a
+            JOIN users u ON a.user_id = u.user_id
+            ORDER BY STR_TO_DATE(a.appoint_sched_date, '%M %d %Y') DESC";
+
     $result = $conn->query($sql);
 } catch (PDOException $e) {
     die("Error fetching data: " . $e->getMessage());
 }
+
 
 try {
     $sqlCount = "SELECT COUNT(*) AS total_appointments FROM appointment_record";
@@ -90,12 +97,13 @@ try {
                 $status = $row["appoint_status"];
                 $date = $row["appoint_sched_date"];
                 $time = $row["appoint_sched_time"];
+                $profile_picture = $row["profile_picture"];
 
                 if ($status === 'confirmed' || $status === 'pending' || $status === 'cancelled') {
                     $appointmentsExist = true;
                     echo '<div class="notification-card appoint searchable-card">';
                     echo '<div class="first-section">';
-                    echo '<img src="https://static.independent.co.uk/s3fs-public/thumbnails/image/2014/12/05/18/Ed-Sheeran.jpg">';
+                    echo '<img src="../guest_side/'.$profile_picture.'">';
                     echo '<div class="guest-details-admin">';
                     echo '<span class="guest">' . $userName . '</span>';
                     echo '<span class="status ' . $status . '" data-status="' . $status . '">';

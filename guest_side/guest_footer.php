@@ -4,12 +4,12 @@
             <ul>
                 <h6>Quick Links</h6>
                 <hr>
-                <li><a href="index.php">Home</a></li>
-                <li><a href="discover.html">Discover</a></li>
-                <li><a href="announcements.html">Announcements</a></li>
+                <li><a href="../index.php">Home</a></li>
+                <li><a href="discover.php">Discover</a></li>
+                <li><a href="announcements.php">Announcements</a></li>
                 <li><a href="#">About</a></li>
-                <li><a href="login.html">Login</a></li>
-                <li><a href="signup.html">Signup</a></li>
+                <li><a href="login.php">Login</a></li>
+                <li><a href="signup.php">Signup</a></li>
             </ul>
         </div>
         <div class="contact-info">

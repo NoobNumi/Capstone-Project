@@ -49,8 +49,13 @@ if (isset($_POST['submit'])) {
             if ($userRow && password_verify($password, $userRow['password'])) {
                 echo '<script>console.log("Logged in as Regular User");</script>';
                 $_SESSION['user_id'] = $userRow['user_id'];
+
+                $_SESSION['user_profile_picture'] = $userRow['profile_picture'];
+                if (isset($_POST['login'])) {
+                }
                 header('location: ../index.php');
                 exit();
+                
             } else {
                 session_destroy();
 
@@ -68,6 +73,8 @@ if ($invalid) {
                 <strong><i class="fa-solid fa-triangle-exclamation" style="margin-right: 12px";></i>Incorrect e-mail or password!</strong>
             </div>';
 }
+
+
 ?>
 
 
@@ -130,7 +137,7 @@ if ($invalid) {
                     </hr>
                 </div>
                 <div class="continue-browsing">
-                    <a class="btn-login-signup" href="../index.php">Continue browsing</a>
+                    <a class="btn-login-signup" href="index.php">Continue browsing</a>
                 </div>
                 <p class="signin">Don't have an account yet? <a href="signup.php" style="text-decoration: none;">Signup</a> </p>
                 <p class="copyright">Copyright &copy <script>

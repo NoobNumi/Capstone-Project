@@ -89,7 +89,7 @@ if (isset($_SESSION['admin_id'])) {
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="post-discover.php">
                     <i class="fa-solid fa-magnifying-glass"></i>
                     <span>Discover</span>
                 </a>

@@ -80,16 +80,17 @@ try {
                 <button class="add-btn">Add new</button>
             </div>
         </div>
-        <table class="meal-table">
-            <tr>
-                <th>Meal ID</th>
-                <th>Name</th>
-                <th>Category</th>
-                <th>Action</th>
-            </tr>
-            <?php
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                echo '<tr class="searchable-card">
+        <div class="table-container">
+            <table class="meal-table">
+                <tr>
+                    <th>Meal ID</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Action</th>
+                </tr>
+                <?php
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    echo '<tr class="searchable-card">
                     <td>' . sprintf("%03d", $row['meal_id']) . '</td>
                     <td>' . $row['meal_name'] . '</td>
                     <td>' . $row['mealCat_name'] . '</td>
@@ -97,9 +98,10 @@ try {
                         <button class="view-btn" data-meal-id="' . $row['meal_id'] . '">View</button>
                     </td>
                 </tr>';
-            }
-            ?>
-        </table>
+                }
+                ?>
+            </table>
+        </div>
         <div class="no-meals-message" style="
                 display: none;
                 width: inherit;

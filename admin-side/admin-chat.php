@@ -53,7 +53,7 @@ $unreadMessageCountHome = 2;
                     <a href="admin_messages.php">
                         <i class="fa-solid fa-arrow-left"></i>
                     </a>
-                    <img src="../images/guest.png">
+                    <img src="../guest_side/<?php echo $userData['profile_picture'];?>">
                     <span class="message-title">
                     <?php echo $userData['first_name']; ?>
                     </span>

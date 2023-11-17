@@ -6,6 +6,12 @@ if (!isset($_SESSION['user_id'])) {
     header("location: login.php");
 }
 
+$table1 = 'reception_reservation_record';
+$table2 = 'recollection_reservation_record';
+$table3 = 'retreat_reservation_record';
+$table4 = 'seminar_reservation_record';
+$training = 'training_reservation_record';
+
 $user_id = $_SESSION['user_id'];
 $sql = "SELECT * FROM appointment_record WHERE user_id = :user_id";
 $stmt = $conn->prepare($sql);
@@ -43,7 +49,10 @@ $allAppointments = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <section class="reservation-section">
         <div class="dash-content">
             <div class="profile-header">
-                <img src="../images/guest.png" class="profile-photo">
+                <?php
+                if (isset($_SESSION['user_id'])) {
+                 $profile_picture = isset($_SESSION['user_profile_picture']) ? $_SESSION['user_profile_picture'] : 'default_profile_picture.jpg';
+                    echo    '<img src="../guest_side/' . $profile_picture . '" class="user-profile-photo">';} ?>
                 <div class="guest-name-email">
                     <span class="g-name">
                         <?php echo $userName; ?>
@@ -96,6 +105,22 @@ $allAppointments = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         </div>
         <div class="reserve-appoint">
+             <?php if (isset($_GET['success'])) { ?>  
+               <div class="alert alert-success alert-dismissible fade show" role="alert">
+               <?php echo $_GET['success']; ?>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+          <?php } ?>
+          <?php if (isset($_GET['error'])) { ?>  
+               <div class="alert alert-danger alert-dismissible fade show" role="alert">
+               <?php echo $_GET['error']; ?>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+          <?php } ?>
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active" id="reserve-tab" data-bs-toggle="tab" data-bs-target="#reserve-tab-pane" type="button" role="tab" aria-controls="reserve-tab-pane" aria-selected="true">Reservations</button>
@@ -107,94 +132,55 @@ $allAppointments = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="reserve-tab-pane" role="tabpanel" aria-labelledby="reserve-tab" tabindex="0">
                     <div class="row row-cols-1 row-cols-md-2 g-4">
-                        <div class="col">
-                            <div class="card h-100">
-                                <div class="card-body">
-                                    <div class="header">
-                                        <div class="left-side">
-                                            <p class="service-name">Recollection</p>
-                                        </div>
-                                        <div class="right-side">
-                                            <span class="status-logo pending">
-                                                <i class="fa-solid fa-clock"></i>
-                                                Pending
-                                            </span>
-                                        </div>
+                         <?php $sql = "SELECT * FROM (
+                SELECT * FROM reception_reservation_record
+                UNION ALL
+                SELECT * FROM recollection_reservation_record
+                UNION ALL
+                SELECT * FROM retreat_reservation_record
+                UNION ALL
+                SELECT * FROM seminar_reservation_record
+                UNION ALL
+                SELECT * FROM training_reservation_record
+            ) AS all_reservations
+            WHERE user_id = $user_id;
+            ORDER BY STR_TO_DATE(timestamp, '%M %d %Y') DESC";
 
-                                    </div>
-                                    <ul>
-                                        <li>Check-in-date <p>11-21-2023</p>
-                                        </li>
-                                        <li>Check-out-date <p>11-30-2023</p>
-                                        </li>
-                                        <li>Total Amount <p>₱2000.00</p>
-                                        </li>
-                                    </ul>
-                                    <div class="d-grid gap-2 d-md-flex justify-content-center">
-                                        <a href="#" class="btn btn-update w-100">Update</a>
-                                        <a href="#" class="btn btn-cancel w-100">Cancel</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card h-100">
-                                <div class="card-body">
-                                    <div class="header">
-                                        <div class="left-side">
-                                            <p class="service-name">Training</p>
-                                        </div>
-                                        <div class="right-side">
-                                            <span class="status-logo cancelled">
-                                                <i class="fa-solid fa-ban"></i>
-                                                Cancelled
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <ul>
-                                        <li>Check-in-date <p>11-21-2023</p>
-                                        </li>
-                                        <li>Check-out-date <p>11-30-2023</p>
-                                        </li>
-                                        <li>Total Amount <p>₱8000.00</p>
-                                        </li>
-                                    </ul>
-                                    <a href="#" class="btn btn-update w-100">View</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card h-100">
-                                <div class="card-body">
-                                    <div class="header">
-                                        <div class="left-side">
-                                            <p class="service-name">Retreat</p>
-                                        </div>
-                                        <div class="right-side">
-                                            <span class="status-logo completed">
-                                                <i class="fa-solid fa-circle-check"></i>
-                                                Completed
-                                            </span>
-                                        </div>
+        $result = $conn->query($sql); ?>
+        <?php while ($row = $result->fetch(PDO::FETCH_ASSOC)) { ?>
+                                <div class="col">
+                                    <div class="card h-100">
+                                        <div class="card-body">
+                                            <div class="header">
+                                                <div class="left-side">
+                                                    <p class="service-name"><?php echo $row['package']; ?></p>
+                                                </div>
+                                                <div class="right-side">
+                                                <span class="status-logo completed">
+                                                        <i class="fa-solid fa-circle-check"></i>
+                                                        <?php echo $row['status']; ?>
+                                                    </span>
+                                                </div>
 
-                                    </div>
-                                    <ul>
-                                        <li>Check-in-date <p>11-21-2023</p>
-                                        </li>
-                                        <li>Check-in-date <p>11-30-2023</p>
-                                        </li>
-                                        <li>Total Amount <p>₱23000.00</p>
-                                        </li>
-                                    </ul>
-                                    <div class="d-grid gap-2 d-md-flex justify-content-center">
-                                        <a href="#" class="btn btn-update w-100">Update</a>
-                                        <a href="#" class="btn btn-cancel w-100">Cancel</a>
+                                            </div>
+                                            <ul>
+                                                <li>Check-in-date <p><?php echo $row['check_in']; ?></p>
+                                                </li>
+                                                <li>Check-out-date <p><?php echo $row['check_out']; ?></p>
+                                                </li>
+                                                <li>Total Amount <p><?php echo $row['price']; ?></p>
+                                                </li>
+                                            </ul>
+                                            <div class="d-grid gap-2 d-md-flex justify-content-center">
+                                                <a href="#" class="btn btn-update w-100">Update</a>
+                                                <a href="#" class="btn btn-cancel w-100">Cancel</a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                                <?php
+                    }
+            ?>
                 <div class="tab-pane fade" id="appoint-tab-pane" role="tabpanel" aria-labelledby="appoint-tab" tabindex="0">
                     <div class="row row-cols-1 row-cols-md-2 g-4">
                         <?php foreach ($allAppointments as $appointment) : ?>

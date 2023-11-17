@@ -6,7 +6,7 @@
                     Are you sure you want to logout?
                 </span>
                 <div class="logout-buttons">
-                    <a href="../guest_side/logout.php"><button class="btn-logout" id="btn_confirm">
+                    <a href="logout.php"><button class="btn-logout" id="btn_confirm">
                         Confirm
                     </button></a>
                     <button class="btn-logout" id="btn_cancel" onclick="closeModal()">
