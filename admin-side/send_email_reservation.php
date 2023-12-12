@@ -1,3 +1,23 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<style>
+    .loading-overlay {
+        display: none;
+    }
+    .spinner{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100vh;
+    }
+    .spinner-border{
+        height: 100px;
+        width: 100px;
+    }
+</style>
+
 <?php
 
 use PHPMailer\PHPMailer\PHPMailer;
@@ -10,6 +30,12 @@ require('../PHPMailer-master/src/SMTP.php');
 require('../fpdf186/fpdf.php');
 
 if (isset($_GET['reservation_id']) && isset($_GET['reservation_type'])) {
+
+    echo '<div class="d-flex justify-content-center spinner">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>';
     $reservationId = isset($_GET['reservation_id']) ? $_GET['reservation_id'] : (isset($_GET['id']) ? $_GET['id'] : null);
     $reservationType = $_GET['reservation_type'];
 
@@ -37,15 +63,13 @@ if (isset($_GET['reservation_id']) && isset($_GET['reservation_type'])) {
         if ($result) {
             $first_name = $result['first_name'];
             $last_name = $result['last_name'];
-            $street_add = $result['street_add'];
-            $city_municipality = $result['city_municipality'];
-            $province = $result['province'];
             $email = $result['email'];
             $contact_no = $result['contact_no'];
-            $guest_count = $result['guest_count'];
+            $guest_count = $result['guest'];
             $check_in = $result['check_in'];
             $check_out = $result['check_out'];
-            $price = $result['price'];
+            $package = $result['package'];
+            $total = $result['total'];
             $payment_method = $result['payment_method'];
             $status = $result['status'];
 
@@ -61,17 +85,12 @@ if (isset($_GET['reservation_id']) && isset($_GET['reservation_type'])) {
             $pdf->Ln(20);
 
 
-            $fullAddress = $street_add . ', ' . $city_municipality . ', ' . $province;
             $pdf->SetFont('Arial', 'B', 14);
             $pdf->Cell(0, 10, 'Reservation Slip', 0, 1, 'C');
             $pdf->SetFont('Arial', 'B', 12);
             $pdf->Cell(35, 10, 'Reservation ID:', 0);
             $pdf->SetFont('Arial', '', 12);
             $pdf->Cell(70, 10, $reservationId, 0, 1);
-
-            $pdf->SetFont('Arial', 'B', 12);
-            $pdf->Cell(0, 10, 'Date: _________________', 0, 1);
-            $pdf->Cell(0, 10, 'Time: _________________', 0, 1);
             $pdf->Ln(10);
             $pdf->Ln(10);
 
@@ -85,11 +104,6 @@ if (isset($_GET['reservation_id']) && isset($_GET['reservation_type'])) {
             $pdf->Cell(25, 10, 'Email:', 0);
             $pdf->SetFont('Arial', '', 12);
             $pdf->Cell(70, 10, $email, 0, 1);
-
-            $pdf->SetFont('Arial', 'B', 12);
-            $pdf->Cell(35, 10, 'Address: ', 0);
-            $pdf->SetFont('Arial', '', 12);
-            $pdf->Cell(0, 10, $fullAddress, 0, 1);
 
             $pdf->SetFont('Arial', 'B', 12);
             $pdf->Cell(35, 10, 'Contact no:', 0);
@@ -109,7 +123,9 @@ if (isset($_GET['reservation_id']) && isset($_GET['reservation_type'])) {
 
             $pdf->SetX(-90);
             $pdf->SetFont('Arial', 'B', 12);
-            $pdf->Cell(70, 10, 'Type of Package: ', 0, 1);
+            $pdf->Cell(35, 10, 'Type of Package:');
+            $pdf->SetFont('Arial', '', 12);
+            $pdf->Cell(70, 10, $package, 0, 1);
 
             $pdf->SetFont('Arial', 'B', 12);
             $pdf->Cell(35, 10, 'Check in:', 0);
@@ -125,7 +141,7 @@ if (isset($_GET['reservation_id']) && isset($_GET['reservation_type'])) {
             $pdf->SetFont('Arial', 'B', 12);
             $pdf->Cell(35, 10, 'Total Amount:', 0);
             $pdf->SetFont('Arial', '', 12);
-            $pdf->Cell(70, 10, 'PHP '. number_format($price, 2), 0);
+            $pdf->Cell(70, 10, 'PHP ' . number_format($total, 2), 0);
 
             $pdf->SetX(-90);
             $pdf->SetFont('Arial', 'B', 12);
@@ -150,8 +166,8 @@ if (isset($_GET['reservation_id']) && isset($_GET['reservation_type'])) {
             $pdfPath = __DIR__ . '/' . $pdfFilename;
             $pdf->Output($pdfPath, 'F');
 
-
             $mail = new PHPMailer(true);
+
 
             try {
                 $mail->isSMTP();
@@ -172,12 +188,18 @@ if (isset($_GET['reservation_id']) && isset($_GET['reservation_type'])) {
                 $mail->Body = '<p>Dear ' .  $first_name . ',</p><p>Your reservation has been confirmed for the following details:</p><p>Check In: ' . $check_in . '</p><p>Check Out: ' . $check_out . '</p><p>Payment Method: ' . $payment_method . '</p><p>See attached for reservation details.</p><p>See you soon!</p>';
 
                 $mail->send();
-                echo 'Email sent!';
+                echo '<script>
+                    $("#loading-overlay").modal("hide");
+            
+                    window.location.href = "reservation-view.php";
+                </script>';
             } catch (Exception $e) {
-                error_log($errorInfo, 3, 'email_errors.log');
-                echo 'Email sending failed: ', $mail->ErrorInfo;
-            }
+                echo '<script>
+                    $("#loading-overlay").modal("hide");
 
+                    alert("Email sending failed: ' . $mail->ErrorInfo . '");
+                </script>';
+            }
             unlink($pdfPath);
         } else {
             echo "No data found for the reservation ID.";
@@ -189,8 +211,14 @@ if (isset($_GET['reservation_id']) && isset($_GET['reservation_type'])) {
 
 ?>
 
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 <script>
-    setTimeout(function () {
-        window.close();
-    }, 1000); 
+    $(document).ready(function() {
+        $(".loading-overlay").removeClass("d-none");
+        setTimeout(function() {
+            window.close();
+        }, 1000);
+    });
 </script>

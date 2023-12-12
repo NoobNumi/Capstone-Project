@@ -4,10 +4,11 @@
                 <div class="close-btn">
                     <i class="fa-solid fa-xmark" id="closeBTN"></i>
                 </div>
-                <i class="fa-solid fa-calendar-days"></i>
-                <span>What schedule would like to create?</span>
+                <i class="fa-solid fa-calendar-xmark"></i>
+                <p class="busy-date-msg">Add busy schedules</p>
+                <span>What service would you want to add unavailable dates?</span>
                 <div class="buttons-section">
-                    <a href="#" class="btn-reserve">Reservation</a>
+                    <a id="reserveAdd" class="btn-reserve">Reservation</a>
                     <a class="btn-appoint" id="appointAdd">Appointment</a>
                 </div>
             </div>
@@ -23,7 +24,6 @@
                 modalAddSched.style.display = 'flex';
                 document.body.style.overflow = 'hidden';
                 modalAddSched.style.position = 'fixed';
-                console.log('Modal opened');
             }
 
             function closeModal() {

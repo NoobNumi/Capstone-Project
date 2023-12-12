@@ -41,14 +41,22 @@ include("./today_sched_query.php");
 <body style="overflow-x: hidden;">
     <?php
     include("add-sched-modal.php");
+    include("add_available_reservation_dates.php");
+    include("add_unavailable_reservation_dates.php");
     include("admin_create_sched.php");
     ?>
     <section class="schedule-view">
         <?php include "./admin_sidebar.php"; ?>
         <div class="sched-view-header">
             <span class="docu-name">Calendar</span>
-            <div class="dashboard-header">
-                <a class="add-button" id="addButton"><i class="fa-solid fa-plus"></i>Add Schedule</a>
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa-solid fa-plus"></i> Add Dates
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" id="addAvailableReserveBtn"><i class="fa-solid fa-calendar-check"></i>Add Available Reservation Dates</a></li>
+                    <li><a class="dropdown-item" id="addButton"><i class="fa-solid fa-calendar-xmark"></i>Add Unavailable Dates</a></li>
+                </ul>
             </div>
         </div>
         <div class="main-content-sched">
@@ -61,7 +69,7 @@ include("./today_sched_query.php");
 
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     echo '<li class="person">
-                                <img src="/images/guest.png">
+                                <img src="../guest_side/' . $row['profile_picture'] . '">
                                 <div class="important-details">
                                     <span class="record-type">' . ucfirst($row['type']) . '</span>
                                     <span class="date-sched">' . ($row['type'] === 'appointment' ? $row['time'] : '') . '</span>
@@ -86,39 +94,27 @@ include("./today_sched_query.php");
             }
             ?>
             <div class="sched-calendar-view">
+                <div class="service-viewer-content">
+                    <!-- SERVICES FOR THE SELECTED DATE WILL DISPLAY HERE -->
+                </div>
                 <header>
-                    <div class="filtering">
-                        <span class="date-btn active">
-                            Month
-                        </span>
-                        <span class="date-btn">
-                            Week
-                        </span>
-                        <span class="date-btn">
-                            Day
-                        </span>
-                    </div>
                     <div class="icons">
                         <button id="prev-btn" class="material-symbols-rounded calendar-btn">chevron_left</button>
                         <p class="current-newDate"></p>
                         <button id="next-btn" class="material-symbols-rounded calendar-btn">chevron_right</button>
                     </div>
-
-                    <select name="options" id="filter-select">
-                        <option value="all">All</option>
-                        <optgroup label="Reservations">
-                            <option value="all_reservations">All Reservations</option>
-                            <option value="seminar">Seminar</option>
-                            <option value="trainings">Trainings</option>
-                            <option value="reception">Reception</option>
-                            <option value="recollection">Recollection</option>
-                            <option value="retreat">Retreat</option>
-                        </optgroup>
-                        <option value="appointment">Appointment</option>
-                    </select>
-
+                    <div id="filter-select" hidden></div>
                 </header>
                 <div class="calendar">
+                    <ul class="weekdays">
+                        <li>Sun</li>
+                        <li>Mon</li>
+                        <li>Tue</li>
+                        <li>Wed</li>
+                        <li>Thu</li>
+                        <li>Fri</li>
+                        <li>Sat</li>
+                    </ul>
                     <ul class="days-calendar">
                         <?php
                         include("./month-sched-view-query.php");
@@ -152,7 +148,7 @@ include("./today_sched_query.php");
                                 if ($appointCount > 0) {
                                     echo '<span class="color-guide appoint">
                                             <i class="fa-solid fa-calendar-check appoint-con"></i>
-                                                Appoints
+                                            <span class="service-name"> Appoints </span>
                                             </span>';
                                 }
 
@@ -160,13 +156,13 @@ include("./today_sched_query.php");
                                     if ($appointCount > 0) {
                                         echo '<span class="color-guide reserve">
                                         <i class="fa-solid fa-clipboard-list reserve-con"></i>
-                                            Reserves
+                                            <span class="service-name"> Reserves </span>
                                             <div class="total-list-count">' . ($appointCount + $reserveCount) . '</div>
                                         </span>';
                                     } else {
                                         echo '<span class="color-guide reserve">
                                         <i class="fa-solid fa-clipboard-list reserve-con"></i>
-                                            Reserves
+                                            <span class="service-name"> Reserves </span>
                                         <div class="total-list-count">' . $reserveCount . '</div>
                                         </span>';
                                     }
@@ -184,10 +180,14 @@ include("./today_sched_query.php");
         <?php require("logout_modal.php"); ?>
     </section>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="./js/addAvailableReserveDates.js"></script>
+    <script src="./js/add_sched_modal.js"></script>
+    <script src="./js/calendar-view.js"></script>
     <script src="./js/users.js"></script>
+    <script src="./js/renderReserveCalendar.js"></script>
     <script src="./js/render_calendar.js"></script>
     <script src="./js/sidebar-animation.js"></script>
-    <script src="./js/calendar-view.js"></script>
+    <script src="./js/sidebar-closing.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
 </body>

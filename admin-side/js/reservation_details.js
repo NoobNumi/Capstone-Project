@@ -6,8 +6,19 @@ $(document).ready(function () {
     const confirmButtons = $('#confirm-button');
     const notifBar = $('.notif-bar');
 
+    $(document).on('click', '.notif-details', function () {
+        const notifType = $(this).data('type');
+        const itemId = $(this).data('id');
+        const reservationType = $(this).data('reservation-type');
+
+        console.log('Notification clicked! Type:', notifType, 'ID:', itemId, 'Reservation Type:', reservationType);
+
+        if (notifType === 'reservation') {
+            handleReservationClick(itemId, reservationType);
+        }
+    });
+
     function fetchReservationDetails(reservationId, reservationType) {
-        console.log('Fetching reservation details for reservation type:', reservationType);
         return $.ajax({
             type: 'GET',
             url: 'fetch_reservation_details.php',
@@ -18,7 +29,6 @@ $(document).ready(function () {
             dataType: 'json'
         });
     }
-    
 
     function handleReservationClick(itemId, reservationType) {
         fetchReservationDetails(itemId, reservationType)
@@ -27,7 +37,6 @@ $(document).ready(function () {
                 confirmButtons.add(cancelButtons).each(function (index, button) {
                     $(button).data('reservation-id', itemId).data('reservation-type', reservationType);
                 });
-                console.log('Show reservation modal');
                 showReservationModal();
             })
             .fail(function (jqXHR, textStatus, errorThrown) {
@@ -35,25 +44,12 @@ $(document).ready(function () {
             });
     }
 
-    notifDetails.click(function () {
-        const notifType = $(this).data('type');
-        const itemId = $(this).data('id');
-        const reservationType = $(this).data('reservation-type');
-
-        console.log('Notification clicked! Type:', notifType, 'ID:', itemId, 'Reservation Type:', reservationType);
-
-        if (notifType === 'reservations') {
-            handleReservationClick(itemId, reservationType);
-        }
-    });
 
     notifButtons.on('click', function (event) {
         event.preventDefault();
 
         const reservationId = $(this).data('reservation-id') || $(this).data('id');
         const reservationType = $(this).data('reservation-type');
-        console.log('Notification button clicked with ID:', reservationId);
-        console.log('Reservation Type:', reservationType);
 
         handleReservationClick(reservationId, reservationType);
     });
@@ -66,7 +62,6 @@ $(document).ready(function () {
         $(cancelButton).on('click', function () {
             const reservationId = $(this).data('reservation-id') || $(this).data('id');
             const reservationType = $(this).data('reservation-type');
-            console.log('Cancel button clicked with ID:', reservationId);
 
             hideReservationModal();
             $('.question-text').text('Are you sure you want to cancel this reservation?');
@@ -100,15 +95,12 @@ $(document).ready(function () {
         $(confirmButton).on('click', function () {
             const reservationId = $(this).data('reservation-id') || $(this).data('id');
             const reservationType = $(this).data('reservation-type');
-            console.log('Confirm button clicked with ID:', reservationId);
-            console.log('Reservation Type (Confirm Button):', reservationType);
             updateReservationStatus(reservationId, 'confirmed', reservationType);
             window.open('send_email_reservation.php?reservation_id=' + reservationId + '&reservation_type=' + reservationType, '_blank');
         });
     });
 
     function showReservationModal() {
-        console.log('showReservationModal function is called.');
         const reservationDetailsView = $('.reservation-details-view');
         reservationDetailsView.css('display', 'flex');
         $('body').css('overflow', 'hidden');
@@ -129,26 +121,51 @@ $(document).ready(function () {
 
     function capitalizeFirstLetter(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
-    }    
+    }
+
+    function getUserRole(callback) {
+        $.ajax({
+            url: 'get_user_role.php',
+            type: 'GET',
+            success: function (response) {
+                const data = JSON.parse(response);
+                callback(data.userRole);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log('AJAX error:', textStatus, errorThrown);
+                // Handle error appropriately
+            }
+        });
+    }
 
     function updateModalContent(reservation, reservationType) {
         const guestNameElement = $('#guest-name-details');
         const transactionNum = $('.transact-num');
         const contactInfoElement = $('#guest-contact-details');
+        const packageType = $('#guest-package-type');
         const checkInElement = $('#guest-check-in');
         const checkOutElement = $('#guest-check-out');
         const priceElement = $('#guest-price');
+        const guestNumber = $('#guest-number');
+        const formattedTotal = parseFloat(reservation.total).toFixed(2);
         const paymentMethodElement = $('#guest-payment-method');
         const proofOfPaymentElement = $('#guest-proof-of-payment');
         const profilePictureElement = $('.guest-pfp');
         const reserveType = $('.reserve-type-text');
+        const mealOne = $('#meal1');
+        const mealTwo = $('#meal2');
+        const mealThree = $('#meal3');
+        const dessert = $('#dessert');
+        const drinks = $('#drinks');
 
-        guestNameElement.text(reservation.first_name + ' ' + reservation.last_name);
+        guestNameElement.text(reservation.first_name);
         transactionNum.text(reservation.transaction_num);
         contactInfoElement.text(reservation.contact_no);
+        packageType.text(reservation.package);
+        guestNumber.text(reservation.guest);
         checkInElement.text(reservation.check_in);
         checkOutElement.text(reservation.check_out);
-        priceElement.text(reservation.price);
+        priceElement.text('₱' + parseFloat(formattedTotal).toLocaleString('en-US'));
         paymentMethodElement.text(reservation.payment_method);
         const profilePictureUrl = "../guest_side/" + reservation.profile_picture;
         profilePictureElement.attr('src', profilePictureUrl);
@@ -158,6 +175,26 @@ $(document).ready(function () {
         proofOfPaymentLink.attr('href', proofOfPaymentURL);
         const capitalizedReservationType = capitalizeFirstLetter(reservationType);
         reserveType.text(capitalizedReservationType);
+        mealOne.text(reservation.breakfast);
+        mealTwo.text(reservation.lunch);
+        mealThree.text(reservation.dinner);
+        dessert.text(reservation.dessert);
+        drinks.text(reservation.drinks);
+
+        if (reservation.package === 'Venue-Only Package') {
+            const mealViewCustomer = $('.meal-view-customer');
+            mealViewCustomer.hide();
+        }
+
+        const inOrderElement = $('.in-order');
+
+        if (reservation.package === 'Catering Package') {
+            const textToUpdate = '(In this order: 3 Meals, Drinks, and Dessert)';
+            inOrderElement.text(textToUpdate);
+        } else {
+            const textToUpdate = '(In this order: Breakfast, Lunch, Dinner, Drinks, Dessert)';
+            inOrderElement.text(textToUpdate);
+        }
 
         if (reservation.payment_method.toLowerCase() === 'pay-on-site') {
             proofOfPaymentElement.hide();
@@ -183,24 +220,32 @@ $(document).ready(function () {
 
         const cancelButton = $('#cancel-button');
         const confirmButton = $('#confirm-button');
+        const noteModal = $('#noteModal');
 
-        if (reservation.status === 'pending') {
-            cancelButton.css('display', 'flex');
-            confirmButton.css('display', 'flex');
-        } else if (reservation.status === 'confirmed') {
-            cancelButton.css('display', 'flex');
-            confirmButton.css('display', 'none');
-        } else if (reservation.status === 'cancelled') {
-            cancelButton.css('display', 'flex');
-            confirmButton.css('display', 'none');
-            cancelButton.prop('disabled', true);
-        } else {
-            cancelButton.css('display', 'flex');
-            confirmButton.css('display', 'flex');
-            cancelButton.prop('disabled', false);
-        }
+        getUserRole(function (userRole) {
+            if (userRole === 'assistant') {
+                noteModal.hide();
+                cancelButton.hide();
+                confirmButton.hide();
+            } else {
+                if (reservation.status === 'pending') {
+                    cancelButton.css('display', 'flex');
+                    confirmButton.css('display', 'flex');
+                } else if (reservation.status === 'confirmed') {
+                    cancelButton.css('display', 'flex');
+                    confirmButton.css('display', 'none');
+                } else if (reservation.status === 'cancelled') {
+                    cancelButton.css('display', 'flex');
+                    confirmButton.css('display', 'none');
+                    cancelButton.prop('disabled', true);
+                } else {
+                    cancelButton.css('display', 'flex');
+                    confirmButton.css('display', 'flex');
+                    cancelButton.prop('disabled', false);
+                }
+            }
+        });
     }
-
 
     function updateReservationStatus(reservationId, newStatus, reservationType) {
         $.ajax({
@@ -212,7 +257,6 @@ $(document).ready(function () {
                 reservation_type: reservationType
             },
             success: function (response) {
-                console.log('Update reservation status response:', response);
                 const result = JSON.parse(response);
                 if (newStatus === 'confirmed' || newStatus === 'cancelled') {
                     displaySweetAlert(result.success, result, newStatus);
@@ -227,7 +271,6 @@ $(document).ready(function () {
         });
     }
 
-
     function displaySweetAlert(success, message, action) {
         let title, icon, text;
 
@@ -236,13 +279,11 @@ $(document).ready(function () {
             icon = 'success';
             text = `${message.first_name}'s reservation has been confirmed and is set on ${message.check_in}. We have notified ${message.first_name} with the reservation!`;
             hideReservationModal();
-            location.reload();
         } else if (action === 'cancelled') {
             title = 'Reservation canceled!';
             icon = 'error';
             text = `The reservation for ${message.first_name} has been cancelled. We have notified ${message.first_name} with the cancellation!`;
             hideReservationModal();
-            location.reload();
         } else if (success) {
             title = 'Success';
             icon = 'success';
@@ -253,16 +294,41 @@ $(document).ready(function () {
             text = typeof message === 'string' ? message : 'An error occurred';
         }
 
-        console.log('Displaying SweetAlert with:');
-        console.log('Title:', title);
-        console.log('Text:', text);
-        console.log('Icon:', icon);
-
         Swal.fire({
             title: title,
             text: text,
             icon: icon
+        }).then((result) => {
+            if (result.isConfirmed) {
+                location.reload();
+            }
         });
     }
 
+    const chipsIntegration = $('.chips-integration');
+    let isDragging = false;
+    let startX;
+    let scrollLeft;
+
+    chipsIntegration.on("mousedown touchstart", startDragging);
+    chipsIntegration.on("mouseup mouseleave touchend", stopDragging);
+    chipsIntegration.on("mousemove touchmove", moveScroll);
+
+    function startDragging(e) {
+        isDragging = true;
+        startX = e.clientX || e.originalEvent.touches[0].clientX;
+        scrollLeft = chipsIntegration.scrollLeft();
+    }
+
+    function stopDragging() {
+        isDragging = false;
+    }
+
+    function moveScroll(e) {
+        if (!isDragging) return;
+        e.preventDefault();
+        const x = e.clientX || e.originalEvent.touches[0].clientX;
+        const walk = (x - startX) * 2;
+        chipsIntegration.scrollLeft(scrollLeft - walk);
+    }
 });

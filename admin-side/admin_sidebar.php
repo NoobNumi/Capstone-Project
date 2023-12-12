@@ -7,7 +7,16 @@ $currentPage = basename($_SERVER['PHP_SELF']);
             <img class="logo-img" src="../images/logo_trinitas.png">
             <div>
                 <h1 class="logo-name">Trinitas</h1>
-                <span class="admin-name">ADMIN</span>
+                <?php
+                if (isset($_SESSION['admin_id'])) {
+                    echo '<span class="admin-name">ADMIN</span>';
+                } elseif (isset($_SESSION['asst_id'])) {
+                    echo '<span class="admin-name" style="letter-spacing: 3px;">ASSISTANT</span>';
+                } else {
+                    echo '<span class="admin-name">UNKNOWN_ROLE</span>';
+                }
+                ?>
+
             </div>
         </a>
         <span class="material-symbols-outlined menu" id="guestMenu">
@@ -71,8 +80,8 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                 <span class="links-names" style="margin-left: 3px">Calendar</span>
             </a>
         </li>
-        <li <?php echo ($currentPage === 'reviewFeedback.php') ? 'class="active"' : ''; ?>>
-            <a href="reviewFeedback.php?<?php echo isset($_SESSION['admin_id']) ? 'admin_id=' . $_SESSION['admin_id'] : 'asst_id=' . $_SESSION['asst_id']; ?>">
+        <li <?php echo ($currentPage === 'ratings.php') ? 'class="active"' : ''; ?>>
+            <a href="ratings.php?<?php echo isset($_SESSION['admin_id']) ? 'admin_id=' . $_SESSION['admin_id'] : 'asst_id=' . $_SESSION['asst_id']; ?>">
                 <i class="fa-regular fa-comments"></i>
                 <span class="links-names" style="margin-left: -4px;">Feedback</span>
             </a>
@@ -101,15 +110,15 @@ $currentPage = basename($_SERVER['PHP_SELF']);
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function() {
         var dropdown = document.querySelector(".post-downlist");
         var menu = document.querySelector(".downlist-menu");
 
-        dropdown.addEventListener("mouseenter", function () {
+        dropdown.addEventListener("mouseenter", function() {
             menu.style.maxHeight = "400px";
         });
 
-        dropdown.addEventListener("mouseleave", function () {
+        dropdown.addEventListener("mouseleave", function() {
             menu.style.maxHeight = "0";
         });
     });

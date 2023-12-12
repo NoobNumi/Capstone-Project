@@ -33,7 +33,7 @@ $sql = "SELECT * FROM $table WHERE transaction_num = '$transact'";
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
+$package = $row['package'];
 ?>
 
 
@@ -81,17 +81,25 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
                 <p class="service-name"><?php echo $row['package']; ?> meals:</p>
                 <div class="">
                      <?php
-                     
                       $sql = "SELECT *
                     FROM $table WHERE transaction_num = '$transact'";
                     $stmt = $conn->prepare($sql);
                     $stmt->execute();
                     $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                      if($package == 'Catering Package'){
+                     
                       ?>
-                   <p>Breakfast: <?php echo $row['breakfast']; ?></p>
-                   <p>Lunch: <?php echo $row['lunch']; ?></p>
-                  <p>Dinner: <?php echo $row['dinner']; ?></p>
+                   <p>Dish 1: <?php echo $row['breakfast']; ?></p>
+                   <p>Dish 2: <?php echo $row['lunch']; ?></p>
+                   <p>Dish 3: <?php echo $row['dinner']; ?></p>
                    <p>Dessert: <?php echo $row['dessert']; ?></p>
+
+                  <?php } else{ ?>
+                      <p>Breakfast: <?php echo $row['breakfast']; ?></p>
+                      <p>Lunch: <?php echo $row['lunch']; ?></p>
+                      <p>Dinner: <?php echo $row['dinner']; ?></p>
+                      <p>Dessert: <?php echo $row['dessert']; ?></p>
+                  <?php } ?>
                 </div>
               
         </div>

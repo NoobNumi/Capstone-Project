@@ -93,19 +93,21 @@ try {
             $appointmentsExist = false;
 
             while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-                $userName = $row["first_name"] . " " . $row["last_name"];
+                $first_name = $row["first_name"];
+                $last_name = $row["last_name"];
                 $status = $row["appoint_status"];
                 $date = $row["appoint_sched_date"];
                 $time = $row["appoint_sched_time"];
                 $profile_picture = $row["profile_picture"];
 
+
                 if ($status === 'confirmed' || $status === 'pending' || $status === 'cancelled') {
                     $appointmentsExist = true;
                     echo '<div class="notification-card appoint searchable-card">';
                     echo '<div class="first-section">';
-                    echo '<img src="../guest_side/'.$profile_picture.'">';
+                    echo '<img src="../guest_side/' . $profile_picture . '">';
                     echo '<div class="guest-details-admin">';
-                    echo '<span class="guest">' . $userName . '</span>';
+                    echo '<span class="guest">' . $first_name .' '. $last_name . '</span>';
                     echo '<span class="status ' . $status . '" data-status="' . $status . '">';
                     echo ucfirst($status);
                     if ($status === 'confirmed') {

@@ -45,8 +45,6 @@ function getUserImage($userType)
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.css" integrity="sha512-Woz+DqWYJ51bpVk5Fv0yES/edIMXjj3Ynda+KWTIkGoynAMHrqTcDUQltbipuiaD5ymEo9520lyoVOo9jCQOCA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js" integrity="sha512-Ixzuzfxv1EqafeQlTCufWfaC6ful6WFqIz4G+dWvK0beHw0NVJwvCKSgafpy5gwNqKmgUfIBraVwkKI+Cz0SEQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <title>Announcements</title>
@@ -63,25 +61,41 @@ function getUserImage($userType)
     <section class="announcements">
         <div class="post-container">
             <div class="profile-pic">
-                <img src="../images/nun.png" width="50px" height="50px" alt="" srcset="">
+                <?php
+                $profileImage = getUserImage($userType);
+                ?>
+                <img src="<?php echo $profileImage; ?>" width="50px" height="50px" alt="" srcset="">
             </div>
             <div class="dummy-input">
                 <input type="text" placeholder="Post an update...">
             </div>
         </div>
+
         <div class="posts">
             <h1>Trinitas updates</h1>
-            <span>
-                <span class="material-symbols-rounded">
-                    tune
-                </span>
+            <div class="dropdown">
+                <a class="btn btn-secondary dropdown-toggle transparent-dropdown" href="#" role="button" id="announcementDropdownButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span class="material-symbols-rounded">tune</span>
+                </a>
+
+                <ul class="dropdown-menu transparent-dropdown-menu" aria-labelledby="announcementDropdownButton">
+                    <li><a class="dropdown-item sort" href="?order=latest">Latest</a></li>
+                    <li><a class="dropdown-item sort" href="?order=oldest">Oldest</a></li>
+                </ul>
+            </div>
         </div>
         <!------------------------------------------------- POSTS --------------------------------------------------->
         <?php
         try {
-            $query = "SELECT a.announcement_id, a.post_content, a.timestamp
-            FROM announcements a
-            ORDER BY a.timestamp DESC";
+            $order = isset($_GET['order']) ? $_GET['order'] : 'latest';
+            $query = "SELECT a.announcement_id, a.post_content, a.timestamp, a.is_admin
+            FROM announcements a";
+
+            if ($order == 'latest') {
+                $query .= " ORDER BY a.timestamp DESC";
+            } elseif ($order == 'oldest') {
+                $query .= " ORDER BY a.timestamp ASC";
+            }
             $stmt = $conn->query($query);
 
             while ($row = $stmt->fetch()) {
@@ -89,10 +103,19 @@ function getUserImage($userType)
                 echo '<div class="profile-settings">';
                 echo '<div class="posted">';
                 echo '<div class="profile-pic">';
-                echo '<img src="../images/nun.png" width="50px" height="50px" alt="" srcset="">';
-                echo '</div>';
-                echo '<div class="profile-details">';
-                echo '<h5>Admin</h5>';
+                if ($row['is_admin'] == 1) {
+                    // Admin
+                    echo '<img src="../images/nun.png" width="50px" height="50px" alt="" srcset="">';
+                    echo '</div>';
+                    echo '<div class="profile-details">';
+                    echo '<h5>Admin</h5>';
+                } else {
+                    // Assistant
+                    echo '<img src="../images/assist_nun.png" width="50px" height="50px" alt="" srcset="">';
+                    echo '</div>';
+                    echo '<div class="profile-details">';
+                    echo '<h5>Assistant</h5>';
+                }
                 $timestamp = strtotime($row['timestamp']);
                 $current_time = time();
                 $time_diff = $current_time - $timestamp;
@@ -155,9 +178,6 @@ function getUserImage($userType)
                     echo '</div>';
                     $image_count++;
                 }
-
-
-
                 echo '</div>';
                 echo '</div>';
                 echo '</div>';

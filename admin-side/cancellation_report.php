@@ -130,14 +130,27 @@ function TableHeader()
 function Row($data)
 {
     $this->SetX($this->TableX);
-    $ci=$this->ColorIndex;
-    $fill=!empty($this->RowColors[$ci]);
-    if($fill)
-        $this->SetFillColor($this->RowColors[$ci][0],$this->RowColors[$ci][1],$this->RowColors[$ci][2]);
-    foreach($this->aCols as $col)
-        $this->Cell($col['w'],5,$data[$col['f']],1,0,$col['a'],$fill);
+    $ci = $this->ColorIndex;
+    $fill = !empty($this->RowColors[$ci]);
+
+    if ($fill) {
+        $this->SetFillColor($this->RowColors[$ci][0], $this->RowColors[$ci][1], $this->RowColors[$ci][2]);
+    }
+
+    foreach ($this->aCols as $col) {
+        if ($col['f'] === 'total') {
+            $formattedAmount = number_format($data[$col['f']]);
+            $this->Cell($col['w'], 5, $formattedAmount, 1, 0, $col['a'], $fill);
+        } elseif ($col['f'] === 'timestamp') {
+            $formattedDate = date('F j, Y', strtotime($data[$col['f']]));
+            $this->Cell($col['w'], 5, $formattedDate, 1, 0, $col['a'], $fill);
+        } else {
+            $this->Cell($col['w'], 5, $data[$col['f']], 1, 0, $col['a'], $fill);
+        }
+    }
+
     $this->Ln();
-    $this->ColorIndex=1-$ci;
+    $this->ColorIndex = 1 - $ci;
 }
 
 function CalcWidths($width, $align)
@@ -273,7 +286,7 @@ $pdf->Cell(100 ,5,'Cancellation Report',0,1);//end of line
 $pdf->SetFont('Arial','',12);
 $pdf->Cell(1 ,5,'',0,1);
 $pdf->Cell(20 ,5,'',0,0);
-$pdf->Cell(100 ,5,'Date Range: '.$datefrom.' to '.$dateto.'',0,1);//end of line
+$pdf->Cell(100, 5, 'Date Range: ' . date('F j, Y', strtotime($datefrom)) . ' to ' . date('F j, Y', strtotime($dateto)) . '', 0, 1);//end of line
 $pdf->Cell(1 ,5,'',0,1);
 $pdf->Cell(1 ,5,'',0,1);
 

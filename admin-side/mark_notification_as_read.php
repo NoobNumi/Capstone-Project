@@ -9,10 +9,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $updateQuery = '';
 
-        if ($notifType === 'appointments') {
+        if ($notifType === 'appointment') {
             $updateQuery = "UPDATE appointment_record SET is_read = 1 WHERE appoint_id = :itemId";
-        } elseif ($notifType === 'reservations') {
-            // Update for reservations
+        } elseif ($notifType === 'reservation') {
             switch ($_POST['reservation_type']) {
                 case 'reception':
                     $updateQuery = "UPDATE reception_reservation_record SET is_read = 1 WHERE reception_id = :itemId";
@@ -45,9 +44,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute();
 
         echo json_encode(['success' => true]);
-        exit; // Add this exit statement
+        exit;
     } else {
-        // Send an error response if required keys are not set
         echo json_encode(['error' => 'Missing required data']);
     }
 } else {

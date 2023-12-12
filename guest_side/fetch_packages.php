@@ -34,4 +34,23 @@ function getAmenitiesByPackageId($packageId) {
 
     return $amenities;
 }
+function getImagesByPackageId($packageId) {
+    $conn = new mysqli("localhost", "root", "", "trinitas");
+
+    $query = "SELECT package_images.image_path
+            FROM package_images 
+            INNER JOIN packages ON package_images.package_id = packages.package_id 
+            WHERE package_images.package_id = $packageId";
+
+    $result = $conn->query($query);
+
+    $images = array();
+    while ($row = $result->fetch_assoc()) {
+        $images[] = $row;
+    }
+
+    $conn->close();
+
+    return $images;
+}
 ?>

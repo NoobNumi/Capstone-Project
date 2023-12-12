@@ -61,7 +61,6 @@ try {
 
             <table class="user-table">
                 <tr>
-                    <th>User ID</th>
                     <th>Profile Picture</th>
                     <th>First Name</th>
                     <th>Last Name</th>
@@ -71,7 +70,6 @@ try {
                     <?php
                     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                         echo '<tr class="searchable-card">
-                    <td>' . sprintf("%03d", $row['user_id']) . '</td>
                     <td> <img src="../guest_side/' . $row['profile_picture'] . '" class="user-pfp"> </td>
                     <td>' . $row['first_name'] . '</td>
                     <td>' . $row['last_name'] . '</td>

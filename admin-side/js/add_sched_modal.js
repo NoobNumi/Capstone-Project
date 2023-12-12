@@ -1,42 +1,78 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const schedButton = document.getElementById('addButton');
-    const modalAddSched = document.getElementById('addSchedModal');
-    const closeButton = document.getElementById('closeBTN');
+$(document).ready(function() {
+    const availableCalendar = $('.available-reservation-sched-selector');
+    const addAvailableReserveBtn = $('#addAvailableReserveBtn');
+    const cancelAddAvailableReservDates = $('#cancelBtnAvailableReserve')
 
-    const addButton = document.getElementById('appointAdd');
-    const modalAppointAdd = document.getElementById('appointment_sched');
-    const closeAppModal = document.getElementById('cancelBtn');
+    function openAddReserveSchedCalendar(){
+        availableCalendar.css('display', 'flex');
+        $('body').css('overflow', 'hidden');
+    }  
+    
+    addAvailableReserveBtn.on('click', openAddReserveSchedCalendar);
+
+    const schedButton = $('#addButton');
+    const modalAddSched = $('#addSchedModal');
+    const closeButton = $('#closeBTN');
+
+    const addButton = $('#appointAdd');
+    const modalAppointAdd = $('#appointment_sched');
+    const closeAppModal = $('#cancelBtn');
+    
+    const reserveButton = $('#reserveAdd');
+    const modalReserveAdd = $('#reservation_sched');
+    const closeReserveModal = $('#cancelBtnReserve');
 
     function openAddSchedModal() {
-        modalAddSched.style.display = 'flex';
-        document.body.style.overflow = 'hidden';
-        modalAddSched.style.position = 'fixed';
-        console.log('AddSchedModal opened');
+        modalAddSched.css('display', 'flex');
+        $('body').css('overflow', 'hidden');
+        modalAddSched.css('position', 'fixed');
     }
 
     function closeAddSchedModal() {
-        modalAddSched.style.display = 'none';
-        document.body.style.overflow = 'auto';
+        modalAddSched.css('display', 'none');
+        $('body').css('overflow', 'auto');
     }
 
     function openAppointAddModal() {
-        if (modalAddSched.style.display === 'flex') {
+        if (modalAddSched.css('display') === 'flex') {
             closeAddSchedModal();
         }
-        modalAppointAdd.style.display = 'flex';
-        document.body.style.overflow = 'hidden';
-        modalAppointAdd.style.position = 'fixed';
-        console.log('Appointment Add Modal opened');
+        modalAppointAdd.css('display', 'flex');
+        $('body').css('overflow', 'hidden');
+        modalAppointAdd.css('position', 'fixed');
+    }
+    function openReserveAddModal() {
+        if (modalReserveAdd.css('display') === 'flex') {
+            closeAddSchedModal();
+        }
+        modalReserveAdd.css('display', 'flex');
+        $('body').css('overflow', 'hidden');
+        modalReserveAdd.css('position', 'fixed');
     }
 
     function closeAppointAddModal() {
-        modalAppointAdd.style.display = 'none';
-        document.body.style.overflow = 'auto';
+        modalAppointAdd.css('display', 'none');
+        $('body').css('overflow-y', 'auto');
+    }
+    function closeReserveAddModal() {
+        modalReserveAdd.css('display', 'none');
+        $('body').css('overflow-y', 'auto');
     }
 
-    schedButton.addEventListener('click', openAddSchedModal);
-    closeButton.addEventListener('click', closeAddSchedModal);
+    function closeAddAvailableReserveModal(){
+        availableCalendar.css('display', 'none');
+        $('body').css('overflow-y', 'auto');
+    }
 
-    addButton.addEventListener('click', openAppointAddModal);
-    closeAppModal.addEventListener('click', closeAppointAddModal);
+    schedButton.on('click', openAddSchedModal);
+    closeButton.on('click', closeAddSchedModal);
+
+    addButton.on('click', openAppointAddModal);
+    closeAppModal.on('click', closeAppointAddModal);
+
+    reserveButton.on('click', openReserveAddModal);
+    closeReserveModal.on('click', closeReserveAddModal);
+
+    cancelAddAvailableReservDates.on('click', closeAddAvailableReserveModal)
+
 });

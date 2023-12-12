@@ -153,7 +153,8 @@ ul.admin-navbar li a:hover {
 }
 
 
-.fa-regular, .post-downlist .fa-solid,
+.fa-regular,
+.post-downlist .fa-solid,
 .links-names {
     color: #35435e;
 }
@@ -245,9 +246,10 @@ ul.admin-navbar li a:hover .fa-regular {
     padding-left: 0;
 }
 
-.downlist-menu li{
+.downlist-menu li {
     list-style: none;
 }
+
 @media screen and (max-width: 756px) {
     .admin-sidebar.closed {
         width: 55px;
@@ -282,8 +284,8 @@ section.admin-dashboard {
     position: relative;
     min-height: 100vh;
     top: 50%;
-    left: 190px;
-    width: calc(100% - 160px);
+    left: 242px;
+    width: calc(100% - 270px);
     padding: 10px;
     margin: auto 15px;
     display: flex;
@@ -306,6 +308,23 @@ section.admin-dashboard {
 
 :is(.admin-dashboard)::-webkit-scrollbar {
     width: 0px;
+}
+
+.admin-dashboard header {
+    width: 100%;
+    position: relative;
+}
+
+.admin-dashboard header h5 {
+    font-weight: 800;
+    font-size: 24px;
+    color: #303030;
+    letter-spacing: 4px;
+}
+
+.admin-dashboard header span {
+    font-weight: 600;
+    color: #9b9b9b;
 }
 
 .dashboard-header {
@@ -335,14 +354,16 @@ section.admin-dashboard {
 }
 
 .row-cols-2 {
-    left: 185px;
-    width: calc(100% - 139px);
+    width: 100%;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
 }
 
 
 .row .col {
     background-color: #fff;
-    margin: 20px;
+    margin: 20px 6px;
     width: 200px;
     padding: 20px;
     border-radius: 10px;
@@ -435,17 +456,86 @@ span.notif-count.hidden {
     overflow: hidden;
 }
 
+.card-total-amount {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: space-between;
+    width: 100%;
+    margin: 20px 0;
+}
+
+.column-card {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    height: 150px;
+    width: 100%;
+    padding: 10px 14px;
+    background-color: #9b9b9b;
+    border-radius: 10px;
+    color: #ffff;
+    font-size: 17px;
+}
+
+.column-card.first {
+    background: #C77B85;
+
+}
+
+.column-card.second {
+    background: #6D78AD;
+}
+
+.column-title-name.first {
+    background-color: #e8b2b8;
+}
+
+.column-title-name.second {
+    background-color: #92a1e8;
+}
+
+.column-title-name.third {
+    background-color: #96cacc;
+}
+
+.column-card.third {
+    background-color: #4C9CA0;
+}
+
+.column-title-name {
+    padding: 10px;
+    width: auto;
+    border-radius: 10px;
+}
+
+.report-generate{
+    border: none;
+    outline: none;
+    background-color: #ededed;
+    padding: 10px 14px;
+    border-radius: 10px;
+}
+ 
+@media screen and (max-width: 1120px) {
+    .card-total-amount h5{
+        font-size: 15px;
+    }
+}
+
 @media (max-width: 767px) {
     section.admin-dashboard {
+        margin-top: 26px;
         padding: 0;
-        width: calc(100% - 50px);
+        width: calc(100% - 80px);
         left: 48px;
     }
 
     .admin-dashboard .row {
         flex-direction: column;
         align-items: stretch;
-        width: inherit;
+        width: 100%;
+        margin: 20px ;
     }
 
     .admin-dashboard .col {
@@ -496,6 +586,13 @@ span.notif-count.hidden {
         border-top-right-radius: 0;
 
     }
+
+    .card-total-amount{
+        flex-direction: column;
+        width: auto;
+    }
+
+    
 }
 
 /* ------------------------------------------------------ MODAL SCHED OPTION ---------------------------------------------- */
@@ -528,15 +625,21 @@ span.notif-count.hidden {
     justify-content: center;
     flex-direction: column;
     line-height: 2rem;
-    width: auto;
+    width: 300px;
     height: 100%;
     margin-bottom: 14px;
+    text-align: justify;
 }
 
-.sched-modal-content i.fa-calendar-days {
-    font-size: 30px;
+.sched-modal-content i.fa-calendar-xmark {
+    font-size: 60px;
     margin: 15px 0;
-    color: #235789;
+    color: #f73b3b;
+
+}
+
+.sched-modal-content span{
+    padding: 10px 14px;
 }
 
 .close-btn {
@@ -548,7 +651,11 @@ span.notif-count.hidden {
     cursor: pointer;
 }
 
-
+.busy-date-msg{
+    font-weight: 800;
+    font-size: 20px;
+    color: #303030;
+}
 .buttons-section {
     display: flex;
     align-items: center;
@@ -586,18 +693,18 @@ span.notif-count.hidden {
 
 /* ------------------------------------------------------ CHARTS IN DASHBOARD ADMIN ---------------------------------------------- */
 .charts {
-    width: calc(100% - 78px);
+    width: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    padding: 10px;
     gap: 20px;
+    position: relative;
 }
 
-.charts .col {
-    border-radius: 5%;
-    padding: 30px;
+.charts #chartContainer,
+.charts #chartContainer2 {
     width: 100%;
-    height: 100%;
+    height: 300px;
+    position: relative;
     background-color: #ffff;
 }
 
@@ -1441,7 +1548,7 @@ button.btn-admin-login:hover {
     height: 70px;
 }
 
-.user-pfp{
+.user-pfp {
     height: 60px;
     width: 60px;
     border-radius: 50%;
@@ -1466,6 +1573,18 @@ th {
     outline: none;
     width: inherit;
     font-size: 16px;
+    /* background-color: transparent; */
+    /* border-bottom: 1px solid #9e9e9e; */
+    /* border-radius: 0; */
+    /* outline: none; */
+    /* height: 3rem; */
+    /* width: 100%; */
+    /* font-size: 1rem; */
+    /* margin: 0 0 20px 0; */
+    /* padding: 0; */
+    /* box-shadow: none; */
+    /* box-sizing: content-box; */
+    /* transition: all 0.3s; */
 }
 
 .admin-appoint-header .left-section,
@@ -1677,6 +1796,15 @@ span.status.cancelled {
     font-weight: 600;
 }
 
+.no-notifications-message {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
 
 
 @media screen and (max-width: 1290px) {
@@ -1800,7 +1928,7 @@ span.status.cancelled {
         font-size: 12px;
         display: flex;
         align-items: center;
-        gap: 0 !important;
+        gap: 0;
     }
 
     span.status i {
@@ -1912,12 +2040,18 @@ span.status.cancelled {
         font-size: 12px;
         margin-bottom: 0;
     }
+
+    span.status.pending, span.status.confirmed, span.status.cancelled {
+        gap: 10px;
+    }
 }
 
 
-/* -------------------------------------------------------- DATE FOR APPOINTMENT SELECTOR ------------------------------------------ */
+/* -------------------------------------------------------- DATE FOR APPOINTMENT AND RESERVATION SELECTOR ------------------------------------------ */
 
-.appointment-sched-selector {
+.appointment-sched-selector,
+.reservation-sched-selector,
+.available-reservation-sched-selector {
     width: 100%;
     height: 100vh;
     display: none;
@@ -1926,64 +2060,101 @@ span.status.cancelled {
     flex-direction: column;
     background: rgba(0, 0, 0, 0.5);
     z-index: 999;
+    position: absolute;
 }
 
 .date-select-container {
     background-color: #fff;
-    padding: 10px 14px;
+    /* padding: 10px 14px; */
     border-radius: 10px;
     width: auto;
 }
 
 
-.appointment-date-sched-header {
+.appointment-date-sched-header,
+.reservation-date-sched-header,
+.available-reservation-date-sched-header {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
     height: 100px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+
+.appointment-date-sched-header{
+    background-color: #f7cc00;
+    color: #303030;
+}
+
+.reservation-date-sched-header{
+    background-color: #235789;
+    color: #ffff;
+}
+
+.available-reservation-date-sched-header{
+    background-color: #4b8d3b;
+    color: #ffff;
+}
+
+.appointment-date-sched-header a span.back{
+    color: #303030;
+}
+.reservation-date-sched-header a span.back,
+.available-reservation-date-sched-header a span.back{
+    color: #ffff;
 }
 
 a span.back {
     cursor: pointer;
-    position: absolute;
+    position: relative;
     margin-left: 30px;
-    display: flex;
-    display: flex-start;
-    color: #235789;
 }
 
 
-.appointment-date-sched-header .separate-div {
+.appointment-date-sched-header .separate-div,
+.reservation-date-sched-header .separate-div,
+.available-reservation-date-sched-header .separate-div {
     display: flex;
     justify-content: center;
     width: inherit;
 }
 
 span#header-title {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     font-weight: 600;
+    margin-right: 45px;
 }
 
-.wrapper {
+.wrapper-reserve,
+.wrapper,
+.wrapper-available-reserve {
     width: 450px;
     border-radius: 10px;
     background: #fff;
     margin: 0 auto;
 }
 
-.wrapper header {
+.wrapper-reserve header,
+.wrapper header,
+.wrapper-available-reserve header {
     display: flex;
-    align-items: center;
+    align-items: baseline;
     justify-content: space-between;
     padding: 20px 30px;
     border-radius: 10px 10px 0 0;
 }
 
+header .icons-reserve,
+header .icons-available-reserve,
 header .icons {
     display: flex;
 }
 
+header .icons-reserve span,
+header .icons-available-reserve span,
 header .icons span {
     height: 38px;
     width: 38px;
@@ -1998,37 +2169,52 @@ header .icons span {
     transition: background-color 0.3s;
 }
 
-header .icons span:last-child {
+header .icons-reserve span:last-child,
+header .icons span:last-child,
+header .icons-available-reserve:last-child {
     margin-right: 0;
 }
 
+header .icons-reserve span:hover,
+header .icons-available-reserve span:hover,
 header .icons span:hover {
     background: #0a1d2e;
     color: #fff;
 }
 
+header .current-date-reserve,
+header .current-date-avaiable-reserve,
 header .current-date {
     font-size: 1.25rem;
     font-weight: 500;
     color: #235789;
 }
 
+.calendarReserve,
+.calendarAvailableReserve,
 .calendar {
-    padding: 20px;
+    padding: 0px 10px;
     background: #fff;
 }
 
+.calendarReserve ul,
+.calendarAvailableReserve ul, 
 .calendar ul {
     display: flex;
     flex-wrap: wrap;
     list-style: none;
     text-align: center;
+    padding-left: 1rem;
 }
 
+.calendarReserve .days,
+.calendarAvailableReserve .days, 
 .calendar .days {
     margin-bottom: 20px;
 }
 
+.calendarReserve li,
+.calendarAvailableReserve li, 
 .calendar li {
     color: #333;
     width: calc(100% / 7);
@@ -2039,30 +2225,42 @@ header .current-date {
     transition: background-color 0.3s, color 0.3s;
 }
 
+.calendarReserve .weeks li,
+.calendarAvailableReserve .weeks li, 
 .calendar .weeks li {
     font-weight: 500;
     cursor: default;
 }
 
+.daysReserve li.selected, 
+.daysAvailableReserve li.selected,
 .days li.selected {
     background: #235789;
     transition: all 1s ease;
     color: #fff;
 }
 
+.daysReserve li.inactive, 
+.daysAvailableReserve li.inactive,
 .days li.inactive {
     color: #aaa;
     cursor: not-allowed;
 }
 
+.daysReserve li.inactive:hover, 
+.daysAvailableReserve li.inactive:hover,
 .days li.inactive:hover {
     background: none;
 }
 
+.daysReserve li.active,
+.daysAvailableReserve li.active,
 .days li.active {
     color: #fff;
 }
 
+.daysReserve li::before, 
+.daysAvailableReserve li::before,
 .days li::before {
     position: absolute;
     content: "";
@@ -2075,10 +2273,8 @@ header .current-date {
     transform: translate(-50%, -50%);
 }
 
-.days li.active::before {
-    background: #9B59B6;
-}
 
+.daysReserve li:not(.active):hover::before,
 .days li:not(.active):hover::before {
     background: #f2f2f2;
 }
@@ -2120,12 +2316,12 @@ header .current-date {
     border: none;
 }
 
-.option-buttons #cancel-button:not([disabled]){
+.option-buttons #cancel-button:not([disabled]) {
     color: #303030;
     border: solid #959595 1px;
 }
 
-.option-buttons #cancel-button .disabled{
+.option-buttons #cancel-button .disabled {
     display: flex;
     color: gray;
     cursor: not-allowed;
@@ -2135,15 +2331,18 @@ header .current-date {
 
 @media screen and (max-width: 768px) {
 
+    .reservation-date-sched-header a,
     .appointment-date-sched-header a {
         align-items: center;
         display: flex;
     }
 
+    .wrapper-reserve,
     .wrapper {
         width: auto;
     }
 
+    .wrapper-reserve header, 
     .wrapper header {
         padding: 10px 6px;
     }
@@ -2164,8 +2363,10 @@ header .current-date {
         font-size: 17px;
     }
 
+    .calendarReserve {
     .calendar {
         padding: 0;
+    }
     }
 }
 
@@ -2224,6 +2425,10 @@ header .current-date {
     display: flex;
     gap: 10px;
     align-items: center;
+    width: 100%;
+    justify-content: space-between;
+    height: 50px;
+    font-size: 20px;
 }
 
 
@@ -2301,6 +2506,8 @@ header .current-date {
 
 .person img {
     width: 50px;
+    border-radius: 50%;
+    border: solid #235789 4px;
 }
 
 .person .important-details {
@@ -2335,7 +2542,8 @@ header .current-date {
 .sched-calendar-view header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
+    width: 100%;
     padding: 0 15px;
 }
 
@@ -2389,7 +2597,7 @@ header .current-date {
 
 p.current-newDate {
     font-weight: 600;
-    font-size: 17px;
+    margin-bottom: 0;
 }
 
 .days-calendar li .day-num {
@@ -2425,6 +2633,93 @@ p.current-newDate {
 
 .color-coding .appoint {
     background-color: #fed86b;
+    color: #303030;
+}
+
+.btn.dropdown-toggle::after {
+    display: none;
+}
+
+.dropdown button{
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    letter-spacing: 1.4px;
+    background-color: #235789;
+}
+
+.dropdown button:hover{
+    background-color: #133a5c;
+    transition: 0.4s;
+}
+
+.dropdown button::before{
+    background-color: #133a5c;
+}
+
+.dropdown-menu li{
+    cursor: pointer;
+}
+
+.dropdown-item{
+    width: 100%;
+    gap: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.dropdown-item i{
+    position: relative;
+    left: 0;
+}
+
+/* DISPLAY TEXT */
+.service-viewer-content{
+    max-height: 100px;
+    height: 100%;
+    overflow-x: auto;
+    display: none;
+}
+.service-viewer {
+    padding: 10px 14px;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px
+}
+
+.service-viewer .service-date {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.service-info-name{
+    font-weight: 700;
+    color: #303030;
+    
+}
+
+.service-information {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 10px;
+    margin: 10px 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.service-information.reserve {
+    background-color: #235789;
+    color: #ffff;
+}
+.service-information.appoint{
+    background-color: #fed86b;
+    color: #303030;
+}
+.sched-calendar-view .calendar .days-calendar .current-date-highlight {
+    background-color: #235789;
+    color: #ffffff;
 }
 
 @media screen and (max-width: 1243px) {
@@ -2458,9 +2753,13 @@ p.current-newDate {
 }
 
 @media screen and (max-width: 768px) {
+    .today-sched {
+        height: auto !important;
+    }
+
     .schedule-view {
-        left: 258px;
-        width: calc(100% - 262px);
+        left: 63px;
+        width: calc(100% - 71px);
     }
 
     .main-content-sched {
@@ -2498,10 +2797,28 @@ p.current-newDate {
         font-size: 13px;
     }
 
+    .color-guide.appoint i::after {
+        content: "";
+    }
+
+    .service-name,
+    .reserve-con,
+    .appoint-con,
+    .total-list-count {
+        display: none;
+    }
+
+    .admin-sidebar .schedule-view,
+    .schedule-view.admin-sidebar-open {
+        left: 61px;
+        width: calc(100% - 67px);
+    }
 
 }
 
+
 /* -------------------------------------------------- REVIEWS AND RATINGS ------------------------------------------------------------ */
+
 section.reviews {
     padding: 40px 34px 40px 34px;
 
@@ -2532,9 +2849,9 @@ section.reviews {
     font-size: 28px
 }
 
-.profile-details {
+/* .profile-details {
     padding-top: 12px;
-}
+} */
 
 .profile-details h5 {
     font-size: 18px;
@@ -2660,6 +2977,142 @@ section.reviews {
     background-color: #4d90c6;
 }
 
+/* -------------------------------------------------- REVIEWS AND RATINGS ------------------------------------------------------------ */
+.rating-overview {
+    padding: 50px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    align-items: center;
+    width: 100%;  
+    background-color: white;  
+}
+
+.rating-overview h2{
+    font-size: 23px;
+}
+
+.ratings-overview{
+    padding-left: 100px;
+    padding-top: 50px;
+}
+
+.user-reviews{
+    padding-left: 100px;
+    padding-top: 40px;
+}
+
+#average-rating {
+    font-size: 24px;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+#average-rating .fa-solid {
+    color: #FFD700;
+}
+
+#average-rating .fa-regular {
+    color: #ccc;
+}
+
+#average-rating #total-reviews{
+    font-size: 18px;
+    font-weight: 3px;
+}
+
+#average-rating .fa-solid,
+#average-rating .fa-regular {
+    width: 30px;
+    font-size: 30px;
+}
+
+
+.rating-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.stars {
+    padding-top: 0px;
+    padding-right: 20px;
+    font-size: 20px;
+    color: #FFD700;
+}
+
+.stars.fa-regular {
+    color: #ccc;
+}
+
+.fa-star {
+    margin: 3px;
+}
+
+.bar {
+    flex-grow: 1;
+    height: 20px;
+    background-color: #ccc;
+    margin: 0 10px;
+    border-radius: 15px;
+    align-items: center;
+}
+
+.bar > div {
+    height: 100%;
+    background-color: #FFD700;
+    width: 100%;
+    border-radius: 15px;
+}
+
+.success-dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.vertical-line {
+    border-left: 2px solid #7d7d7d;
+    margin: 0 10px;
+    height: 20px;
+}
+
+
+.user_reviews span {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    cursor: pointer;
+}
+
+.review-card {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 20px;
+}
+
+.user_reviews {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.user-reviews h1{
+    font-size: 23px;
+    margin-left: 50px;
+}
+
 @media screen and (max-width: 768px) {
     .reviews-container {
         display: flex;
@@ -2766,22 +3219,24 @@ section.reviews {
     width: 100%;
     justify-content: center;
     z-index: 2;
-    position: absolute;
+    position: fixed;
     background-color: rgba(0, 0, 0, 0.5);
 }
 
 .reservation-details-modal {
     width: 50%;
 }
-.appointment-details-modal{
+
+.appointment-details-modal {
     width: 30%;
 }
+
 .appointment-details-modal,
 .reservation-details-modal {
     background-color: #ffff;
     padding: 13px;
     border-radius: 10px;
-    
+
 }
 
 .reservation-details-content,
@@ -2822,21 +3277,21 @@ section.reviews {
 }
 
 
-.reservation-details-content .section-one{
+.reservation-details-content .section-one {
     display: flex;
     align-items: center;
     justify-content: space-between;
 
 }
 
-.section-one .user-details{
+.section-one .user-details {
     gap: 20px;
     margin-bottom: 30px;
     display: flex;
     align-items: center;
 }
 
-.reserve-inf{
+.reserve-inf {
     display: flex;
     align-items: end;
     flex-direction: column;
@@ -2845,7 +3300,7 @@ section.reviews {
 }
 
 .transact-num,
-.reserve-type-text{
+.reserve-type-text {
     font-weight: 500;
     color: #4b8d3b;
     margin-left: 20px;
@@ -2865,6 +3320,7 @@ section.reviews {
     word-wrap: break-word;
     flex-wrap: wrap;
     overflow-wrap: anywhere;
+    flex-direction: column;
 }
 
 .name-detail {
@@ -2908,6 +3364,56 @@ section.reviews {
 .reservation-stat i.fa-ban {
     color: #f73b3b;
 }
+
+.chips-integration{
+    display: flex;
+    gap: 10px;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    margin: 10px 0;
+    width: 100%;
+    cursor:-webkit-grab;
+}
+
+
+.chips-integration .chip-card{
+    padding: 10px 14px;
+    font-size: 13px;
+    width: auto;
+    white-space: nowrap;
+    display: inline-block; 
+    border-radius: 30px;
+    font-weight: 600;
+}
+.in-order{
+    font-weight: 400;
+    color: #918e8e;
+    font-style: italic;
+}
+
+.chips-integration .chip-card#meal1{
+    background-color: #235789;
+    color: #ffff;
+}
+
+.chips-integration .chip-card#meal2{
+    background-color: #f7cc00;
+    color: #303030;
+}
+.chips-integration .chip-card#meal3{
+    background-color: #F76C6C;
+    color: #fff;
+}
+.chips-integration .chip-card#dessert{
+    background-color: #92c986;
+    color: #303030;
+}
+.chips-integration .chip-card#drinks{
+    background-color: #e8b2b8;
+    color: #303030;
+}
+
 @media screen and (max-width: 1176px) {
     .appointment-details-modal {
         width: 60%
@@ -2921,12 +3427,30 @@ section.reviews {
         width: 90%
     }
 
+    .reservation-details-content .section-one {
+        flex-direction: column;
+    }
+
     .reservation-details-content .section-two {
         display: grid;
         align-items: flex-start;
         grid-template-columns: 2fr 2fr;
         gap: 20px;
     }
+
+    .reservation-details-content{
+        overflow: auto;
+        height: 600px;
+    }
+
+    .reservation-details-content{
+        padding: 6px 10px;
+    }
+
+    .in-order{
+        text-wrap: wrap;
+    }
+
 
 }
 
@@ -3468,6 +3992,37 @@ section.announcements {
     cursor: pointer;
 }
 
+.transparent-dropdown {
+    background-color: transparent;
+    color: #303030;
+    border: none;
+}
+
+.transparent-dropdown-menu {
+    background-color: #ffff;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+    border: none;
+}
+
+.transparent-dropdown::after {
+    display: none;
+}
+
+.transparent-dropdown:hover,
+.transparent-dropdown:active,
+.transparent-dropdown:focus,
+.transparent-dropdown:active:focus {
+    background-color: transparent;
+    color: #303030;
+    border: none;
+}
+
+.transparent-dropdown-menu a:hover,
+.transparent-dropdown-menu a:focus {
+    background-color: transparent;
+}
+
+
 .drop-down-edit-menu {
     position: absolute;
     width: 100%;
@@ -3755,7 +4310,7 @@ li.copy-clipboard:hover {
     display: none;
 }
 
-:is(.photo-display-all, .photo-fetch-all)::-webkit-scrollbar {
+:is(.photo-display-all, .photo-fetch-all, .chips-integration)::-webkit-scrollbar {
     width: 0px;
 }
 

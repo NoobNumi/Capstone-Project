@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-    include("insert_dates.php");
+include("insert_dates.php");
 
 ?>
 
@@ -27,7 +27,7 @@
                             arrow_back_ios
                         </span></a>
                     <div class="separate-div">
-                        <span id="header-title">Select available dates</span>
+                        <span id="header-title">Select unavailable dates</span>
                     </div>
                 </div>
                 <div class="wrapper">

@@ -7,64 +7,100 @@ $todaySchedsql = "
     SELECT 
         'appointment' AS source,
         'appointment' AS type,
-        first_name AS first_name, 
-        last_name AS last_name, 
-        appoint_sched_date AS date, 
-        appoint_sched_time AS time 
-    FROM appointment_record 
-    WHERE appoint_sched_date = :todayDate AND appoint_sched_time >= :currentTime
+        a.appoint_id AS id, 
+        a.user_id, 
+        a.first_name, 
+        a.last_name, 
+        a.appoint_sched_date AS date, 
+        a.appoint_sched_time AS time,
+        u.profile_picture
+    FROM appointment_record a
+    JOIN users u ON a.user_id = u.user_id
+    WHERE a.appoint_sched_date = :todayDate AND a.appoint_sched_time >= :currentTime
+    
     UNION ALL
+    
     SELECT 
         'reception' AS source,
         'reception' AS type,
-        first_name, 
-        last_name, 
-        check_in AS date, 
-        check_in AS time 
-    FROM reception_reservation_record 
-    WHERE check_in = :todayDate
+        r.reception_id AS id, 
+        r.user_id, 
+        r.first_name, 
+        r.last_name, 
+        r.check_in AS date, 
+        r.check_in AS time,
+        u.profile_picture
+    FROM reception_reservation_record r
+    JOIN users u ON r.user_id = u.user_id
+    WHERE r.check_in = :todayDate
+    
     UNION ALL
+    
     SELECT 
         'recollection' AS source,
         'recollection' AS type,
-        first_name, 
-        last_name, 
-        check_in AS date, 
-        check_in AS time 
-    FROM recollection_reservation_record 
-    WHERE check_in = :todayDate
+        r.recollection_id AS id, 
+        r.user_id, 
+        r.first_name, 
+        r.last_name, 
+        r.check_in AS date, 
+        r.check_in AS time,
+        u.profile_picture
+    FROM recollection_reservation_record r
+    JOIN users u ON r.user_id = u.user_id
+    WHERE r.check_in = :todayDate
+    
     UNION ALL
+    
     SELECT 
         'retreat' AS source,
         'retreat' AS type,
-        first_name, 
-        last_name, 
-        check_in AS date, 
-        check_in AS time 
-    FROM retreat_reservation_record 
-    WHERE check_in = :todayDate
+        r.retreat_id AS id, 
+        r.user_id, 
+        r.first_name, 
+        r.last_name, 
+        r.check_in AS date, 
+        r.check_in AS time,
+        u.profile_picture
+    FROM retreat_reservation_record r
+    JOIN users u ON r.user_id = u.user_id
+    WHERE r.check_in = :todayDate
+    
     UNION ALL
+    
     SELECT 
         'seminar' AS source,
         'seminar' AS type,
-        first_name, 
-        last_name, 
-        check_in AS date, 
-        check_in AS time 
-    FROM seminar_reservation_record 
-    WHERE check_in = :todayDate
+        r.seminar_id AS id, 
+        r.user_id, 
+        r.first_name, 
+        r.last_name, 
+        r.check_in AS date, 
+        r.check_in AS time,
+        u.profile_picture
+    FROM seminar_reservation_record r
+    JOIN users u ON r.user_id = u.user_id
+    WHERE r.check_in = :todayDate
+    
     UNION ALL
+    
     SELECT 
         'training' AS source,
         'training' AS type,
-        first_name, 
-        last_name, 
-        check_in AS date, 
-        check_in AS time 
-    FROM training_reservation_record 
-    WHERE check_in = :todayDate
+        r.training_id AS id, 
+        r.user_id, 
+        r.first_name, 
+        r.last_name, 
+        r.check_in AS date, 
+        r.check_in AS time,
+        u.profile_picture
+    FROM training_reservation_record r
+    JOIN users u ON r.user_id = u.user_id
+    WHERE r.check_in = :todayDate
+    
     ORDER BY date, time;
 ";
+
 
 
 $stmt = $conn->prepare($todaySchedsql);

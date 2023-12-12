@@ -12,9 +12,5 @@ $stmt->bindParam(':appointmentId', $appointmentId, PDO::PARAM_INT);
 $stmt->execute();
 $appointment = $stmt->fetch(PDO::FETCH_ASSOC);
 
-if ($appointment) {
-    echo json_encode($appointment);
-} else {
-    echo json_encode(['error' => 'Appointment not found']);
-}
-?>
+
+echo json_encode($appointment);

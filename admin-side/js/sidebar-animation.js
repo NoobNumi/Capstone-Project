@@ -12,16 +12,15 @@ menuItems.forEach(function (item) {
 
 let guestSidebar = document.querySelector(".admin-sidebar");
 let closeBtn = document.querySelector("#guestMenu");
-let scheduleView = document.querySelector(".schedule-view");
-const reservationList = document.querySelector(".reservations-list")
-const messageCountElement = document.querySelector(".notif-count");
-const countColorElement = document.querySelector(".count-color");
+// let scheduleView = document.querySelector(".schedule-view");
+// const reservationList = document.querySelector(".reservations-list")
+// const messageCountElement = document.querySelector(".notif-count");
+// const countColorElement = document.querySelector(".count-color");
 
 
 closeBtn.addEventListener("click", () => {
   guestSidebar.classList.toggle("closed");
-  scheduleView.classList.toggle("admin-sidebar-open");
-  reservationList.classList.toggle("admin-sidebar-open");
+  // scheduleView.classList.toggle("admin-sidebar-open");
 
 });
 

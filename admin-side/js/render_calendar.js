@@ -37,7 +37,7 @@ const renderCalendar = () => {
   }
 
   for (let i = 1; i <= lastDateofMonth; i++) {
-    const isSelected = selectedDates.has(`${currYear}-${currMonth}-${i}`) ? "selected" : "";
+    const isSelected = selectedDates.has(`${currYear}-${currMonth+1}-${i}`) ? "selected" : "";
     const isInactive =
       (currYear === date.getFullYear() && currMonth === date.getMonth() && i < today) ||
       (currYear < date.getFullYear() || (currYear === date.getFullYear() && currMonth < date.getMonth()))
@@ -62,7 +62,7 @@ const renderCalendar = () => {
   const dateElements = document.querySelectorAll(".calendar .days li:not(.inactive)");
   dateElements.forEach(dateElement => {
     dateElement.addEventListener("click", () => {
-      const selectedDate = `${currYear}-${currMonth}-${dateElement.getAttribute("data-date")}`;
+      const selectedDate = `${currYear}-${currMonth+1}-${dateElement.getAttribute("data-date")}`;
 
       if (dateElement.classList.contains("inactive")) {
         return;
@@ -70,10 +70,10 @@ const renderCalendar = () => {
 
       if (selectedDates.has(selectedDate)) {
         selectedDates.delete(selectedDate);
-        dateElement.classList.remove("selected"); // Remove the 'selected' class
+        dateElement.classList.remove("selected");
       } else {
         selectedDates.add(selectedDate);
-        dateElement.classList.add("selected"); // Add the 'selected' class
+        dateElement.classList.add("selected");
       }
       
       renderCalendar();
@@ -102,10 +102,22 @@ prevNextIcon.forEach(icon => {
   });
 });
 
-// Function to submit selected dates
 function submitForm() {
-    const selectedDatesArray = Array.from(selectedDates); // Convert Set to an array
-    const selectedDatesValue = selectedDatesArray.join(","); // Join selected dates with commas
+    const selectedDatesArray = Array.from(selectedDates);
+    if (selectedDatesArray.length === 0) {
+      Swal.fire({
+        title: "Warning!",
+        text: "Please select some dates.",
+        icon: "warning",
+        showConfirmButton: false,
+        timer: 2500,
+        customClass: {
+          popup: "custom-sweetalert"
+        }
+      });
+      return;
+    }
+    const selectedDatesValue = selectedDatesArray.join(","); 
     document.getElementById("selectedDates").value = selectedDatesValue;
     document.getElementById("dateForm").submit();
 }

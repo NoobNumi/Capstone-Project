@@ -1,10 +1,11 @@
 $(document).ready(function () {
     const notifBar = $('.notif-bar');
-    $('.notif-details').click(function () {
+    $(document).on('click', '.notif-details', function () {
         const notifType = $(this).data('type');
         const itemId = $(this).data('id');
+        console.log('Notification clicked! Type:', notifType, 'ID:', itemId);
     
-        if (notifType === 'appointments') {
+        if (notifType === 'appointment') {
             $.ajax({
                 url: 'fetch_appointment_details.php',
                 type: 'GET',
@@ -38,6 +39,7 @@ $(document).ready(function () {
                 appoint_id: appointmentId
             },
             success: function (response) {
+                console.log(response);
                 const appointment = JSON.parse(response);
                 updateModalContent(appointment);
 
@@ -105,13 +107,13 @@ $(document).ready(function () {
     }
 
     function updateModalContent(appointment) {
-        const guestNameElement = $('#guest-name-details');
+        const guestNameElementAppoint = $('#guest-name-details-appoint');
         const dateElement = $('#guest-date-details');
         const timeElement = $('#guest-time-details');
         const agendaElement = $('#guest-agenda-details');
         const profilePictureElement = $('.guest-pfp');
     
-        guestNameElement.text(appointment.first_name + ' ' + appointment.last_name);
+        guestNameElementAppoint.text(appointment.first_name + ' ' + appointment.last_name);
         dateElement.text(appointment.appoint_sched_date);
         timeElement.text(appointment.appoint_sched_time);
         agendaElement.text(appointment.appoint_description);
@@ -214,6 +216,10 @@ $(document).ready(function () {
             title: title,
             text: text,
             icon: icon
+        }).then((result) => {
+            if (result.isConfirmed) {
+                location.reload();
+            }
         });
     }
 });

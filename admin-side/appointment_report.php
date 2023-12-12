@@ -188,7 +188,7 @@ $pdf->Cell(100 ,5,'Appointment Report',0,1);//end of line
 $pdf->SetFont('Arial','',12);
 $pdf->Cell(1 ,5,'',0,1);
 $pdf->Cell(20 ,5,'',0,0);
-$pdf->Cell(100 ,5,'Date Range: '.$datefrom.' to '.$dateto.'',0,1);//end of line
+$pdf->Cell(100, 5, 'Date Range: ' . date('F j, Y', strtotime($datefrom)) . ' to ' . date('F j, Y', strtotime($dateto)) . '', 0, 1);//end of line
 $pdf->Cell(1 ,5,'',0,1);
 $pdf->Cell(1 ,5,'',0,1);
 

@@ -41,18 +41,20 @@ if ($days == 0) {
 }
 $totalCost = $row['price'] * $row['guest'] * $days;
 if (isset($_POST['submit'])) {
-  $originalFilename = $_FILES['pic']['name']; // Original filename
+  $image = $_FILES['pic']['name'];
 
-  $encodedFilename = base64_encode($originalFilename);
-
-  $proofOfPaymentDirectory = "../proof_of_payment/";
-
-  $imageFullPath = $proofOfPaymentDirectory . $encodedFilename;
-
-  $sql = "UPDATE $table SET proof_of_payment ='$encodedFilename', payment_method = 'Gcash', total = '$totalCost' WHERE transaction_num = '$transact'";
+  $sql = "UPDATE $table SET proof_of_payment ='$image', payment_method = 'Gcash', total = '$totalCost', timestamp = NOW() WHERE transaction_num = '$transact'";
   $conn->query($sql) or die($conn->error);
 
-  move_uploaded_file($_FILES['pic']['tmp_name'], $imageFullPath);
+
+  header('Location: guest_dashboard.php?success=Submitted successfully');
+}
+if (isset($_POST['send'])) {
+  $image = $_FILES['pic']['name'];
+
+  $sql = "UPDATE $table SET proof_of_payment ='$image', payment_method = 'Pay-on-Site', total = '$totalCost', timestamp = NOW() WHERE transaction_num = '$transact'";
+  $conn->query($sql) or die($conn->error);
+
 
   header('Location: guest_dashboard.php?success=Submitted successfully');
 }
@@ -99,12 +101,36 @@ if (isset($_POST['submit'])) {
               <h4 class="text-uppercase mt-1"><?php echo $transact; ?></h4>
 
             </div>
-            <a href="index.php">Cancel and return to the website</a>
-          </div>
+            <form action="delete.php" method="post">
+              <!-- Button trigger modal -->
+              <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                Cancel and Return to Website
+              </button>
 
+              <!-- Modal -->
+              <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <h5 class="modal-title" id="staticBackdropLabel">Cancel Reservation?</h5>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="submit" name="delete" class="btn btn-primary">Confirm</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+          <input type="hidden" name="id" value="<?php echo $row['transaction_num']; ?>">
+          </form>
           <div class="row">
             <div class="col-md-5 col-lg-5 col-xl-5 mb-3 mb-md-0">
-              <h5 class="mb-0 text-success"><?php echo '₱' . $totalCost . '.00'; ?></h5>
+              <h5 class="mb-0 text-success"><?php echo '₱' . $row['total'] . '.00'; ?></h5>
               <h5 class="mb-3"><?php echo $row['package']; ?></h5>
               <div>
 
@@ -131,11 +157,11 @@ if (isset($_POST['submit'])) {
                 </div>
                 <hr />
                 <h5 class="mb-3">Meals</h5>
-                <h6>Breakfast: <?php echo $row['breakfast']; ?></h6>
-                <h6>Lunch: <?php echo $row['lunch']; ?></h6>
-                <h6>Dinner: <?php echo $row['dinner']; ?></h6>
-                <h6>Dessert: <?php echo $row['dessert']; ?></h6>
-                <h6>Drinks: <?php echo $row['drinks']; ?></h6>
+                <h6><?php echo $row['breakfast']; ?></h6>
+                <h6><?php echo $row['lunch']; ?></h6>
+                <h6><?php echo $row['dinner']; ?></h6>
+                <h6><?php echo $row['dessert']; ?></h6>
+                <h6><?php echo $row['drinks']; ?></h6>
                 <hr>
                 <!-- Button trigger modal -->
 
@@ -204,7 +230,10 @@ if (isset($_POST['submit'])) {
 
                   </div>
                 </div>
-                <a class="btn-outline-primary btn-lg" role="button" type="button" href="guest_dashboard.php?success=Submitted successfully">Pay On Site</a>
+                <form method="post">
+                  <input type="hidden" name="total">
+                  <button class="btn-outline-primary btn-lg" type="submit" name="send">Pay on Site</button>
+                </form>
               </div>
             </div>
             <div class=" col-lg-4 col-xl-5 offset-lg-1 offset-xl-2">
@@ -213,17 +242,26 @@ if (isset($_POST['submit'])) {
                 <div class="d-flex justify-content-between mt-2">
                   <span>Package Price</span> <span><?php echo '₱' . $row['price']; ?></span>
                 </div>
+                <?php
+                $package = $row['package'];
+                if ($package == 'Catering Package') { ?>
+                  <div class="d-flex justify-content-between mt-2">
+                    <span>Additional per head</span> <span>₱450</span>
+                  </div>
+                <?php  } ?>
+
+
                 <div class="d-flex justify-content-between mt-2">
-                  <span>Number of Days</span> <span>* <?php echo $days; ?></span>
+                  <span>Number of Days</span> <span><?php echo $days; ?></span>
                 </div>
                 <div class="d-flex justify-content-between mt-2">
-                  <span>Guest</span> <span>* <?php echo $row['guest']; ?></span>
+                  <span>Guest</span> <span><?php echo $row['guest']; ?></span>
                 </div>
                 <hr />
 
 
                 <div class="d-flex justify-content-between mt-2">
-                  <span>Total </span> <span class="text-success"><?php echo '₱' . $totalCost . '.00'; ?></span>
+                  <span>Total </span> <span class="text-success"><?php echo '₱' . $row['total'] . '.00'; ?></span>
                 </div>
               </div>
             </div>

@@ -96,8 +96,8 @@ if (isset($_POST['submit'])) {
 </head>
 <style>
     .file-name {
-            margin-left: 10px;
-        }
+        margin-left: 10px;
+    }
 </style>
 
 <body style="overflow-x: hidden;">
@@ -109,60 +109,63 @@ if (isset($_POST['submit'])) {
                 <h1>Trinitas</h1>
             </div>
         </div>
-        <div class="signup-form">
-            <form class="signup" action="" method="POST" enctype="multipart/form-data">
-                <p class="title">Sign up</p>
-                <p class="message">All Fields are required </p>
-                <div class="flex">
-                    <label>
-                        <input required="" placeholder="" type="text" class="input" name="first_name">
-                        <span>Firstname</span>
-                    </label>
-
-                    <label>
-                        <input required="" placeholder="" type="text" class="input" name="last_name">
-                        <span>Lastname</span>
-                    </label>
-                </div>
-
-                <label>
-                    <input required="" placeholder="" type="email" class="input" name="email">
-                    <span>Email</span>
-                </label>
-                <div class="flex">
-                    <label>
-                        <input required="" placeholder="" type="password" class="input" name="password">
-                        <span>Password</span>
-                    </label>
-                    <label>
-                        <input required="" placeholder="" type="password" class="input" name="cpassword">
-                        <span>Confirm password</span>
-                    </label>
-                </div>
-
-                <div class="flex">
-                    <div class="file-input-wrapper">
-                        <label class="file-input-label" for="profilePicture">
-                            <i class="fas fa-image"></i> Choose Profile Picture
+        <div class="sign-up-container">
+            <div class="signup-form">
+                <form class="signup" action="" method="POST" enctype="multipart/form-data">
+                    <p class="title">Sign up</p>
+                    <p class="message">All Fields are required </p>
+                    <div class="flex">
+                        <label>
+                            <input required="" placeholder="" type="text" class="input" name="first_name">
+                            <span>Firstname</span>
                         </label>
-                        <input type="file" name="profile_picture" id="profilePicture" accept="image/*">
+
+                        <label>
+                            <input required="" placeholder="" type="text" class="input" name="last_name">
+                            <span>Lastname</span>
+                        </label>
                     </div>
-                    <span class="file-name" id="fileName"></span>
-                </div>
-                <button class="btn-login-signup" type="submit" name="submit">SIGN UP</button>
-                <p class="signin">Already have an acount ? <a href="login.php" style="text-decoration: none;">Login</a> </p>
-                <p class="copyright">Copyright &copy <script>
-                        document.write(new Date().getFullYear())
-                    </script> Trinitas </br> All Rights Reserved </p>
-            </form>
+
+                    <label>
+                        <input required="" placeholder="" type="email" class="input" name="email">
+                        <span>Email</span>
+                    </label>
+                    <div class="flex">
+                        <label>
+                            <input required="" placeholder="" type="password" class="input" name="password">
+                            <span>Password</span>
+                        </label>
+                        <label>
+                            <input required="" placeholder="" type="password" class="input" name="cpassword">
+                            <span>Confirm password</span>
+                        </label>
+                    </div>
+
+                    <div class="flex">
+                        <div class="file-input-wrapper">
+                            <label class="file-input-label" for="profilePicture">
+                                <i class="fas fa-image"></i> Choose Profile Picture
+                            </label>
+                            <input type="file" name="profile_picture" id="profilePicture" accept="image/*">
+                        </div>
+                        <span class="file-name" id="fileName"></span>
+                    </div>
+                    <button class="btn-login-signup" type="submit" name="submit">SIGN UP</button>
+                    <p class="signin">Already have an acount ? <a href="login.php" style="text-decoration: none;">Login</a> </p>
+                    <p class="copyright">Copyright &copy <script>
+                            document.write(new Date().getFullYear())
+                        </script> Trinitas </br> All Rights Reserved </p>
+                </form>
+            </div>
         </div>
+
     </section>
 
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
     <script>
-        document.getElementById('profilePicture').addEventListener('change', function () {
+        document.getElementById('profilePicture').addEventListener('change', function() {
             const fileNameDisplay = document.getElementById('fileName');
             const input = this;
 

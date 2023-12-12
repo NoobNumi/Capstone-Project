@@ -4,8 +4,7 @@ session_start();
 error_reporting(E_ALL);
 require_once("../connection.php");
 if (isset($_SESSION['admin_id'])) {
-   
-}else {
+} else {
     session_destroy();
 
     //session_name("assistant_manager_session");
@@ -16,7 +15,7 @@ if (isset($_SESSION['admin_id'])) {
         header("location: ../guest_side/login.php");
         exit;
     }
-}   
+}
 
 
 ?>
@@ -36,109 +35,124 @@ if (isset($_SESSION['admin_id'])) {
     <title>Reports</title>
 </head>
 
+<style>
+    .notif-button.report{
+        color: #ffff;
+        font-weight: 600;
+    }
+
+    .third-section .btn-view {
+        text-decoration: none;
+    }
+</style>
+
 <body>
     <?php
-        include("./admin_sidebar.php");
+    include("./admin_sidebar.php");
     ?>
     <!-- ALL MESSAGES BEGINS HERE -->
     <section class="">
         <section class="reservations-list">
-        <div class="reserve-appoint-header">
-            <div class="right-section">
-                <h4 class="admin-title">Reports</h4>
-               
-            </div>
-            <div class="center-section">
-                <div class="search-bar-admin">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" id="searchInput" placeholder="Search here...">
+            <div class="reserve-appoint-header">
+                <div class="right-section">
+                    <h4 class="admin-title">Reports</h4>
+
                 </div>
             </div>
-        </div>
-        <div class="notification-list">
+            <div class="notification-list">
                 <div class="notification-card reserve searchable-card">
-                <div class="first-section">
-                <div class="guest-details-admin">
-                <h4>Sales Report</h4>
+                    <div class="first-section">
+                        <div class="guest-details-admin">
+                            <h4>Sales Report</h4>
+                        </div>
+                    </div>
+                    <div class="second-section">
+                        <div class="section-content">
+                        </div>
+                    </div>
+                    <div class="third-section">
+                        <a href="sales_report_table.php" class="btn-view">
+                            <div class="notif-button report">
+                                View
+                            </div>
+                        </a>
+                    </div>
                 </div>
+                <div class="notification-card reserve searchable-card">
+                    <div class="first-section">
+                        <div class="guest-details-admin">
+                            <h4>Frequency Report</h4>
+                        </div>
+                    </div>
+                    <div class="second-section">
+                        <div class="section-content">
+                        </div>
+                    </div>
+                    <div class="third-section">
+                        <a href="frequency_report_table.php" class="btn-view">
+                            <div class="notif-button report">
+                                View
+                            </div>
+                        </a>
+                    </div>
                 </div>
-                <div class="second-section">
-                <div class="section-content">
+                <div class="notification-card reserve searchable-card">
+                    <div class="first-section">
+                        <div class="guest-details-admin">
+                            <h4>Reservation Report</h4>
+                        </div>
+                    </div>
+                    <div class="second-section">
+                        <div class="section-content">
+                        </div>
+                    </div>
+                    <div class="third-section">
+                        <a href="reservation_report_table.php" class="btn-view">
+                            <div class="notif-button report">
+                                View
+                            </div>
+                        </a>
+                    </div>
                 </div>
+                <div class="notification-card reserve searchable-card">
+                    <div class="first-section">
+                        <div class="guest-details-admin">
+                            <h4>Appointment Report</h4>
+                        </div>
+                    </div>
+                    <div class="second-section">
+                        <div class="section-content">
+                        </div>
+                    </div>
+                    <div class="third-section">
+                        <a href="appointment_report_table.php" class="btn-view">
+                            <div class="notif-button report">
+                                View
+                            </div>
+                        </a>
+                    </div>
                 </div>
-                <div class="third-section">
-                <div class="notif-button" data-reservation-id="" data-reservation-type="">
-                <a href="sales_report_table.php" class="btn-view">View</a>
+                <div class="notification-card reserve searchable-card">
+                    <div class="first-section">
+                        <div class="guest-details-admin">
+                            <h4>Cancellation Report</h4>
+                        </div>
+                    </div>
+                    <div class="second-section">
+                        <div class="section-content">
+                        </div>
+                    </div>
+                    <div class="third-section">
+                        <a href="cancellation_report_table.php" class="btn-view">
+                            <div class="notif-button report">
+                                View
+                            </div>
+                        </a>
+                    </div>
                 </div>
-                </div>
-                </div>
-                 <div class="notification-card reserve searchable-card">
-                <div class="first-section">
-                <div class="guest-details-admin">
-                <h4>Frequency Report</h4>
-                </div>
-                </div>
-                <div class="second-section">
-                <div class="section-content">
-                </div>
-                </div>
-                <div class="third-section">
-                <div class="notif-button" data-reservation-id="" data-reservation-type="">
-                <a href="frequency_report_table.php" class="btn-view">View</a>
-                </div>
-                </div>
-                </div>
-                 <div class="notification-card reserve searchable-card">
-                <div class="first-section">
-                <div class="guest-details-admin">
-                <h4>Reservation Report</h4>
-                </div>
-                </div>
-                <div class="second-section">
-                <div class="section-content">
-                </div>
-                </div>
-                <div class="third-section">
-                <div class="notif-button" data-reservation-id="" data-reservation-type="">
-                <a href="reservation_report_table.php" class="btn-view">View</a>
-                </div>
-                </div>
-                </div>
-                 <div class="notification-card reserve searchable-card">
-                <div class="first-section">
-                <div class="guest-details-admin">
-                <h4>Appointment Report</h4>
-                </div>
-                </div>
-                <div class="second-section">
-                <div class="section-content">
-                </div>
-                </div>
-                <div class="third-section">
-                <div class="notif-button" data-reservation-id="" data-reservation-type="">
-                <a href="appointment_report_table.php" class="btn-view">View</a>
-                </div>
-                </div>
-                </div>
-                 <div class="notification-card reserve searchable-card">
-                <div class="first-section">
-                <div class="guest-details-admin">
-                <h4>Cancellation Report</h4>
-                </div>
-                </div>
-                <div class="second-section">
-                <div class="section-content">
-                </div>
-                </div>
-                <div class="third-section">
-                <div class="notif-button" data-reservation-id="" data-reservation-type="">
-                <a href="cancellation_report_table.php" class="btn-view">View</a>
-                </div>
-                </div>
-                </div>
-        </div>
-    </section>
-        <?php  require("logout_modal.php");?>
+            </div>
+        </section>
+        <?php require("logout_modal.php"); ?>
     </section>
     <!-- ALL MESSAGE ENDS HERE -->
 </body>

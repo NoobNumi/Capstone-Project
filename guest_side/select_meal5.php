@@ -20,15 +20,45 @@ if($type == 'reception'){
 }if($type == 'training'){
     $table = 'training_reservation_record';
 }
+$sql = "SELECT * FROM $table WHERE transaction_num = '$transact'";
+$stmt = $conn->prepare($sql);
+$stmt->execute();
+$row = $stmt->fetch(PDO::FETCH_ASSOC);
+$date1 = $row['check_in']; 
+$datefrom = strtotime($date1); 
+$date2 = $row['check_out']; 
+$dateto = strtotime($date2);
+$diff =  $dateto - $datefrom; 
+$days = floor($diff / (60 * 60 * 24));
+//echo $days;
+if($days==0){
+    $days = 1;
+}
+$add = 450;
+$package = $row['package'];
+if($package == 'Catering Package'){
+ //$add = $row['guest'] * 450;
+ $totalCost = ($row['price'] * $days) + ($add * $row['guest'] * $days);
+}else if($package == 'Venue-Only Package'){
+$totalCost = $row['price'] * $days;
+}else{
+$totalCost = $row['price'] * $row['guest'] * $days;
+}
+
+
 if (isset($_POST['submit'])) {
   $drinks = $_POST['drinks'];
 
-  $sql = "UPDATE $table SET drinks ='$drinks' WHERE transaction_num = '$transact'";
+  $sql = "UPDATE $table SET drinks ='$drinks', total = '$totalCost' WHERE transaction_num = '$transact'";
   $conn->query($sql) or die($conn->error);
+
+  $sql2 = "UPDATE chart SET count = count + 1 WHERE type = '$type'";
+  $conn->query($sql2) or die($conn->error);
 
   header('Location: select_meal6.php?transact='.$transact.'&type='.$type);
 
 }
+
 $sql = "SELECT * FROM $table WHERE transaction_num = '$transact'";
 $stmt = $conn->prepare($sql);
 $stmt->execute();
@@ -81,18 +111,27 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
                 <p class="service-name"><?php echo $row['package']; ?> meals:</p>
                 <div class="">
                      <?php
-                     
                       $sql = "SELECT *
                     FROM $table WHERE transaction_num = '$transact'";
                     $stmt = $conn->prepare($sql);
                     $stmt->execute();
                     $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                      if($package == 'Catering Package'){
+                     
                       ?>
-                   <p>Breakfast: <?php echo $row['breakfast']; ?></p>
-                   <p>Lunch: <?php echo $row['lunch']; ?></p>
-                  <p>Dinner: <?php echo $row['dinner']; ?></p>
+                   <p>Dish 1: <?php echo $row['breakfast']; ?></p>
+                   <p>Dish 2: <?php echo $row['lunch']; ?></p>
+                   <p>Dish 3: <?php echo $row['dinner']; ?></p>
                    <p>Dessert: <?php echo $row['dessert']; ?></p>
-                   <p>Drinks: <?php echo $row['drinks']; ?></p>
+                    <p>Drinks: <?php echo $row['drinks']; ?></p>
+
+                  <?php } else{ ?>
+                      <p>Breakfast: <?php echo $row['breakfast']; ?></p>
+                      <p>Lunch: <?php echo $row['lunch']; ?></p>
+                      <p>Dinner: <?php echo $row['dinner']; ?></p>
+                      <p>Dessert: <?php echo $row['dessert']; ?></p>
+                      <p>Drinks: <?php echo $row['drinks']; ?></p>
+                  <?php } ?>
                 </div>
               
         </div>

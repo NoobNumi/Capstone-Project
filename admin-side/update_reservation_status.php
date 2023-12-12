@@ -41,8 +41,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     try {
-        $stmt = $conn->prepare("UPDATE $tableName SET status = :new_status WHERE $primaryKeyColumn = :reservation_id");
+        $currentTimestamp = new DateTime('now', new DateTimeZone('Asia/Manila'));
+        $currentTimestamp = $currentTimestamp->format('Y-m-d H:i:s');
+
+        $stmt = $conn->prepare("UPDATE $tableName SET status = :new_status, timestamp = :current_timestamp WHERE $primaryKeyColumn = :reservation_id");
         $stmt->bindParam(':new_status', $newStatus);
+        $stmt->bindParam(':current_timestamp', $currentTimestamp);
         $stmt->bindParam(':reservation_id', $reservationId);
         $stmt->execute();
 
@@ -54,7 +58,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
             if ($row) {
-
                 echo json_encode([
                     'success' => true,
                     'first_name' => $row['first_name'],
@@ -74,3 +77,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 } else {
     echo json_encode(['success' => false, 'message' => 'Invalid request method']);
 }
+?>

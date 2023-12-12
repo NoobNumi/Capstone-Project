@@ -13,10 +13,6 @@ if (isset($_POST['submit'])) {
     $user_id = $_POST['user_id'];
     $first_name = $_POST['first_name'];
     $last_name = $_POST['last_name'];
-    $street_add = $_POST['street_add'];
-    $city_municipality = $_POST['city_municipality'];
-    $province = $_POST['province'];
-    $postal_code = $_POST['postal_code'];
     $contact_no = $_POST['contact_no'];
     $appoint_sched_date = $_POST['appoint_sched_date'];
     $appoint_description = $_POST['appoint_description'];
@@ -24,40 +20,36 @@ if (isset($_POST['submit'])) {
     $appoint_sched_time = "4:00 PM";
     $appoint_status = "pending";
 
+    date_default_timezone_set('Asia/Manila');
+
+    $currentTimestamp = date("Y-m-d H:i:s");
+
     $query = $conn->prepare("SELECT * FROM `appointment_record` WHERE `first_name` = ? AND `last_name` = ?");
     $query->bindValue(1, $first_name);
     $query->bindValue(2, $last_name);
     $query->execute();
     $row = $query->fetch(PDO::FETCH_ASSOC);
 
-    if ($query->rowCount() > 0) {
-        $already_filed = 1;
-    } else {
-        $query = "INSERT INTO appointment_record (user_id, first_name, last_name, street_add, city_municipality, province, postal_code, contact_no, appoint_sched_date, appoint_sched_time, appoint_description, appoint_status) VALUES (:user_id, :first_name, :last_name, :street_add, :city_municipality, :province, :postal_code, :contact_no, :appoint_sched_date, :appoint_sched_time, :appoint_description, :appoint_status)";
-        $run_query = $conn->prepare($query);
+    $query = "INSERT INTO appointment_record (user_id, first_name, last_name, contact_no, appoint_sched_date, appoint_sched_time, appoint_description, appoint_status, timestamp, is_read, is_read_user) VALUES (:user_id, :first_name, :last_name, :contact_no, :appoint_sched_date, :appoint_sched_time, :appoint_description, :appoint_status, :timestamp, 0, 0)";
+    $run_query = $conn->prepare($query);
 
-        $data = [
-            ':user_id' => $user_id,
-            ':first_name' => $first_name,
-            ':last_name' => $last_name,
-            ':street_add' => $street_add,
-            ':city_municipality' => $city_municipality,
-            ':province' => $province,
-            ':postal_code' => $postal_code,
-            ':contact_no' => $contact_no,
-            ':appoint_sched_date' => $appoint_sched_date,
-            ':appoint_sched_time' => $appoint_sched_time,
-            ':appoint_description' => $appoint_description,
-            ':appoint_status' => $appoint_status
-        ];
+    $data = [
+        ':user_id' => $user_id,
+        ':first_name' => $first_name,
+        ':last_name' => $last_name,
+        ':contact_no' => $contact_no,
+        ':appoint_sched_date' => $appoint_sched_date,
+        ':appoint_sched_time' => $appoint_sched_time,
+        ':appoint_description' => $appoint_description,
+        ':appoint_status' => $appoint_status,
+        ':timestamp' => $currentTimestamp
+    ];
 
-        $query_execute = $run_query->execute($data);
-        if ($query_execute) {
-            $success = 1;
-        }
+    $query_execute = $run_query->execute($data);
+    if ($query_execute) {
+        $success = 1;
     }
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -81,11 +73,6 @@ if (isset($_POST['submit'])) {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <?php
-    if ($already_filed) {
-        echo '<div class="alert alert-danger" style="text-align:center; font-size: 1.2rem;">
-            <strong><i class="fa-solid fa-triangle-exclamation" style="margin-right: 12px";></i>You already filed an appointment!</strong>
-            </div>';
-    }
     if ($success) { ?>
         <script>
             Swal.fire({
@@ -104,6 +91,7 @@ if (isset($_POST['submit'])) {
     <?php } ?>
     <?php
     include("guest_navbar.php");
+    include("notification-bar.php");
     ?>
     <!--APPOINTMENT FORM STARTS-->
     <section class="main-appointment">
@@ -112,38 +100,26 @@ if (isset($_POST['submit'])) {
                 <p class="appointment-title">Appointment Form</p>
                 <p class="message">Input details about your appointment</p>
                 <div class="appoint-flex">
-                    <label>
-                        <input required="" placeholder="" type="text" class="input" name="first_name">
-                        <span>Firstname</span>
-                    </label>
+                    <?php
+                        $select_query = 'SELECT * FROM `users` WHERE user_id = :user_id';
+                        $stmt = $conn->prepare($select_query);
+                        $stmt->bindParam(':user_id', $_SESSION['user_id']);
+                        $stmt->execute();
+                        $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-                    <label>
-                        <input required="" placeholder="" type="text" class="input" name="last_name">
-                        <span>Lastname</span>
-                    </label>
-                </div>
-                <div class="appoint-flex">
-                    <label>
-                        <input required="" placeholder="" type="text" class="input" name="street_add">
-                        <span>Street</span>
-                    </label>
-                    <label>
-                        <input required="" placeholder="" type="text" class="input" name="city_municipality">
-                        <span>Municipality</span>
-                    </label>
-
-                </div>
-                <div class="appoint-flex">
-                    <label>
-                        <input required="" placeholder="" type="text" class="input" name="province">
-                        <span>Province</span>
-                    </label>
-
-                    <label>
-                        <input required="" placeholder="" type="text" class="input" name="postal_code">
-                        <span>Postal Code</span>
-                    </label>
-
+                        if ($stmt->rowCount() > 0) {
+                            $first_name = $user['first_name'];
+                            $last_name = $user['last_name'];
+                    ?>
+                        <label>
+                            <input required="" placeholder="" type="text" class="input" name="first_name" value="<?php echo $first_name; ?>">
+                            <span>Firstname</span>
+                        </label>
+                        <label>
+                            <input required="" placeholder="" type="text" class="input" name="last_name" value="<?php echo $last_name; ?>">
+                            <span>Lastname</span>
+                        </label>
+                        </label>
                 </div>
                 <div class="appoint-flex">
                     <label>
@@ -167,20 +143,12 @@ if (isset($_POST['submit'])) {
                     </label>
                 </div>
                 <p id="char-count">Characters: 0 / 300</p>
-                <?php
-                $select_query = 'SELECT * FROM `users` WHERE user_id = :user_id';
-                $stmt = $conn->prepare($select_query);
-                $stmt->bindParam(':user_id', $_SESSION['user_id']);
-                $stmt->execute();
-                $user = $stmt->fetch(PDO::FETCH_ASSOC);
+            <?php
+                    }
+            ?>
+            <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
 
-                if ($stmt->rowCount() > 0) {
-                ?>
-                    <input type="hidden" name="user_id" value="<?php echo $_SESSION['user_id']; ?>">
-                <?php
-                }
-                ?>
-                <button class="btn-login-signup" type="submit" name="submit" style="height: 50px; cursor:pointer;">Make an Appointment</button>
+            <button class="btn-login-signup" type="submit" name="submit" style="height: 50px; cursor:pointer;">Make an Appointment</button>
             </form>
         </div>
         <?php include("date_time_selector.php"); ?>
@@ -188,7 +156,7 @@ if (isset($_POST['submit'])) {
     </section>
     <?php include("guest_footer.php"); ?>
     <script>
-       function limitTextarea(textarea, maxChars) {
+        function limitTextarea(textarea, maxChars) {
             const text = textarea.value;
             const currentCharCount = text.length;
 
@@ -205,6 +173,9 @@ if (isset($_POST['submit'])) {
     </script>
     <script src="./js/date-time-selector-modal.js"></script>
     <script src="./js/insert_date_time.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="./js/populateNotification.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
 </body>

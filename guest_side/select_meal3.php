@@ -33,7 +33,9 @@ $sql = "SELECT * FROM $table WHERE transaction_num = '$transact'";
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
+$package = $row['package'];
+$except1 = $row['breakfast'];
+$except2 = $row['lunch'];
 ?>
 
 
@@ -79,18 +81,25 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
                  <p class="text-center"><?php echo $row['first_name'].' '.$row['last_name']; ?></p>
                  <hr>
                 <p class="service-name"><?php echo $row['package']; ?> meals:</p>
-                <div class="">
+               <div class="">
                      <?php
-                     
                       $sql = "SELECT *
                     FROM $table WHERE transaction_num = '$transact'";
                     $stmt = $conn->prepare($sql);
                     $stmt->execute();
                     $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                      if($package == 'Catering Package'){
+                     
                       ?>
-                   <p>Breakfast: <?php echo $row['breakfast']; ?></p>
-                   <p>Lunch: <?php echo $row['lunch']; ?></p>
-                  <p>Dinner: <?php echo $row['dinner']; ?></p>
+                   <p>Dish 1: <?php echo $row['breakfast']; ?></p>
+                   <p>Dish 2: <?php echo $row['lunch']; ?></p>
+                   <p>Dish 3: <?php echo $row['dinner']; ?></p>
+
+                  <?php } else{ ?>
+                      <p>Breakfast: <?php echo $row['breakfast']; ?></p>
+                      <p>Lunch: <?php echo $row['lunch']; ?></p>
+                      <p>Dinner: <?php echo $row['dinner']; ?></p>
+                  <?php } ?>
                 </div>
               
         </div>
@@ -100,9 +109,10 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
     <div class="col-md-9">  
       
                 <div class="mx-5 my-5 row">
-                  
-         <p class="reservation-title">Select Dinner</p>
-         <?php $sql = "SELECT *  FROM meals WHERE type = 'ld'";
+              <?php if($package == 'Catering Package'){ ?>
+                 <p class="reservation-title">Select Dish 3</p>
+         <?php $sql = "SELECT *
+        FROM meals WHERE type != 'dessert' AND type != 'drinks' AND meal_name != '$except1' AND meal_name != '$except2' AND type != 'breakfast'";
 
 $stmt = $conn->prepare($sql);
 $stmt->execute(); ?>
@@ -130,6 +140,41 @@ $stmt->execute(); ?>
            </div>     
            <?php
             }
+            ?>
+             <?php } else { ?>
+
+
+         <p class="reservation-title">Select Dinner</p>
+         <?php $sql = "SELECT *
+        FROM meals WHERE type = 'ld'";
+
+$stmt = $conn->prepare($sql);
+$stmt->execute(); ?>
+
+<?php  while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) { ?>
+      <div class="container col-md-4 mt-3 mb-5">
+        <form method="post">
+      
+        <div class="card">
+            <div class="card-body">
+              <div class="food-details">
+                        <img src="<?php echo $row['meal_img_path']; ?>">
+                        <p class="food-name"><?php echo $row['meal_name']; ?></p>
+                    </div>     
+            </div>
+
+            <div class=" mx-3 my-3" align="right">
+             <input type="hidden" name="dinner" value="<?php echo $row['meal_name']; ?>">
+                <button type="submit" name="submit" class="btn btn-primary">Select</button>
+            </div>
+        </div>
+
+  
+</form>
+           </div>     
+           <?php
+            }
+        }
             ?>
 
 </div>

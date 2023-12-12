@@ -27,40 +27,44 @@ if (isset($_SESSION['user_id'])) {
             <li><i class="fa-solid fa-newspaper fa-con"></i><a class="navigation-link" href="../guest_side/discover.php">Discover</a></li>
             <li><i class="fa-solid fa-bullhorn fa-con"></i><a class="navigation-link" href="../guest_side/announcements.php">Announcements</a></li>
             <li><i class="fa-solid fa-address-card fa-con"></i><a class="navigation-link" href="../guest_side/aboutPage.php">About</a></li>
-            <li class="msg-nav">
-                <span class="count-color navbar-side"></span>
-                <a class="navigation-link-message-part" href="../guest_side/messages.php"><i class="fa-solid fa-message message-con"></i></a>
-            </li>
             <?php if (!isset($_SESSION['user_id'])) { ?>
                 <li><i class="fa-solid fa-right-to-bracket fa-con"></i><a class="user-buttons" href="../guest_side/login.php">Log in</a>
                 </li>
                 <li><i class="fa-solid fa-user-plus fa-con"></i><a class="user-buttons" href="../guest_side/signup.php">Sign up</a></li>
             <?php } else { ?>
-            <?php
-            if (isset($_SESSION['user_id'])) {
-                $profile_picture = isset($_SESSION['user_profile_picture']) ? $_SESSION['user_profile_picture'] : 'default_profile_picture.jpg';
-                echo '<div class="profile-select" data-bs-toggle="dropdown">';
-                echo '<img src="../guest_side/' . $profile_picture . '" class="user-profile-picture">';
-                echo '<a href="#" style="display: none;" id="guest-link">Guest</a>';
-                echo '</div>';
-            } else {
-                echo 'User is not logged in.'; // Add a message for debugging
-            }
-            ?>
+                <?php
+                if (isset($_SESSION['user_id'])) {
+                    echo '<li class="notif-nav">';
+                    echo '<span class="notif-count-color navbar-side"></span>';
+                    echo '<a class="navigation-link-message-part" href="#"><i class="fa-solid fa-bell notif-con"></i></a>';
+                    echo '</li>';
+                    echo '<li class="msg-nav">';
+                    echo '<span class="count-color navbar-side"></span>';
+                    echo '<a class="navigation-link-message-part" href="../guest_side/messages.php"><i class="fa-solid fa-message message-con"></i></a>';
+                    echo '</li>';
+                    $profile_picture = isset($_SESSION['user_profile_picture']) ? $_SESSION['user_profile_picture'] : 'default_profile_picture.jpg';
+                    echo '<div class="profile-select" data-bs-toggle="dropdown">';
+                    echo '<img src="../guest_side/' . $profile_picture . '" class="user-profile-picture">';
+                    echo '<a href="#" style="display: none;" id="guest-link">Guest</a>';
+                    echo '</div>';
+                } else {
+                    echo 'User is not logged in.';
+                }
+                ?>
 
-                    <div class="dropdown-menu">
-                        <?php
-                            $user_id = $_SESSION['user_id'];
-                            $sql = $conn->prepare("SELECT * FROM users WHERE user_id = :user_id");
-                            $sql->bindParam(':user_id', $user_id, PDO::PARAM_INT);
-                            $sql->execute();
-                            if ($sql->rowCount() > 0) {
-                                $row = $sql->fetch(PDO::FETCH_ASSOC);
-                            }
-                        ?>
-                        <a class="dropdown-item dropdown-link-name" href="guest_dashboard.php?user_id=<?php echo $_SESSION['user_id']; ?>"><i class="fa-solid fa-circle-user"></i> Profile</a>
-                        <a class="dropdown-item dropdown-link-name" id="logout_click"><i class="fa-solid fa-right-from-bracket"></i>Logout</a>
-                    </div>
+                <div class="dropdown-menu">
+                    <?php
+                    $user_id = $_SESSION['user_id'];
+                    $sql = $conn->prepare("SELECT * FROM users WHERE user_id = :user_id");
+                    $sql->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+                    $sql->execute();
+                    if ($sql->rowCount() > 0) {
+                        $row = $sql->fetch(PDO::FETCH_ASSOC);
+                    }
+                    ?>
+                    <a class="dropdown-item dropdown-link-name" href="guest_dashboard.php?user_id=<?php echo $_SESSION['user_id']; ?>"><i class="fa-solid fa-circle-user"></i> Profile</a>
+                    <a class="dropdown-item dropdown-link-name" id="logout_click"><i class="fa-solid fa-right-from-bracket"></i>Logout</a>
+                </div>
                 </li>
             <?php } ?>
         </ul>

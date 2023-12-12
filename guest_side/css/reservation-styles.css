@@ -42,7 +42,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 14px;
-    width: 600px;
+    width: auto;
     background-color: #fff;
     padding: 20px;
     border-radius: 20px;
@@ -56,6 +56,8 @@ body {
     font-weight: 700;
     font-size: 23px;
     letter-spacing: 1px;
+    position: relative;
+    padding-top: 30px;
 }
 
 .reservation-form .message {
@@ -190,6 +192,41 @@ body {
     color: #ffff;
     transition: 0.5s;
 }
+
+
+
+.container-packages .card{
+    width: 100%;
+}
+
+.card .row{
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+
+
+.price-package{
+    background-color: #235789;
+    color: #ffff;
+    position: absolute;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 20px;
+    left: 1%;
+    bottom: 4px;
+}
+
+@media screen and (max-width: 400px) {
+    .container-packages {
+        width: 90%;
+    }
+}
+
+
+
 
  /* ------------------------------------------------------ DATE TIME SELECTOR SECTION -------------------------------------------- */
  .dateTime-modal-trigger {
@@ -484,5 +521,11 @@ p.month-name {
 
     .dateTime-modal-trigger {
         overflow: auto;
+    }
+
+    .price-package {
+        left: 1%;
+        font-size: 17px;
+        padding: 4px 7px;
     }
 }

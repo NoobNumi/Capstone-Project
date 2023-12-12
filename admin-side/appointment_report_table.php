@@ -51,106 +51,34 @@ $stmt->execute();
             <div class="right-section">
                 <h4 class="admin-title">Appointment Report</h4>
             </div>
-            <div class="center-section">
-                <div class="search-bar-admin">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" id="searchInput" placeholder="Search here...">
-                </div>
-            </div>
         </div>
         <div>
-             <!--form method="get" action="sales_report.php">
+            <form method="get" action="appointment_report.php">
                 <div class="notification-card reserve searchable-card">
-                <div class="second-section">
-               
-                <div class="service-type">
-                    <label>Date From:</label>
-                  <input class="form-control" type="date" name="datefrom" required><br>
-                <div class="service"></div>
-                </div>
-                </div>
-                
-                 <div class="third-section">
-    
-                <div class="service-type">
-                    <label>Date To:</label>
-                  <input class="form-control" type="date" name="dateto" required><br>
-                <div class="service"></div>
-                </div>
-                
-                </div>
-                <div class="third-section">
-                
-                <button type="submit" class="notif-button text-white">Generate</button>
-               
-                </div>
-                </div>
-            </form-->
-  <?php if (!isset($_SESSION['admin_id'])) { ?>
-               
-            <?php } else { ?>
-              <form method="get" action="appointment_report.php">
-                <div class="notification-card reserve searchable-card">
-                <div class="second-section">
-               
-                <div class="service-type">
-                    <label>Date From:</label>
-                  <input class="form-control" type="date" name="datefrom" required><br>
-                <div class="service"></div>
-                </div>
-                </div>
-                
-                 <div class="third-section">
-    
-                <div class="service-type">
-                    <label>Date To:</label>
-                  <input class="form-control" type="date" name="dateto" required><br>
-                <div class="service"></div>
-                </div>
-                
-                </div>
-                <div class="third-section">
-                
-                <button type="submit"  class="notif-button text-white btn btn-light">Generate</button>
-               
-                </div>
+                    <div class="second-section">
+                        <div class="service-type">
+                            <label>Date From:</label>
+                            <input class="form-control report-generate" type="date" name="datefrom" required><br>
+                            <div class="service"></div>
+                        </div>
+                    </div>
+
+                    <div class="third-section">
+                        <div class="service-type">
+                            <label>Date To:</label>
+                            <input class="form-control report-generate" type="date" name="dateto" required><br>
+                            <div class="service"></div>
+                        </div>
+
+                    </div>
+                    <div class="third-section">
+                        <button type="submit" class="notif-button" style="color: #ffff; font-weight: 600">Generate</button>
+                    </div>
                 </div>
             </form>
-                        <?php
-                            
-                            }
-                        ?>
-        </div>
-        <!--table class="meal-table">
-            <tr>
-                <th>Appointment Date</th>
-                <th>Time</th>
-                <th>Costumer Name</th>
-                <th>Appointment Status</th>
-            </tr>
-            <?php
-          //  while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-             //   echo '<tr class="searchable-card">
-                //    <td>' .  $row['appoint_sched_date'] . '</td>
-                 //   <td>' . $row['appoint_sched_time'] . '</td>
-                 //   <td>' . $row['first_name'] . ' ' . $row['last_name']. '</td>
-                 //    <td>' . $row['appoint_status'] . '</td>
-                //</tr>';
-          //  }
-            ?>
-        </table-->
-        <div class="no-meals-message" style="
-                display: none;
-                width: inherit;
-                text-align: center;
-                padding: 10px 14px;
-                background: #fff;">
-            No meals found
         </div>
     </section>
-
     <?php require("logout_modal.php"); ?>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="./js/users.js"></script>
     <script src="./js/sidebar-animation.js"></script>

@@ -16,8 +16,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     try {
-        $stmt = $conn->prepare("UPDATE appointment_record SET appoint_status = :new_status WHERE appoint_id = :appoint_id");
+        $currentTimestamp = new DateTime('now', new DateTimeZone('Asia/Manila'));
+        $currentTimestamp = $currentTimestamp->format('Y-m-d H:i:s');
+
+        $stmt = $conn->prepare("UPDATE appointment_record SET appoint_status = :new_status, timestamp = :current_timestamp WHERE appoint_id = :appoint_id");
         $stmt->bindParam(':new_status', $newStatus);
+        $stmt->bindParam(':current_timestamp', $currentTimestamp);
         $stmt->bindParam(':appoint_id', $appointmentId);
         $stmt->execute();
 
@@ -25,9 +29,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt = $conn->prepare("SELECT first_name, appoint_sched_date, appoint_sched_time FROM appointment_record WHERE appoint_id = :appoint_id");
             $stmt->bindParam(':appoint_id', $appointmentId);
             $stmt->execute();
-        
+
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        
+
             if ($row) {
                 echo json_encode([
                     'success' => true,
@@ -41,13 +45,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         } else {
             echo json_encode(['success' => false, 'message' => 'Update failed']);
-        }        
-        
+        }
+
     } catch (PDOException $e) {
         echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
     }
 } else {
     echo json_encode(['success' => false, 'message' => 'Invalid request method']);
 }
-
 ?>

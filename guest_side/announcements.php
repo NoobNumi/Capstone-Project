@@ -1,250 +1,146 @@
 <?php
-    require("../connection.php");
-    session_name("user_session");
-    session_start();
+require("../connection.php");
+session_name("user_session");
+session_start();
 
-    if (isset($_GET['user_id'])) {
-        $user_id = $_GET['user_id'];
-    } else {
-        $user_id = 0;
-    }
+date_default_timezone_set('Asia/Manila');
+
+if (isset($_GET['user_id'])) {
+    $user_id = $_GET['user_id'];
+} else {
+    $user_id = 0;
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.css" integrity="sha512-Woz+DqWYJ51bpVk5Fv0yES/edIMXjj3Ynda+KWTIkGoynAMHrqTcDUQltbipuiaD5ymEo9520lyoVOo9jCQOCA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="./css/guest-style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js" integrity="sha512-Ixzuzfxv1EqafeQlTCufWfaC6ful6WFqIz4G+dWvK0beHw0NVJwvCKSgafpy5gwNqKmgUfIBraVwkKI+Cz0SEQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <title>Announcements</title>
 </head>
-<body>
-   <?php 
-        include("guest_navbar.php");
-        include("logout_modal.php");
-    ?>
 
+<body>
+
+    <?php
+    include("guest_navbar.php");
+    include("notification-bar.php");
+    include("logout_modal.php");
+    ?>
     <!------------------------------------------------- START OF ANNOUNCEMENTS --------------------------------------------------->
     <section class="announcements">
         <div class="posts">
             <h1>Trinitas updates</h1>
-            <span>Filter
-                <span class="material-symbols-rounded">
-                    tune
-                </span>
-            </span>
         </div>
+        <!------------------------------------------------- POSTS --------------------------------------------------->
+        <?php
+        try {
+            $query = "SELECT a.announcement_id, a.post_content, a.timestamp, a.is_admin
+            FROM announcements a ORDER BY a.timestamp DESC";
+            $stmt = $conn->query($query);
 
+            while ($row = $stmt->fetch()) {
+                echo '<div class="post-card">';
+                echo '<div class="profile-settings">';
+                echo '<div class="posted">';
+                echo '<div class="profile-pic">';
+                if ($row['is_admin'] == 1) {
+                    // Admin
+                    echo '<img src="../images/nun.png" width="50px" height="50px" alt="" srcset="">';
+                    echo '</div>';
+                    echo '<div class="profile-details">';
+                    echo '<h5>Admin</h5>';
+                } else {
+                    // Assistant
+                    echo '<img src="../images/assist_nun.png" width="50px" height="50px" alt="" srcset="">';
+                    echo '</div>';
+                    echo '<div class="profile-details">';
+                    echo '<h5>Assistant</h5>';
+                }
+                $timestamp = strtotime($row['timestamp']);
+                $current_time = time();
+                $time_diff = $current_time - $timestamp;
+                if ($time_diff < 3600) {
+                    $time_ago = round($time_diff / 60) . 'm';
+                } elseif ($time_diff < 86400) {
+                    $time_ago = round($time_diff / 3600) . 'h';
+                } elseif ($time_diff < 604800) {
+                    $time_ago = date('M j', $timestamp);
+                } else {
+                    $time_ago = date('M j', $timestamp);
+                }
+                echo '<p>' . $time_ago . '</p>';
+                echo '</div>';
+                echo '</div>';
+                echo '<style>.btn-dropdown::after { display: none; }</style>';
+                echo '<style>.btn-dropdown { background-color: transparent; color: #303030; border: none; outline: none; }</style>';
+                echo '<style>.btn-dropdown:hover { background-color: transparent; color: #303030; }</style>';
+                echo '<style>.btn-dropdown:focus { background-color: transparent; }</style>';
+                echo '<div class="dropdown">';
+                echo '<button class="btn btn-secondary btn-dropdown dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">';
+                echo '<div class="settings-icon">';
+                echo '</div>';
+                echo '</button>';
+                echo '</div>';
+                echo '</div>';
+                echo '<div class="post-description">';
+                $post_content = $row['post_content'];
+                if (str_word_count($post_content) > 50) {
+                    $short_content = implode(' ', array_slice(explode(' ', $post_content), 0, 50));
+                    echo '<p class="short-content">' . $short_content . '... <span class="read-more text-truncate"><br>See More</span></p>';
+                    echo '<p class="full-content" style="display: none;">' . $post_content . ' <span class="read-less text-truncate"><br>See Less</span></p>';
+                } else {
+                    echo '<p>' . $post_content . '</p>';
+                }
+                echo '<br><br></div>';
+                echo '<div class="image-grid">';
+                $announcement_id = $row['announcement_id'];
+                $image_query = "SELECT img_url_path FROM announcement_image WHERE announcement_id = $announcement_id";
+                $image_stmt = $conn->query($image_query);
+                $image_count = 0;
 
-        <!------------------------------------------------- POST CARD 1 --------------------------------------------------->
+                while ($image_row = $image_stmt->fetch()) {
+                    $image_id = 'image-' . $image_count;
+                    echo '<div class="image-item" id="' . $image_id . '"';
+                    if ($image_count > 3) {
+                        echo ' style="display: none;"';
+                    }
 
-        <div class="post-card">
-            <div class="profile-settings">
-                <div class="posted">
-                    <div class="profile-pic">
-                        <img src="../images/nun.png" width="50px" height="50px" alt="" srcset="">
-                    </div>
-                    <div class="profile-details">
-                        <h5>Admin</h5>
-                        <p>15h</p>
-                    </div>
-                </div>
-                <div class="settings-icon">
-                    <span class="material-symbols-rounded">
-                        more_horiz
-                    </span>
-                </div>
-            </div>
-            <div class="post-description">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente, cum consequuntur quod laudantium
-                    ipsa eligendi iure, magnam illo, vitae ea dolore. Quae magni maxime aperiam a quaerat sed, nihil
-                    commodi.</p>
-            </div>
-            <div class="post-img">
-                <img src="../images/bgImage.png" width="100px" height="100px" alt="" class="post">
-                <img src="../images/bgImage.png" width="100px" height="100px" alt="" class="post">
-            </div>
+                    echo '>';
+                    echo '<a href="' . $image_row['img_url_path'] . '" data-lightbox="gallery-' . $announcement_id . '">';
+                    echo '<img src="' . $image_row['img_url_path'] . '" alt="Image ' . ($image_count + 1) . '">';
+                    echo '</a>';
 
-            <hr>
+                    if ($image_count == 3) {
+                        $remaining_photos = $image_stmt->rowCount() - 4;
+                        echo '<div class="overlay">';
+                        echo '<div class="more-photos">+' . $remaining_photos . '</div>';
+                        echo '</div>';
+                    }
 
-            <div class="post-actions">
-                <div class="post-react">
-                    <span class="material-symbols-rounded" id="like_react">
-                        favorite
-                    </span>
-                    <p>Like</p>
-                </div>
-                <div class="post-comment">
-                    <span class="material-symbols-rounded">
-                        comment
-                    </span>
-                    <p>Comment</p>
-                </div>
-                <div class="post-share" id="share_btn">
-                    <span class="material-symbols-rounded">
-                        share_windows
-                    </span>
-                    <p>Share</p>
-                </div>
-            </div>
+                    echo '</div>';
+                    $image_count++;
+                }
 
-
-            <hr class="comment-line">
-
-
-            <div class="comment-details">
-                <img src="../images/guest.png">
-                <div class="comment-field">
-                    <textarea name="" id="" placeholder="Write a comment.."></textarea>
-                    <span class="material-symbols-rounded send_comment" id="home_icons">
-                        send
-                    </span>
-                </div>
-            </div>
-        </div>
-
-
-        <!------------------------------------------------- POST CARD 2 --------------------------------------------------->
-
-        <div class="post-card">
-            <div class="profile-settings">
-                <div class="posted">
-                    <div class="profile-pic">
-                        <img src="../images/nun.png" width="50px" height="50px" alt="" srcset="">
-                    </div>
-                    <div class="profile-details">
-                        <h5>Admin</h5>
-                        <p>15h</p>
-                    </div>
-                </div>
-                <div class="settings-icon">
-                    <span class="material-symbols-rounded">
-                        more_horiz
-                    </span>
-                </div>
-            </div>
-            <div class="post-description">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente, cum consequuntur quod laudantium
-                    ipsa eligendi iure, magnam illo, vitae ea dolore. Quae magni maxime aperiam a quaerat sed, nihil
-                    commodi.</p>
-            </div>
-            <div class="post-img">
-                <img src="../images/bgImage.png" width="100px" height="100px" alt="" class="post">
-                <img src="../images/bgImage.png" width="100px" height="100px" alt="" class="post">
-            </div>
-
-            <hr>
-
-            <div class="post-actions">
-                <div class="post-react">
-                    <span class="material-symbols-rounded" id="like_react">
-                        favorite
-                    </span>
-                    <p>Like</p>
-                </div>
-                <div class="post-comment">
-                    <span class="material-symbols-rounded">
-                        comment
-                    </span>
-                    <p>Comment</p>
-                </div>
-                <div class="post-share" id="share_btn">
-                    <span class="material-symbols-rounded">
-                        share_windows
-                    </span>
-                    <p>Share</p>
-                </div>
-            </div>
-
-            <hr class="comment-line">
-
-
-            <div class="comment-details">
-                <img src="../images/guest.png">
-                <div class="comment-field">
-                    <textarea name="" id="" placeholder="Write a comment.."></textarea>
-                    <span class="material-symbols-rounded send_comment" id="home_icons">
-                        send
-                    </span>
-                </div>
-            </div>
-        </div>
-
-        <!----------------------------------------------- POST CARD 3 ---------------------------------------------------------->
-
-
-        <div class="post-card">
-            <div class="profile-settings">
-                <div class="posted">
-                    <div class="profile-pic">
-                        <img src="../images/nun.png" width="50px" height="50px" alt="" srcset="">
-                    </div>
-                    <div class="profile-details">
-                        <h5>Admin</h5>
-                        <p>15h</p>
-                    </div>
-                </div>
-                <div class="settings-icon">
-                    <span class="material-symbols-rounded">
-                        more_horiz
-                    </span>
-                </div>
-            </div>
-            <div class="post-description">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente, cum consequuntur quod laudantium
-                    ipsa eligendi iure, magnam illo, vitae ea dolore. Quae magni maxime aperiam a quaerat sed, nihil
-                    commodi.</p>
-            </div>
-            <div class="post-img">
-                <img src="../images/bgImage.png" width="100px" height="100px" alt="" class="post">
-                <img src="../images/bgImage.png" width="100px" height="100px" alt="" class="post">
-            </div>
-
-
-            <hr>
-
-            <div class="post-actions">
-                <div class="post-react">
-                    <span class="material-symbols-rounded" id="like_react">
-                        favorite
-                    </span>
-                    <p>Like</p>
-                </div>
-                <div class="post-comment">
-                    <span class="material-symbols-rounded">
-                        comment
-                    </span>
-                    <p>Comment</p>
-                </div>
-                <div class="post-share" id="share_btn">
-                    <span class="material-symbols-rounded">
-                        share_windows
-                    </span>
-                    <p>Share</p>
-                </div>
-            </div>
-
-
-            <hr class="comment-line">
-
-
-            <div class="comment-details">
-                <img src="../images/guest.png">
-                <div class="comment-field">
-                    <textarea name="" id="" placeholder="Write a comment.."></textarea>
-                    <span class="material-symbols-rounded send_comment" id="home_icons">
-                        send
-                    </span>
-                </div>
-            </div>
-        </div>
+                echo '</div>';
+                echo '</div>';
+                echo '</div>';
+                echo '</div>';
+            }
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+        ?>
 
         <div class="reach-bottom-text">
             <p>You have reached the bottom of the page! Thank you for scrolling :></p>
@@ -252,39 +148,26 @@
 
     </section>
 
-    <div class="share-post-modal" id="share_post_options">
-        <div class="share-modal-main">
-            <div class="share-button-container">
-                <div class="share-actions-top">
-                    <h4>Share this post: </h4>
-                    <p class="close">&times;</p>
-                </div>
-    
-                <ul>
-                    <li class="social-media-share">
-                        <a href="http://"><i class="fa-brands fa-facebook"></i></a>
-                        <a href="http://"><i class="fa-brands fa-twitter"></i></a>
-                        <a href="http://"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="http://"><i class="fa-brands fa-tiktok"></i></a>
-                    </li>
-                    <div class="separator">
-                        <hr class="line">
-                        <p>OR</p>
-                        <hr class="line">
-                    </div>  
-                   
-                    <li class="copy-clipboard">
-                        <span class="material-symbols-rounded">
-                            content_copy
-                        </span>
-                        <p>Copy link to clipboard</p>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
     <!------------------------------------------------- END OF ANNOUNCEMENT PAGE --------------------------------------------------->
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="./js/populateNotification.js"></script>
+    <script>
+        document.querySelectorAll('.read-more').forEach(item => {
+            item.addEventListener('click', event => {
+                event.target.parentNode.style.display = 'none';
+                event.target.parentNode.nextElementSibling.style.display = 'block';
+            })
+        })
+
+        document.querySelectorAll('.read-less').forEach(item => {
+            item.addEventListener('click', event => {
+                event.target.parentNode.style.display = 'none';
+                event.target.parentNode.previousElementSibling.style.display = 'block';
+            })
+        })
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-Rx+T1VzGupg4BHQYs2gCW9It+akI2MM/mndMCy36UVfodzcJcF0GGLxZIzObiEfa" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

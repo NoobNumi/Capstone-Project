@@ -51,107 +51,38 @@ $stmt->execute();
             <div class="right-section">
                 <h4 class="admin-title">Reservation Report</h4>
             </div>
-            <div class="center-section">
-                <div class="search-bar-admin">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" id="searchInput" placeholder="Search here...">
-                </div>
-            </div>
         </div>
         <div>
-             <!--form method="get" action="sales_report.php">
-                <div class="notification-card reserve searchable-card">
-                <div class="second-section">
-               
-                <div class="service-type">
-                    <label>Date From:</label>
-                  <input class="form-control" type="date" name="datefrom" required><br>
-                <div class="service"></div>
-                </div>
-                </div>
-                
-                 <div class="third-section">
-    
-                <div class="service-type">
-                    <label>Date To:</label>
-                  <input class="form-control" type="date" name="dateto" required><br>
-                <div class="service"></div>
-                </div>
-                
-                </div>
-                <div class="third-section">
-                
-                <button type="submit" class="notif-button text-white">Generate</button>
-               
-                </div>
-                </div>
-            </form-->
-  <?php if (!isset($_SESSION['admin_id'])) { ?>
-               
+            <?php if (!isset($_SESSION['admin_id'])) { ?>
+
             <?php } else { ?>
-               <form method="get" action="reservation_report.php">
-                <div class="notification-card reserve searchable-card">
-                <div class="second-section">
-               
-                <div class="service-type">
-                    <label>Date From:</label>
-                  <input class="form-control" type="date" name="datefrom" required><br>
-                <div class="service"></div>
-                </div>
-                </div>
-                
-                 <div class="third-section">
-    
-                <div class="service-type">
-                    <label>Date To:</label>
-                  <input class="form-control" type="date" name="dateto" required><br>
-                <div class="service"></div>
-                </div>
-                
-                </div>
-                <div class="third-section">
-                
-                <button type="submit"  class="notif-button text-white btn btn-light">Generate</button>
-               
-                </div>
-                </div>
-            </form>
-                        <?php
-                            
-                            }
-                        ?>
-        </div>
-        <table class="meal-table">
-            <tr>
-                <th>Report ID</th>
-                <th>Retreat ID</th>
-                <th>Recollection ID</th>
-                <th>Reception ID</th>
-                <th>Training ID</th>
-                <th>Seminar ID</th>
-                <th>Report Date</th>
-            </tr>
+                <form method="get" action="reservation_report.php">
+                    <div class="notification-card reserve searchable-card">
+                        <div class="second-section">
+                            <div class="service-type">
+                                <label>Date From:</label>
+                                <input class="form-control report-generate" type="date" name="datefrom" required><br>
+                                <div class="service"></div>
+                            </div>
+                        </div>
+
+                        <div class="third-section">
+                            <div class="service-type">
+                                <label>Date To:</label>
+                                <input class="form-control report-generate" type="date" name="dateto" required><br>
+                                <div class="service"></div>
+                            </div>
+
+                        </div>
+                        <div class="third-section">
+                            <button type="submit" class="notif-button" style="color: #ffff; font-weight: 600">Generate</button>
+                        </div>
+                    </div>
+                </form>
             <?php
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                echo '<tr class="searchable-card">
-                    <td>' .  $row['report_id'] . '</td>
-                    <td>' . $row['retreat_id'] . '</td>
-                    <td>' . $row['recollection_sales'] . '</td>
-                     <td>' . $row['reception_id'] . '</td>
-                    <td>' . $row['training_id'] . '</td>
-                    <td>' . $row['seminar_id'] . '</td>
-                    <td>' . $row['report_date'] . '</td>
-                </tr>';
+
             }
             ?>
-        </table>
-        <div class="no-meals-message" style="
-                display: none;
-                width: inherit;
-                text-align: center;
-                padding: 10px 14px;
-                background: #fff;">
-            No meals found
         </div>
     </section>
 

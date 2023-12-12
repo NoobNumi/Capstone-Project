@@ -69,9 +69,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </header>
             <form id="myForm" class="create-post-form" method="post">
                 <div class="profile-pic">
-                    <img src="../images/nun.png" width="50px" height="50px" alt="" srcset="">
-                    <span class="poster-name">Admin</span>
+                    <?php
+                        $profileImage = getUserImage($userType);
+                    ?>
+                        <img src="<?php echo $profileImage; ?>" width="50px" height="50px" alt="" srcset="">
+                    <?php
+                        if ($userType === 'admin') {
+                            echo '<span class="poster-name">Admin</span>';
+                        } elseif ($userType === 'assistant') {
+                            echo '<span class="poster-name">Assistant</span>';
+                        }
+                    ?>
                 </div>
+
                 <textarea name="post_content" id="" cols="30" rows="5" placeholder="Post an update..."></textarea>
                 <div class="post-photos">
                     <div class="photo-display-all">

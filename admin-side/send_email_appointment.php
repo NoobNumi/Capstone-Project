@@ -1,4 +1,26 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<style>
+    .loading-overlay {
+        display: none;
+    }
+
+    .spinner {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100vh;
+    }
+
+    .spinner-border {
+        height: 100px;
+        width: 100px;
+    }
+</style>
 <?php
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
@@ -83,11 +105,20 @@ if (isset($_GET['appoint_id'])) {
 
             $mail->Subject = 'Appointment Confirmation';
             $mail->isHTML(true);
-            $mail->Body = '<p>Dear '.  $first_name . ',</p><p>Your appointment has been confirmed and is scheduled on '.$appointment_sched_date.' at '. $appointment_sched_time .', right here at Trinitas Home For Contemplation that is located at Zone 5 - Trinitas Street, Upper Bonga, Bacacay, Albay. The attached file is the appointment slip that you need to present upon arrival. See you soon!</p>';
+            $mail->Body = '<p>Dear ' .  $first_name . ',</p><p>Your appointment has been confirmed and is scheduled on ' . $appointment_sched_date . ' at ' . $appointment_sched_time . ', right here at Trinitas Home For Contemplation that is located at Zone 5 - Trinitas Street, Upper Bonga, Bacacay, Albay. The attached file is the appointment slip that you need to present upon arrival. See you soon!</p>';
 
             $mail->send();
+            echo '<script>
+                    $("#loading-overlay").modal("hide");
+            
+                    window.location.href = "reservation-view.php";
+                </script>';
         } catch (Exception $e) {
-            echo 'Email sending failed: ', $mail->ErrorInfo;
+            echo '<script>
+                $("#loading-overlay").modal("hide");
+
+                alert("Email sending failed: ' . $mail->ErrorInfo . '");
+            </script>';
         }
 
         unlink($pdfPath);
@@ -97,3 +128,15 @@ if (isset($_GET['appoint_id'])) {
 } else {
     echo "Missing 'appoint_id' in the GET request.";
 }
+
+?>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $(".loading-overlay").removeClass("d-none");
+        setTimeout(function() {
+            window.close();
+        }, 1000);
+    });
+</script>

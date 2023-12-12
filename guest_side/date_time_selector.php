@@ -1,23 +1,3 @@
-<?php
-
-try {
-    include "../connection.php";
-    $sql = "SELECT date, time_slot, availability_status FROM appointment_availability";
-    $stmt = $conn->prepare($sql);
-    $stmt->execute();
-
-    $appointments = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    $appointmentDates = [];
-
-    foreach ($appointments as $appointment) {
-        $appointmentDates[] = $appointment['date'];
-    }
-} catch (PDOException $e) {
-    echo "Error: " . $e->getMessage();
-}
-
-?>
-
 <body>
     <div class="dateTime-modal-trigger">
         <div class="close-button-header">
@@ -45,17 +25,7 @@ try {
                             <li>Sat</li>
                         </ul>
                         <ul class="days">
-                            <?php foreach ($appointments as $appointment) : ?>
-                                <?php
-                                $dateClass = '';
-                                if ($appointment['availability_status'] === 'booked') {
-                                    $dateClass = 'inactive';
-                                } else if ($appointment['availability_status'] === 'available') {
-                                    $dateClass = 'days';
-                                }
-                                ?>
-                                <li class="<?php echo $dateClass; ?>" data-status="<?php echo $appointment['availability_status']; ?>"><?php echo $appointment['date']; ?></li>
-                            <?php endforeach; ?>
+                            <!-- The names of the days are <li class="date"></li>  -->
                         </ul>
                     </div>
                 </div>
@@ -72,7 +42,7 @@ try {
                         <div class="selection">
                             <div class="time-options">
                                 <div class="time">
-                                    Please note that the only time available is only 4:00 PM
+                                    Please note that the only time available for appointment is only 4:00 PM
                                 </div>
                             </div>
                         </div>
@@ -81,98 +51,107 @@ try {
             </div>
         </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
-        const appointments = <?php echo json_encode($appointments); ?>;
-        const daysTag = document.querySelector(".days");
-        const currentDate = document.querySelector(".current-date");
-        const prevNextIcon = document.querySelectorAll(".icons span");
+        $(document).ready(function() {
+            const daysTag = $(".days");
+            const currentDate = $(".current-date");
+            const prevNextIcon = $(".icons span");
 
-        let date = new Date();
-        let currYear = date.getFullYear();
-        let currMonth = date.getMonth();
+            let date = new Date();
+            let currYear = date.getFullYear();
+            let currMonth = date.getMonth();
+            let currDay = date.getDate(); // Added to get the current day
+            let selectedDate = ""; // Added to store selected date
 
-        const months = ["January", "February", "March", "April", "May", "June", "July",
-            "August", "September", "October", "November", "December"
-        ];
+            const months = [
+                "January", "February", "March", "April", "May", "June", "July",
+                "August", "September", "October", "November", "December"
+            ];
 
-        const renderCalendar = () => {
-            let firstDayofMonth = new Date(currYear, currMonth, 1).getDay();
-            let lastDateofMonth = new Date(currYear, currMonth + 1, 0).getDate();
-            let lastDayofMonth = new Date(currYear, currMonth, lastDateofMonth).getDay();
-            let lastDateofLastMonth = new Date(currYear, currMonth, 0).getDate();
-            let liTag = "";
+            const renderCalendar = () => {
+                $.ajax({
+                    url: 'unavailable-dates-appointment.php',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        console.log(data);
+                        let firstDayofMonth = new Date(currYear, currMonth, 1).getDay();
+                        let lastDateofMonth = new Date(currYear, currMonth + 1, 0).getDate();
+                        let lastDateofLastMonth = new Date(currYear, currMonth, 0).getDate();
+                        let liTag = "";
 
-            for (let i = firstDayofMonth; i > 0; i--) {
-                liTag += `<li class="inactive">${lastDateofLastMonth - i + 1}</li>`;
-            }
+                        for (let i = firstDayofMonth; i > 0; i--) {
+                            liTag += `<li class="inactive">${lastDateofLastMonth - i + 1}</li>`;
+                        }
 
-            for (let i = 1; i <= lastDateofMonth; i++) {
-                let isToday = i === date.getDate() && currMonth === date.getMonth() && currYear === date.getFullYear() ? "active" : "";
-                let currentDate = new Date(currYear, currMonth, i);
-                let dateString = `${months[currMonth]} ${i}, ${currYear}`;
-                let isBooked = false;
+                        for (let i = 1; i <= lastDateofMonth; i++) {
+                            let isToday = i === currDay && currMonth === date.getMonth() && currYear === date.getFullYear() ? "active" : "";
+                            let currentDate = new Date(currYear, currMonth, i);
+                            let dateString = `${months[currMonth]} ${i}, ${currYear}`;
+                            let isInactive = data.includes(dateString) || currentDate < date ? "inactive" : ""; // Check if the date is in the past
 
-                for (const appointment of appointments) {
-                    if (appointment.date === dateString && appointment.availability_status === 'booked') {
-                        isBooked = true;
-                        break;
+                            if (isInactive) {
+                                liTag += `<li class="date inactive ${isToday}" data-day="${i}">${i}</li>`;
+                            } else {
+                                liTag += `<li class="date ${isToday}" data-day="${i}">${i}</li>`;
+                            }
+                        }
+
+                        currentDate.text(`${months[currMonth]} ${currYear}`);
+                        daysTag.html(liTag);
+
+                        $('.date').each(function() {
+                            if (!$(this).hasClass('inactive')) {
+                                $(this).on('click', function() {
+                                    const selectedDay = $(this).data('day');
+                                    const formattedDay = selectedDay.toString().padStart(2, '0');
+                                    const formattedMonth = months[currMonth];
+                                    const selectedYear = currYear;
+
+                                    selectedDate = `${formattedMonth} ${formattedDay}, ${selectedYear}`;
+                                    updateAppointSched();
+                                });
+                            }
+                        });
+                    },
+                    error: function(error) {
+                        console.error('Error fetching data:', error);
                     }
+                });
+            };
+
+            const updateAppointSched = () => {
+                const appointSchedInput = $('#schedule-input');
+                const appointSchedDateInput = $('#appoint_sched_date');
+                const appointSchedTimeInput = $('#appoint_sched_time');
+
+                if (selectedDate) {
+                    appointSchedInput.val(selectedDate); 
+                    appointSchedDateInput.val(selectedDate);
+                    appointSchedTimeInput.val(""); 
+                    $('.dateTime-modal-trigger').hide();
                 }
+            };
 
-                if (isBooked) {
-                    liTag += `<li class="date inactive" data-day="${i}">${i}</li>`;
-                } else {
-                    liTag += `<li class="date ${isToday}" data-day="${i}">${i}</li>`;
-                }
-            }
+            prevNextIcon.each(function() {
+                $(this).on('click', function() {
+                    currMonth = $(this).attr("id") === "prev" ? currMonth - 1 : currMonth + 1;
 
-            currentDate.innerText = `${months[currMonth]} ${currYear}`;
-            daysTag.innerHTML = liTag;
+                    if (currMonth < 0) {
+                        currYear--;
+                        currMonth = 11;
+                    } else if (currMonth > 11) {
+                        currYear++;
+                        currMonth = 0;
+                    }
 
-            document.querySelectorAll('.date').forEach((dayElement) => {
-                if (!dayElement.classList.contains('inactive')) {
-                    dayElement.addEventListener('click', () => {
-                        const selectedDay = dayElement.dataset.day;
-                        const formattedDay = selectedDay.length === 1 ? `0${selectedDay}` : selectedDay;
-                        const formattedMonth = months[currMonth];
-                        const selectedYear = currYear;
-
-                        selectedDate = `${formattedMonth} ${formattedDay}, ${selectedYear}`;
-                        updateAppointSched();
-                    });
-                }
+                    renderCalendar();
+                });
             });
-        }
 
-        const updateAppointSched = () => {
-            const appointSchedInput = document.getElementById('schedule-input');
-            const appointSchedDateInput = document.getElementById('appoint_sched_date');
-            const appointSchedTimeInput = document.getElementById('appoint_sched_time');
-
-            if (selectedDate) {
-                appointSchedInput.value = `${selectedDate} ${selectedTime || ''}`;
-                appointSchedDateInput.value = selectedDate;
-                appointSchedTimeInput.value = selectedTime;
-            }
-        }
-
-        prevNextIcon.forEach(icon => {
-            icon.addEventListener("click", () => {
-                currMonth = icon.id === "prev" ? currMonth - 1 : currMonth + 1;
-
-                if (currMonth < 0) {
-                    currYear--;
-                    currMonth = 11;
-                } else if (currMonth > 11) {
-                    currYear++;
-                    currMonth = 0;
-                }
-
-                renderCalendar();
-            });
+            renderCalendar();
         });
-
-        renderCalendar();
     </script>
     <script src="./js/insert_date_time.js"></script>
 </body>

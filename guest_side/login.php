@@ -6,7 +6,7 @@ if (isset($_POST['submit'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    session_name("admin_session"); 
+    session_name("admin_session");
     session_start();
 
     $query = $conn->prepare("SELECT * FROM `admin` WHERE admin_email = ?");
@@ -45,7 +45,7 @@ if (isset($_POST['submit'])) {
             $query->bindValue(1, $email);
             $query->execute();
             $userRow = $query->fetch(PDO::FETCH_ASSOC);
-            
+
             if ($userRow && password_verify($password, $userRow['password'])) {
                 echo '<script>console.log("Logged in as Regular User");</script>';
                 $_SESSION['user_id'] = $userRow['user_id'];
@@ -55,7 +55,6 @@ if (isset($_POST['submit'])) {
                 }
                 header('location: ../index.php');
                 exit();
-                
             } else {
                 session_destroy();
 
@@ -92,7 +91,9 @@ if ($invalid) {
     <link rel="stylesheet" href="./css/guest-style.css">
     <title>Login</title>
 </head>
+
 <body>
+    <div class="background-overlay"></div>
     <section class="login-page">
         <div class="first-navbar">
             <div class="logo">
@@ -100,59 +101,62 @@ if ($invalid) {
                 <h1>Trinitas</h1>
             </div>
         </div>
-        <div class="login-form">
-            <form class="login" action="" method="POST">
-                <div class="logo">
-                    <img class="logo-mary" src="../images/logo_trinitas.png" width="135px">
-                    <img class="logo-title" src="../images/logo-name.png" width="150px">
-                </div>
-                <p class="title">Login</p>
-                <p class="message">Login to avail our services</p>
+        <div class="login-main-container">
+            <div class="login-form">
+                <form class="login" action="" method="POST">
+                    <div class="logo">
+                        <img class="logo-mary" src="../images/logo_trinitas.png" width="135px">
+                        <img class="logo-title" src="../images/logo-name.png" width="150px">
+                    </div>
+                    <p class="title">Login</p>
+                    <p class="message">Login to avail our services</p>
 
-                <div class="email-div">
-                    <span class="material-symbols-rounded" id="email" id="span-icon">
-                        mail
-                    </span>
-                    <label>
-                        <input required="" placeholder="Email" type="email" name="email" class="input">
-                    </label>
-                </div>
-                <div class="password-div">
-                    <span class="material-symbols-rounded" id="span-icon">
-                        lock
-                    </span>
-                    <label>
-                        <input required="" placeholder="Password" type="password" name="password" class="input" id="password">
-                    </label>
-                    <span class="material-symbols-rounded eye" id="togglePassword">
-                        visibility
-                    </span>
-                </div>
-                <button class="btn-login-signup" type="submit" name="submit">LOGIN</button>
-                <div class="separator">
-                    <hr class="line">
-                    </hr>
-                    <p>OR</p>
-                    <hr class="line">
-                    </hr>
-                </div>
-                <div class="continue-browsing">
-                    <a class="btn-login-signup" href="index.php">Continue browsing</a>
-                </div>
-                <p class="signin">Don't have an account yet? <a href="signup.php" style="text-decoration: none;">Signup</a> </p>
-                <p class="copyright">Copyright &copy <script>
-                        document.write(new Date().getFullYear())
-                    </script> Trinitas </br> All Rights Reserved </p>
-            </form>
+                    <div class="email-div">
+                        <span class="material-symbols-rounded" id="email" id="span-icon">
+                            mail
+                        </span>
+                        <label>
+                            <input required="" placeholder="Email" type="email" name="email" class="input">
+                        </label>
+                    </div>
+                    <div class="password-div">
+                        <span class="material-symbols-rounded" id="span-icon">
+                            lock
+                        </span>
+                        <label>
+                            <input required="" placeholder="Password" type="password" name="password" class="input" id="password">
+                        </label>
+                        <span class="material-symbols-rounded eye" id="togglePassword">
+                            visibility
+                        </span>
+                    </div>
+                    <button class="btn-login-signup" type="submit" name="submit">LOGIN</button>
+                    <div class="separator">
+                        <hr class="line">
+                        </hr>
+                        <p>OR</p>
+                        <hr class="line">
+                        </hr>
+                    </div>
+                    <div class="continue-browsing">
+                        <a class="btn-login-signup" href="index.php">Continue browsing</a>
+                    </div>
+                    <p class="signin">Don't have an account yet? <a href="signup.php" style="text-decoration: none;">Signup</a> </p>
+                    <p class="copyright">Copyright &copy <script>
+                            document.write(new Date().getFullYear())
+                        </script> Trinitas </br> All Rights Reserved </p>
+                </form>
+            </div>
         </div>
+
     </section>
     <script>
-        window.addEventListener('DOMContentLoaded', function () {
+        window.addEventListener('DOMContentLoaded', function() {
             var spanElement = document.getElementById('togglePassword');
-            spanElement.addEventListener('contextmenu', function (e) {
+            spanElement.addEventListener('contextmenu', function(e) {
                 e.preventDefault();
             });
-        }); 
+        });
         const passwordInput = document.getElementById('password');
         const togglePasswordButton = document.getElementById('togglePassword');
 

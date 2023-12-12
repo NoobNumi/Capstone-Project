@@ -16,6 +16,7 @@ if (isset($_SESSION['admin_id'])) {
     }
 }
 
+
 // FOR SERVICES TABLE
 $sql = "SELECT services.service_id, services.service_name, services.service_description, services.img_path
             FROM services";
@@ -30,6 +31,9 @@ $sql2 = "SELECT souvenir_items.item_id, souvenir_items.item_name, souvenir_items
 
 $stmt2 = $conn->prepare($sql2);
 $stmt2->execute();
+
+// $item_type = isset($_POST['selectedStatus']) ? $_POST['selectedStatus'] : '';
+
 
 ?>
 <!DOCTYPE html>
@@ -50,6 +54,7 @@ $stmt2->execute();
     <?php
     include "./admin_sidebar.php";
     include "./discover-view.php";
+    include "./add-discover.php";
     ?>
 
     <section class="post-discover">
@@ -65,17 +70,16 @@ $stmt2->execute();
             </div>
             <div class="left-section">
                 <select name="selectedStatus" class="sorting-list">
-                    <vscode-file: //vscode-app/c:/Users/admin/AppData/Local/Programs/Microsoft%20VS%20Code/resources/app/out/vs/code/electron-sandbox/workbench/workbench.htmloption value="">All</option>
-                        <option value="Services">Services</option>
-                        <option value="Souvenirs">Souvenirs</option>
+                    <option value="">All</option>
+                    <option value="Services">Services</option>
+                    <option value="Souvenirs">Souvenirs</option>
                 </select>
-                <button class="add-btn">Add new</button>
+                <button class="add-btn" id="openAddModal">Add new</button>
             </div>
         </div>
         <div id="table-container-service" class="table-container">
             <table class="discover-table">
                 <tr class="title-discover">
-                    <th>Service ID</th>
                     <th>Service Name</th>
                     <th>Service Description</th>
                     <th>Action</th>
@@ -83,7 +87,6 @@ $stmt2->execute();
                 <?php
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     echo '<tr class="searchable-card">
-                    <td>' . sprintf("%03d", $row['service_id']) . '</td>
                     <td>' . $row['service_name'] . '</td>
                     <td>' . $row['service_description'] . '</td>
                     <td>
@@ -93,19 +96,13 @@ $stmt2->execute();
                 }
                 ?>
             </table>
-            <div class="no-services-message" style="
-                display: none;
-                width: inherit;
-                text-align: center;
-                padding: 10px 14px;
-                background: #fff;">
+            <div class="no-services-message" style="display: none; width: inherit; text-align: center; padding: 10px 14px; background: #fff;">
                 No services found
             </div>
         </div>
         <div id="table-container-souvenir" class="table-container">
             <table class="discover-table">
                 <tr class="title-discover">
-                    <th>Souvenir ID</th>
                     <th>Souvenir Name</th>
                     <th>Souvenir Description</th>
                     <th>Action</th>
@@ -113,7 +110,6 @@ $stmt2->execute();
                 <?php
                 while ($row2 = $stmt2->fetch(PDO::FETCH_ASSOC)) {
                     echo '<tr class="searchable-card">
-                    <td>' . sprintf("%03d", $row2['item_id']) . '</td>
                     <td>' . $row2['item_name'] . '</td>
                     <td>' . $row2['souvenir_description'] . '</td>
                     <td>
@@ -124,12 +120,7 @@ $stmt2->execute();
                 ?>
             </table>
 
-            <div class="no-souvenir-message" style="
-                display: none;
-                width: inherit;
-                text-align: center;
-                padding: 10px 14px;
-                background: #fff;">
+            <div class="no-souvenir-message" style="display: none; width: inherit; text-align: center; padding: 10px 14px; background: #fff;">
                 No souvenirs found
             </div>
         </div>
@@ -137,10 +128,26 @@ $stmt2->execute();
 
     <?php require("logout_modal.php"); ?>
 
+    <script>
+    function openAddModal() {
+        var addModal = document.getElementById('addModal');
+        addModal.style.display = 'flex';
+    }
+    document.getElementById('openAddModal').addEventListener('click', openAddModal);
+
+    function closeAddModal() {
+        var addModal = document.getElementById('addModal'); 
+        addModal.style.display = 'none';
+    }
+
+    document.getElementById('closeAddModal').addEventListener('click', closeAddModal); 
+</script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="./js/discover.js"></script>
     <script src="./js/users.js"></script>
     <script src="./js/sidebar-animation.js"></script>
     <script src="./js/sidebar-closing.js"></script>
-    <!-- <script src="./js/filtering-meals.js"></script> -->
-    <!-- <script src="./js/meal.js"></script> -->
 </body>
+
+</html>

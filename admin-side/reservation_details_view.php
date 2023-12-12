@@ -22,7 +22,7 @@
                         </div>
                     </div>
                     <div class="reserve-inf">
-                        <span class="detail-title">Transaction Number:<span class="transact-num"></span></span>
+                        <span class="detail-title">Transaction #:<span class="transact-num"></span></span>
                         <span class="detail-title">Reservation Type: <span class="reserve-type-text"></span></span>
                     </div>
                 </div>
@@ -30,6 +30,14 @@
                     <span class="guest-date-details">
                         <span class="detail-title">Contact info: <br></span>
                         <span id="guest-contact-details"></span>
+                    </span>
+                    <span class="guest-date-details">
+                        <span class="detail-title">Package type: <br></span>
+                        <span id="guest-package-type"></span>
+                    </span>
+                    <span class="guest-date-details">
+                        <span class="detail-title">Guest number: <br></span>
+                        <span id="guest-number"></span>
                     </span>
                     <span class="guest-date-details">
                         <span class="detail-title">Check in: <br></span>
@@ -40,7 +48,7 @@
                         <span id="guest-check-out"></span>
                     </span>
                     <span class="guest-date-details">
-                        <span class="detail-title">Price: <br>₱ </span>
+                        <span class="detail-title">Total: <br></span>
                         <span id="guest-price"></span>
                     </span>
                     <span class="guest-date-details">
@@ -55,7 +63,17 @@
                         </span>
                     </span>
                 </div>
-                <div class="option-note">
+                <div class="meal-view-customer">
+                <span class="detail-title">Meals <span class="in-order">(In this order: Breakfast, Lunch, Dinner, Drinks, Dessert)</span><br></span>
+                    <div class="chips-integration">
+                        <div class="chip-card" id="meal1"></div>
+                        <div class="chip-card" id="meal2"></div>
+                        <div class="chip-card" id="meal3"></div>
+                        <div class="chip-card" id="dessert"></div>
+                        <div class="chip-card" id="drinks"></div>
+                    </div>
+                </div>
+                <div class="option-note" id="noteModal">
                     <span class="material-symbols-outlined info-icon">
                         info
                     </span>

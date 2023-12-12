@@ -1,4 +1,12 @@
 $(document).ready(function () {
+    document.querySelectorAll('.sort').forEach(item => {
+        item.addEventListener('click', (event) => {
+            if (event.target.classList.contains('sort')) {
+                const selectedOrder = item.getAttribute('href').split('=')[1];
+                window.location.href = window.location.pathname + '?order=' + selectedOrder;
+            }
+        });
+    });
 
     const postContainer = $('.post-container');
     const createPost = $('.create-post');
@@ -28,8 +36,6 @@ $(document).ready(function () {
         $('body').css('overflow-y', 'auto');
     });
 
-    // for closing the edit post modal
-
     closeEditContainer.click(function () {
         editPost.css('display', 'none');
         $('body').css('overflow-y', 'auto');
@@ -56,39 +62,30 @@ $(document).ready(function () {
             }
         }
     });
-    
-    
 
     function displayImage(file) {
-        const imgEditElement = document.createElement("img");
-        imgEditElement.src = URL.createObjectURL(file);
-
-        const photoFetchContainer = document.createElement("div");
-        photoFetchContainer.className = "photo-fetch-container";
-
-        const delPhotoIcon = document.createElement("i");
-        delPhotoIcon.className = "fa-solid fa-xmark closeEditButton";
-        photoFetchContainer.appendChild(delPhotoIcon);
-
-        imgEditElement.className = "photo-img";
-        photoFetchContainer.appendChild(imgEditElement);
-
-        delPhotoIcon.addEventListener("click", () => {
+        const imgEditElement = $('<img>').attr('src', URL.createObjectURL(file)).addClass('photo-img');
+    
+        const delPhotoIcon = $('<i>').addClass('fa-solid fa-xmark closeEditButton');
+        const photoFetchContainer = $('<div>').addClass('photo-fetch-container').append(delPhotoIcon, imgEditElement);
+    
+        delPhotoIcon.click(function() {
+            const fileIdentifier = file.name + file.size;
             selectedReplaceImages = selectedReplaceImages.filter(image => image.name + image.size !== fileIdentifier);
-            photoFetchAll.removeChild(photoFetchContainer);
-
+            photoFetchContainer.remove();
+    
             const imgId = getImgIdByFileIdentifier(existingImages, fileIdentifier);
             if (imgId) {
                 formData.delete(`existingImages[]_${imgId}`);
             }
         });
-
-
-        photoFetchAll.style.display = "block";
-        photoFetchAll.appendChild(photoFetchContainer);
+    
+        $('#editPhotoFetchAll').css('display', 'block').append(photoFetchContainer);
     }
+    
 
     $('.edit').click(function () {
+        event.stopPropagation();
         announcementId = $(this).data('announcement-id');
 
         $.ajax({
@@ -107,6 +104,7 @@ $(document).ready(function () {
                     const photoContainer = $('<div>').addClass('photo-fetch-container').append(delPhotoIcon, imgElement);
 
                     delPhotoIcon.click(function () {
+                        event.stopPropagation();
                         photoContainer.remove();
 
                         // Remove the image from the existingImages array
@@ -153,7 +151,7 @@ $(document).ready(function () {
         existingImages.forEach((image, index) => {
             formData.append(`existingImages[${index}]`, image.img_url_path);
         });
-        
+
 
         for (const file of selectedReplaceImages) {
             formData.append('images[]', file, file.name);
@@ -180,8 +178,8 @@ $(document).ready(function () {
     });
 
 
-
     $('.post-card').on('click', '.delete', function () {
+        event.stopPropagation();
         const announcementId = $(this).data('announcement-id');
 
         Swal.fire({

@@ -106,5 +106,5 @@ $unreadMessageCountHome = 2;
     const unreadMessageCount = <?php echo $unreadMessageCountHome; ?>;
 </script>
 <script src="./js/sidebar-animation.js"></script>
-
+<script src="./js/sidebar-closing.js"></script>
 </html>

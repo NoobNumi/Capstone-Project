@@ -6,58 +6,60 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $serviceId = isset($_POST['service_id']) ? $_POST['service_id'] : $_POST['souvenir_id'];
-    $serviceName = isset($_POST['service_name']) ? $_POST['service_name'] : $_POST['souvenir_name'];
-    $serviceDescription = isset($_POST['service_description']) ? $_POST['service_description'] : $_POST['souvenir_description'];
-    $category = $_POST['category_id'];
+    $itemId = isset($_POST['service_id']) ? $_POST['service_id'] : $_POST['item_id'];
+    $itemName = isset($_POST['service_name']) ? $_POST['service_name'] : $_POST['item_name'];
+    $itemDescription = isset($_POST['service_description']) ? $_POST['service_description'] : $_POST['souvenir_description'];
 
-    if (isset($_FILES['imageInput'])) {
+    if (isset($_FILES['imageInput']) && $_FILES['imageInput']['error'] === UPLOAD_ERR_OK) {
         $imageFile = $_FILES['imageInput'];
+        $imageTmpName = $imageFile['tmp_name'];
+        $imagePath = '../uploads/' . basename($imageFile['name']);
 
-        if ($imageFile['error'] === UPLOAD_ERR_OK) {
-            $imageTmpName = $imageFile['tmp_name'];
-            $imagePath = '../uploads/' . basename($imageFile['name']);
+        if (move_uploaded_file($imageTmpName, $imagePath)) {
+            $tableName = isset($_POST['service_id']) ? "services" : "souvenir_items";
+            $itemNameColumn = isset($_POST['service_id']) ? "service_name" : "item_name";
+            $itemDescriptionColumn = isset($_POST['service_id']) ? "service_description" : "souvenir_description";
+            $imgPathColumn = isset($_POST['service_id']) ? "img_path" : "souvenir_img_path";
 
-            if (move_uploaded_file($imageTmpName, $imagePath)) {
-                $updateDiscoverSql = "UPDATE " . (isset($_POST['service_id']) ? "services" : "souvenir_items") . " SET 
-                    service_name = :service_name,
-                    service_description = :service_description,
-                    img_path = :img_path
-                    WHERE service_id = :service_id";
+            $updateDiscoverSql = "UPDATE $tableName SET 
+                $itemNameColumn = :item_name,
+                $itemDescriptionColumn = :item_description,
+                $imgPathColumn = :img_path
+                WHERE " . ($tableName === "services" ? "service_id" : "item_id") . " = :item_id";
 
-                $stmt = $conn->prepare($updateDiscoverSql);
-                $stmt->bindParam(':service_name', $serviceName);
-                $stmt->bindParam(':service_description', $serviceDescription);
-                $stmt->bindParam(':img_path', $imagePath);
-                $stmt->bindParam(':service_id', $serviceId);
+            $stmt = $conn->prepare($updateDiscoverSql);
+            $stmt->bindParam(':item_name', $itemName);
+            $stmt->bindParam(':item_description', $itemDescription);
+            $stmt->bindParam(':img_path', $imagePath);
+            $stmt->bindParam(':item_id', $itemId);
 
-
-                if ($stmt->execute()) {
-                    echo json_encode(['success' => true, 'message' => 'Details updated successfully']);
-                } else {
-                    echo json_encode(['success' => false, 'message' => 'Failed to update details']);
-                }
+            if ($stmt->execute()) {
+                echo json_encode(['success' => true, 'message' => 'Details updated successfully']);
             } else {
-                echo json_encode(['success' => false, 'message' => 'Failed to move the uploaded image']);
+                echo json_encode(['success' => false, 'message' => 'Failed to update details: ' . $stmt->errorInfo()[2]]);
             }
         } else {
-            echo json_encode(['success' => false, 'message' => 'Image upload error: ' . $imageFile['error']]);
+            echo json_encode(['success' => false, 'message' => 'Failed to move the uploaded image']);
         }
     } else {
-        $updateDiscoverSql = "UPDATE " . (isset($_POST['service_id']) ? "services" : "souvenir_items") . " SET 
-            service_name = :service_name,
-            service_description = :service_description
-            WHERE service_id = :service_id";
+        $tableName = isset($_POST['service_id']) ? "services" : "souvenir_items";
+        $itemNameColumn = isset($_POST['service_id']) ? "service_name" : "item_name";
+        $itemDescriptionColumn = isset($_POST['service_id']) ? "service_description" : "souvenir_description";
+
+        $updateDiscoverSql = "UPDATE $tableName SET 
+            $itemNameColumn = :item_name,
+            $itemDescriptionColumn = :item_description
+            WHERE " . ($tableName === "services" ? "service_id" : "item_id") . " = :item_id";
 
         $stmt = $conn->prepare($updateDiscoverSql);
-        $stmt->bindParam(':service_name', $serviceName);
-        $stmt->bindParam(':service_description', $serviceDescription);
-        $stmt->bindParam(':service_id', $serviceId);
+        $stmt->bindParam(':item_name', $itemName);
+        $stmt->bindParam(':item_description', $itemDescription);
+        $stmt->bindParam(':item_id', $itemId);
 
         if ($stmt->execute()) {
             echo json_encode(['success' => true, 'message' => 'Details updated successfully']);
         } else {
-            echo json_encode(['success' => false, 'message' => 'Failed to update details']);
+            echo json_encode(['success' => false, 'message' => 'Failed to update details: ' . $stmt->errorInfo()[2]]);
         }
     }
 } else {

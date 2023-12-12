@@ -2,8 +2,19 @@
 session_name("admin_session");
 session_start();
 require_once("../connection.php");
-if (!isset($_SESSION['admin_id'])) {
-    header("location: ../guest_side/login.php");
+if (isset($_SESSION['admin_id'])) {
+    require "fetch_counts_query.php";
+} else {
+    session_destroy();
+
+    session_name("assistant_manager_session");
+    session_start();
+    if (isset($_SESSION['asst_id'])) {
+        require "fetch_counts_query.php";
+    } else {
+        header("location: ../guest_side/login.php");
+        exit;
+    }
 }
 
 $reservationType = '';
@@ -17,7 +28,7 @@ try {
                 u.profile_picture, 
                 r.check_in, 
                 r.status, 
-                r.price, 
+                r.total, 
                 'reception' AS type 
             FROM reception_reservation_record r
             JOIN users u ON r.user_id = u.user_id
@@ -32,7 +43,7 @@ try {
                 u.profile_picture, 
                 r.check_in, 
                 r.status, 
-                r.price, 
+                r.total, 
                 'recollection' 
             FROM recollection_reservation_record r
             JOIN users u ON r.user_id = u.user_id
@@ -47,7 +58,7 @@ try {
                 u.profile_picture, 
                 r.check_in, 
                 r.status, 
-                r.price, 
+                r.total, 
                 'retreat' 
             FROM retreat_reservation_record r
             JOIN users u ON r.user_id = u.user_id
@@ -62,7 +73,7 @@ try {
                 u.profile_picture, 
                 r.check_in, 
                 r.status, 
-                r.price, 
+                r.total, 
                 'seminar' 
             FROM seminar_reservation_record r
             JOIN users u ON r.user_id = u.user_id
@@ -77,7 +88,7 @@ try {
                 u.profile_picture, 
                 r.check_in, 
                 r.status, 
-                r.price, 
+                r.total, 
                 'training' 
             FROM training_reservation_record r
             JOIN users u ON r.user_id = u.user_id
@@ -161,7 +172,7 @@ try {
                 $userName = $row["first_name"] . " " . $row["last_name"];
                 $status = $row["status"];
                 $dateTime = $row["check_in"];
-                $price = $row["price"];
+                $total = $row["total"];
                 $profilePicture = $row["profile_picture"];
 
                 $reservationsExist = true;
@@ -193,8 +204,8 @@ try {
                 echo '<div class="date">' . $dateTime . '</div>';
                 echo '</div>';
                 echo '<div class="appoint-details">';
-                echo '<div class="detail-title"><i class="fa-solid fa-money-bill-wave"></i>PRICE</div>';
-                echo '<div class="price">₱' . number_format($price, 2) . '</div>';
+                echo '<div class="detail-title"><i class="fa-solid fa-money-bill-wave"></i>TOTAL</div>';
+                echo '<div class="total">₱' . number_format((float)$total, 2) . '</div>';
                 echo '</div>';
                 echo '</div>';
                 echo '</div>';
