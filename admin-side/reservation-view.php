@@ -23,8 +23,7 @@ try {
     $sql = "SELECT 
                 r.reception_id AS res_id, 
                 r.user_id, 
-                r.first_name, 
-                r.last_name, 
+                r.full_name_org,
                 u.profile_picture, 
                 r.check_in, 
                 r.status, 
@@ -38,8 +37,7 @@ try {
             SELECT 
                 r.recollection_id AS res_id, 
                 r.user_id, 
-                r.first_name, 
-                r.last_name, 
+                r.full_name_org,
                 u.profile_picture, 
                 r.check_in, 
                 r.status, 
@@ -53,8 +51,7 @@ try {
             SELECT 
                 r.retreat_id AS res_id, 
                 r.user_id, 
-                r.first_name, 
-                r.last_name, 
+                r.full_name_org,
                 u.profile_picture, 
                 r.check_in, 
                 r.status, 
@@ -68,8 +65,7 @@ try {
             SELECT 
                 r.seminar_id AS res_id, 
                 r.user_id, 
-                r.first_name, 
-                r.last_name, 
+                r.full_name_org,
                 u.profile_picture, 
                 r.check_in, 
                 r.status, 
@@ -83,8 +79,7 @@ try {
             SELECT 
                 r.training_id AS res_id, 
                 r.user_id, 
-                r.first_name, 
-                r.last_name, 
+                r.full_name_org,
                 u.profile_picture, 
                 r.check_in, 
                 r.status, 
@@ -169,7 +164,7 @@ try {
 
             while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
                 $reservationType = $row['type'];
-                $userName = $row["first_name"] . " " . $row["last_name"];
+                $userName = $row["full_name_org"];
                 $status = $row["status"];
                 $dateTime = $row["check_in"];
                 $total = $row["total"];

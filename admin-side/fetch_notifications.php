@@ -11,29 +11,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($notificationType === 'All') {
         // Fetch all notifications
         $query = "
-            SELECT 'Reservation' AS type, user_id, first_name, last_name, street_add, city_municipality, province, postal_code, contact_no, check_in, check_out, price, payment_method, payment_option, proof_of_payment, status, timestamp, is_read
+            SELECT 'Reservation' AS type, user_id, full_name_org, street_add, city_municipality, province, postal_code, contact_no, check_in, check_out, price, payment_method, payment_option, proof_of_payment, status, timestamp, is_read
             FROM reception_reservation_record
             UNION ALL
-            SELECT 'Recollection' AS type, user_id, first_name, last_name, street_add, city_municipality, province, postal_code, contact_no, guest_count, check_in, check_out, price, payment_method, payment_option, proof_of_payment, status, timestamp, is_read
+            SELECT 'Recollection' AS type, user_id, full_name_org, street_add, city_municipality, province, postal_code, contact_no, guest_count, check_in, check_out, price, payment_method, payment_option, proof_of_payment, status, timestamp, is_read
             FROM recollection_reservation_record
             UNION ALL
-            SELECT 'Retreat' AS type, user_id, first_name, last_name, street_add, city_municipality, province, postal_code, contact_no, guest_count, check_in, check_out, room_type, catering, price, payment_method, payment_option, proof_of_payment, status, timestamp, is_read
+            SELECT 'Retreat' AS type, user_id, full_name_org, street_add, city_municipality, province, postal_code, contact_no, guest_count, check_in, check_out, room_type, catering, price, payment_method, payment_option, proof_of_payment, status, timestamp, is_read
             FROM retreat_reservation_record
             UNION ALL
-            SELECT 'Seminar' AS type, user_id, first_name, last_name, street_add, city_municipality, province, postal_code, contact_no, guest_count, check_in, check_out, room_type, catering, price, payment_method, payment_option, proof_of_payment, status, timestamp, is_read
+            SELECT 'Seminar' AS type, user_id, full_name_org, street_add, city_municipality, province, postal_code, contact_no, guest_count, check_in, check_out, room_type, catering, price, payment_method, payment_option, proof_of_payment, status, timestamp, is_read
             FROM seminar_reservation_record
             UNION ALL
-            SELECT 'Appointment' AS type, user_id, first_name, last_name, street_add, city_municipality, province, postal_code, contact_no, NULL AS guest_count, appoint_sched_date AS check_in, appoint_sched_time AS check_out, appoint_description AS room_type, NULL AS catering, NULL AS price, appoint_status AS status, timestamp, is_read
+            SELECT 'Appointment' AS type, user_id, full_name_org, street_add, city_municipality, province, postal_code, contact_no, NULL AS guest_count, appoint_sched_date AS check_in, appoint_sched_time AS check_out, appoint_description AS room_type, NULL AS catering, NULL AS price, appoint_status AS status, timestamp, is_read
             FROM appointment_record
             ORDER BY timestamp DESC
         ";
     } else {
         switch ($notificationType) {
             case 'Reservations':
-                $query = "SELECT 'Reservation' AS type, user_id, first_name, last_name, street_add, city_municipality, province, postal_code, contact_no, check_in, check_out, price, payment_method, payment_option, proof_of_payment, status, timestamp, is_read FROM reception_reservation_record";
+                $query = "SELECT 'Reservation' AS type, user_id, full_name_org, street_add, city_municipality, province, postal_code, contact_no, check_in, check_out, price, payment_method, payment_option, proof_of_payment, status, timestamp, is_read FROM reception_reservation_record";
                 break;
             case 'Appointments':
-                $query = "SELECT 'Appointment' AS type, user_id, first_name, last_name, street_add, city_municipality, province, postal_code, contact_no, NULL AS guest_count, appoint_sched_date AS check_in, appoint_sched_time AS check_out, appoint_description AS room_type, NULL AS catering, NULL AS price, appoint_status AS status, timestamp, is_read FROM appointment_record";
+                $query = "SELECT 'Appointment' AS type, user_id, full_name_org, street_add, city_municipality, province, postal_code, contact_no, NULL AS guest_count, appoint_sched_date AS check_in, appoint_sched_time AS check_out, appoint_description AS room_type, NULL AS catering, NULL AS price, appoint_status AS status, timestamp, is_read FROM appointment_record";
                 break;
             default:
                 break;

@@ -293,7 +293,7 @@ $pdf->Cell(1, 5, '', 0, 1);
 $pdf->Cell(1, 5, '', 0, 1);
 
 $pdf->AddCol('timestamp', 50, 'Date', 'C');
-$pdf->AddCol('first_name', 20, 'Name', 'C');
+$pdf->AddCol('full_name_org', 20, 'Full Name/Org', 'C');
 $pdf->AddCol('check_in', 40, 'Check in', 'C');
 $pdf->AddCol('check_out', 40, 'Check out', 'C');
 $pdf->AddCol('package', 55, 'Type', 'C');

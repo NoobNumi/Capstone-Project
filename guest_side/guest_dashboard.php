@@ -89,10 +89,10 @@ $sql = "
     WHERE user_id = :user_id
 
     ORDER BY STR_TO_DATE(timestamp, '%M %d %Y') DESC";
-    $stmt = $conn->prepare($sql);
-    $stmt->bindParam(':user_id', $_SESSION['user_id']);
-    $stmt->execute();
-    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$stmt = $conn->prepare($sql);
+$stmt->bindParam(':user_id', $_SESSION['user_id']);
+$stmt->execute();
+$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -112,7 +112,7 @@ $sql = "
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
-<body>
+<body style="overflow-x: hidden;">
     <?php
     // Include sidebar and logout modal
     include("update-reservation-details.php");
@@ -218,26 +218,6 @@ $sql = "
                     </button>
                 </div>
             <?php } ?>
-            <style>
-                .header-nav {
-                    width: 100%;
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                }
-                .search-bar-input{
-                    padding: 10px 14px;
-                    border-radius: 10px;
-                    border: solid 1px #cecece;
-                    background-color: #fff;
-                }
-
-                .search-bar-input input{
-                    border: none;
-                    outline: none;
-                    background-color: transparent;
-                }
-            </style>
             <div class="header-nav">
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
@@ -248,7 +228,7 @@ $sql = "
                     </li>
                 </ul>
                 <div class="search-bar-input">
-                    <input type="text" placeholder="Search here..">
+                    <input type="text" id="searchInput" placeholder="Search here..">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </div>
             </div>
@@ -258,7 +238,7 @@ $sql = "
                 <div class="tab-pane fade show active" id="reserve-tab-pane" role="tabpanel" aria-labelledby="reserve-tab" tabindex="0">
                     <div class="row row-cols-1 row-cols-md-2 g-4">
                         <?php
-                       while ($row = array_shift($result)) {
+                        while ($row = array_shift($result)) {
                         ?>
                             <div class="col">
                                 <div class="card h-100 min-width-card">
@@ -387,6 +367,34 @@ $sql = "
     </section>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        $(document).ready(function() {
+            function filterCards() {
+                const searchText = $("#searchInput").val().toLowerCase();
+                const activeTab = $(".tab-pane.fade.show.active");
+                const cards = activeTab.find(".col");
+
+                cards.each(function() {
+                    const cardText = $(this).text().toLowerCase();
+                    const cardStatus = $(this).find('.status-logo').text().trim().toLowerCase();
+
+                    const isTextMatch = cardText.includes(searchText);
+
+                    if (isTextMatch) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            }
+
+            $("#searchInput").on("input", function() {
+                filterCards();
+            });
+
+            filterCards();
+        });
+    </script>
     <script src="./js/updateReservation.js"></script>
     <script src="./js/updateAppointment.js"></script>
     <script src="./js/date-time-selector-modal.js"></script>

@@ -1,56 +1,3 @@
-<?php
-session_name("user_session");
-session_start();
-require_once("../connection.php");
-$already_filed = 0;
-$success = 0;
-
-if (!isset($_SESSION['user_id'])) {
-    header("location: login.php");
-}
-
-if (isset($_POST['submit'])) {
-    $user_id = $_POST['user_id'];
-    $first_name = $_POST['first_name'];
-    $last_name = $_POST['last_name'];
-    $contact_no = $_POST['contact_no'];
-    $appoint_sched_date = $_POST['appoint_sched_date'];
-    $appoint_description = $_POST['appoint_description'];
-
-    $appoint_sched_time = "4:00 PM";
-    $appoint_status = "pending";
-
-    date_default_timezone_set('Asia/Manila');
-
-    $currentTimestamp = date("Y-m-d H:i:s");
-
-    $query = $conn->prepare("SELECT * FROM `appointment_record` WHERE `first_name` = ? AND `last_name` = ?");
-    $query->bindValue(1, $first_name);
-    $query->bindValue(2, $last_name);
-    $query->execute();
-    $row = $query->fetch(PDO::FETCH_ASSOC);
-
-    $query = "INSERT INTO appointment_record (user_id, first_name, last_name, contact_no, appoint_sched_date, appoint_sched_time, appoint_description, appoint_status, timestamp, is_read, is_read_user) VALUES (:user_id, :first_name, :last_name, :contact_no, :appoint_sched_date, :appoint_sched_time, :appoint_description, :appoint_status, :timestamp, 0, 0)";
-    $run_query = $conn->prepare($query);
-
-    $data = [
-        ':user_id' => $user_id,
-        ':first_name' => $first_name,
-        ':last_name' => $last_name,
-        ':contact_no' => $contact_no,
-        ':appoint_sched_date' => $appoint_sched_date,
-        ':appoint_sched_time' => $appoint_sched_time,
-        ':appoint_description' => $appoint_description,
-        ':appoint_status' => $appoint_status,
-        ':timestamp' => $currentTimestamp
-    ];
-
-    $query_execute = $run_query->execute($data);
-    if ($query_execute) {
-        $success = 1;
-    }
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -65,30 +12,86 @@ if (isset($_POST['submit'])) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.6/dist/flatpickr.min.js"></script>
+    <!-- sweet alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <title>Appointment</title>
 </head>
 
 <body>
-    <!-- sweet alert -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <?php
-    if ($success) { ?>
-        <script>
-            Swal.fire({
-                icon: 'success',
-                title: 'Appointment successful',
-                showConfirmButton: false,
-                timer: 2500
-            })
-            Swal.fire({
-                icon: 'success',
-                title: 'Appointment successful',
-                showConfirmButton: false,
-                timer: 2500
-            })
-        </script>
-    <?php } ?>
+    session_name("user_session");
+    session_start();
+    require_once("../connection.php");
+    $already_filed = 0;
+    $success = 0;
+
+    if (!isset($_SESSION['user_id'])) {
+        header("location: login.php");
+    }
+
+    $success = 0;
+
+    if (isset($_POST['submit'])) {
+        $user_id = $_POST['user_id'];
+        $first_name = $_POST['first_name'];
+        $last_name = $_POST['last_name'];
+        $contact_no = $_POST['contact_no'];
+        $appoint_sched_date = $_POST['appoint_sched_date'];
+        $appoint_description = $_POST['appoint_description'];
+
+        $appoint_sched_time = "4:00 PM";
+        $appoint_status = "pending";
+
+        date_default_timezone_set('Asia/Manila');
+
+        $currentTimestamp = date("Y-m-d H:i:s");
+
+        $query = $conn->prepare("SELECT * FROM `appointment_record` WHERE `first_name` = ? AND `last_name` = ?");
+        $query->bindValue(1, $first_name);
+        $query->bindValue(2, $last_name);
+        $query->execute();
+        $row = $query->fetch(PDO::FETCH_ASSOC);
+
+        $query = "INSERT INTO appointment_record (user_id, first_name, last_name, contact_no, appoint_sched_date, appoint_sched_time, appoint_description, appoint_status, timestamp, is_read, is_read_user) VALUES (:user_id, :first_name, :last_name, :contact_no, :appoint_sched_date, :appoint_sched_time, :appoint_description, :appoint_status, :timestamp, 0, 0)";
+        $run_query = $conn->prepare($query);
+
+        $data = [
+            ':user_id' => $user_id,
+            ':first_name' => $first_name,
+            ':last_name' => $last_name,
+            ':contact_no' => $contact_no,
+            ':appoint_sched_date' => $appoint_sched_date,
+            ':appoint_sched_time' => $appoint_sched_time,
+            ':appoint_description' => $appoint_description,
+            ':appoint_status' => $appoint_status,
+            ':timestamp' => $currentTimestamp
+        ];
+
+        $query_execute = $run_query->execute($data);
+        if ($query_execute) {
+            $success = 1;
+
+            if ($success) { ?>
+                <script>
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Appointment successful',
+                        showConfirmButton: false,
+                        timer: 2500,
+                        onClose: () => {
+                            window.location.href = 'guest_dashboard.php?tab=appointment';
+                        }
+                    })
+                </script>
+
+                <!-- Fallback PHP redirection -->
+                <meta http-equiv="refresh" content="1;url=guest_dashboard.php?tab=appointment">
+    <?php }
+        }
+    }
+    ?>
+
     <?php
     include("guest_navbar.php");
     include("notification-bar.php");
@@ -101,15 +104,15 @@ if (isset($_POST['submit'])) {
                 <p class="message">Input details about your appointment</p>
                 <div class="appoint-flex">
                     <?php
-                        $select_query = 'SELECT * FROM `users` WHERE user_id = :user_id';
-                        $stmt = $conn->prepare($select_query);
-                        $stmt->bindParam(':user_id', $_SESSION['user_id']);
-                        $stmt->execute();
-                        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+                    $select_query = 'SELECT * FROM `users` WHERE user_id = :user_id';
+                    $stmt = $conn->prepare($select_query);
+                    $stmt->bindParam(':user_id', $_SESSION['user_id']);
+                    $stmt->execute();
+                    $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-                        if ($stmt->rowCount() > 0) {
-                            $first_name = $user['first_name'];
-                            $last_name = $user['last_name'];
+                    if ($stmt->rowCount() > 0) {
+                        $first_name = $user['first_name'];
+                        $last_name = $user['last_name'];
                     ?>
                         <label>
                             <input required="" placeholder="" type="text" class="input" name="first_name" value="<?php echo $first_name; ?>">
@@ -173,7 +176,6 @@ if (isset($_POST['submit'])) {
     </script>
     <script src="./js/date-time-selector-modal.js"></script>
     <script src="./js/insert_date_time.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="./js/populateNotification.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>

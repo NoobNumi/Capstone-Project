@@ -125,7 +125,7 @@ $(document).ready(function () {
                             <img src="../guest_side/${notification.profile_picture}">
                             <p class="notif-about">
                                 <span class="notifier-name">
-                                    ${notification.first_name} ${notification.last_name}
+                                    ${notification.full_name_org}
                                 </span>
                                 ${notification.type === 'appointment' ? 'booked an Appointment' : 'booked a Reservation'}
                             </p>

@@ -60,14 +60,14 @@ try {
         $columnName = $selectedMealType;
 
         $sql = "UPDATE $tableName SET 
-            first_name = :first_name, 
+            full_name_org = :full_name_org, 
             contact_no = :contact_no, 
             $columnName = :selected_meal
             WHERE $idColumnName = :id";
 
         $stmt = $conn->prepare($sql);
 
-        $stmt->bindParam(':first_name', $updatedReservation['first_name'], PDO::PARAM_STR);
+        $stmt->bindParam(':full_name_org', $updatedReservation['full_name_org'], PDO::PARAM_STR);
         $stmt->bindParam(':contact_no', $updatedReservation['contact_no'], PDO::PARAM_STR);
         $stmt->bindParam(':selected_meal', $meal['meal'], PDO::PARAM_STR);
         $stmt->bindParam(':id', $reservationId, PDO::PARAM_INT);

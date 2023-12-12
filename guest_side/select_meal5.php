@@ -106,7 +106,7 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
           
                 <p class="reservation-title">Reservation Form</p>
                  <p class="text-center">Transaction Number <?php echo $transact; ?></p>
-                 <p class="text-center"><?php echo $row['first_name'].' '.$row['last_name']; ?></p>
+                 <p class="text-center"><?php echo $row['full_name_org']; ?></p>
                  <hr>
                 <p class="service-name"><?php echo $row['package']; ?> meals:</p>
                 <div class="">

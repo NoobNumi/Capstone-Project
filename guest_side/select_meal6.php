@@ -136,7 +136,7 @@ if (isset($_POST['send'])) {
 
                 <div class="d-flex justify-content-between">
                   <div class="d-flex flex-row mt-1">
-                    <h6><?php echo $row['first_name'] . ' ' . $row['last_name']; ?></h6>
+                    <h6><?php echo $row['full_name_org']; ?></h6>
                   </div>
                 </div>
                 <div class="d-flex justify-content-between">

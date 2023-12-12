@@ -158,7 +158,7 @@ $(document).ready(function () {
         const dessert = $('#dessert');
         const drinks = $('#drinks');
 
-        guestNameElement.text(reservation.first_name);
+        guestNameElement.text(reservation.full_name_org);
         transactionNum.text(reservation.transaction_num);
         contactInfoElement.text(reservation.contact_no);
         packageType.text(reservation.package);
@@ -277,12 +277,12 @@ $(document).ready(function () {
         if (action === 'confirmed') {
             title = 'Reservation confirmed!';
             icon = 'success';
-            text = `${message.first_name}'s reservation has been confirmed and is set on ${message.check_in}. We have notified ${message.first_name} with the reservation!`;
+            text = `${message.full_name_org}'s reservation has been confirmed and is set on ${message.check_in}. We have notified ${message.full_name_org} with the reservation!`;
             hideReservationModal();
         } else if (action === 'cancelled') {
             title = 'Reservation canceled!';
             icon = 'error';
-            text = `The reservation for ${message.first_name} has been cancelled. We have notified ${message.first_name} with the cancellation!`;
+            text = `The reservation for ${message.full_name_org} has been cancelled. We have notified ${message.full_name_org} with the cancellation!`;
             hideReservationModal();
         } else if (success) {
             title = 'Success';

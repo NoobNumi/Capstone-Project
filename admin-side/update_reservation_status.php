@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute();
 
         if ($stmt->rowCount() > 0) {
-            $stmt = $conn->prepare("SELECT first_name, check_in, payment_method FROM $tableName WHERE $primaryKeyColumn = :reservation_id");
+            $stmt = $conn->prepare("SELECT full_name_org, check_in, payment_method FROM $tableName WHERE $primaryKeyColumn = :reservation_id");
             $stmt->bindParam(':reservation_id', $reservationId);
             $stmt->execute();
 
@@ -60,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($row) {
                 echo json_encode([
                     'success' => true,
-                    'first_name' => $row['first_name'],
+                    'full_name_org' => $row['full_name_org'],
                     'check_in' => $row['check_in'],
                     'payment_method' => $row['payment_method'],
                     'message' => 'Reservation updated successfully'

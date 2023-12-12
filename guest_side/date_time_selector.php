@@ -75,7 +75,6 @@
                     type: 'GET',
                     dataType: 'json',
                     success: function(data) {
-                        console.log(data);
                         let firstDayofMonth = new Date(currYear, currMonth, 1).getDay();
                         let lastDateofMonth = new Date(currYear, currMonth + 1, 0).getDate();
                         let lastDateofLastMonth = new Date(currYear, currMonth, 0).getDate();

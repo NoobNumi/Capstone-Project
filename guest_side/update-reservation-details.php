@@ -7,9 +7,9 @@
             </header>
             <div class="text-inputs">
                 <div class="input-capsule" style="width: 100%">
-                    <span class="input-title-name">Name</span>
+                    <span class="input-title-name">Full Name/Org</span>
                     <div class="inputs-flex">
-                        <input type="text" name="first_name" id="userNameReservation">
+                        <input type="text" name="full_name_org" id="userNameReservation">
                     </div>
                 </div>
                 <div class="input-capsule">

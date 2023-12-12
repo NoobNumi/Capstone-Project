@@ -41,10 +41,6 @@ $(document).ready(function () {
     }
 
 
-
-
-
-
     function updateModalContent(reservation, reservationType, reservationId) {
         const guestNameElement = $('#userNameReservation');
         const contactNoElement = $('#userContactReservation');
@@ -52,10 +48,11 @@ $(document).ready(function () {
         const updateService = $('#updateService');
         const updateReservationsHeader = $('.update-section header h6');
 
-        guestNameElement.val(reservation.first_name);
+        guestNameElement.val(reservation.full_name_org);
         contactNoElement.val(reservation.contact_no);
 
         const viewMeals = $('.view-meals');
+
         const updateMealsTitle = $('#updateMealsTitle');
         updateReservationsHeader.text('Update Reservations');
         viewMeals.hide();
@@ -71,7 +68,7 @@ $(document).ready(function () {
 
         updateService.data('reservation-id', reservation.id);
         updateService.data('reservation-type', reservationType);
-        updateReservationsHeader.text(`Update Reservations - ${reservationType}`);
+        updateReservationsHeader.text(`Update Reservations for ${reservationType}`);
 
         const selectedMeals = ['breakfast', 'lunch', 'dinner', 'drinks', 'dessert'];
         selectedMeals.forEach(function (mealType) {
@@ -358,7 +355,7 @@ $(document).ready(function () {
         });
 
         return {
-            first_name: updatedFirstName,
+            full_name_org: updatedFirstName,
             contact_no: updatedContactNo,
             selected_meals: selectedMealData,
         };
@@ -410,7 +407,6 @@ $(document).ready(function () {
             },
             error: function (xhr, status, error) {
                 console.log('AJAX Error:', status, error);
-                console.log('Response Text:', xhr.responseText);
             },
         });
     }
@@ -424,7 +420,6 @@ $(document).ready(function () {
 
         fetchReservationDetails(reservationId, reservationType)
             .then(response => {
-                console.log(response);
                 Swal.fire({
                     title: 'Are you sure?',
                     text: 'You won\'t be able to undo this.',
@@ -445,7 +440,6 @@ $(document).ready(function () {
                             },
                             dataType: 'json',
                             success: function (cancelResponse) {
-                                console.log('Cancel Response:', cancelResponse);
                                 handleCancellationResponse(cancelResponse, reservationType);
                             },
                             

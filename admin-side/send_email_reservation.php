@@ -61,8 +61,7 @@ if (isset($_GET['reservation_id']) && isset($_GET['reservation_type'])) {
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($result) {
-            $first_name = $result['first_name'];
-            $last_name = $result['last_name'];
+            $full_name_org = $result['full_name_org'];
             $email = $result['email'];
             $contact_no = $result['contact_no'];
             $guest_count = $result['guest'];
@@ -95,9 +94,9 @@ if (isset($_GET['reservation_id']) && isset($_GET['reservation_type'])) {
             $pdf->Ln(10);
 
             $pdf->SetFont('Arial', 'B', 12);
-            $pdf->Cell(35, 10, 'Name(s):', 0);
+            $pdf->Cell(35, 10, 'Full Name/Org:', 0);
             $pdf->SetFont('Arial', '', 12);
-            $pdf->Cell(70, 10, $first_name . ' ' . $last_name, 0);
+            $pdf->Cell(70, 10, $full_name_org, 0);
 
             $pdf->SetX(-90);
             $pdf->SetFont('Arial', 'B', 12);
@@ -179,13 +178,13 @@ if (isset($_GET['reservation_id']) && isset($_GET['reservation_type'])) {
                 $mail->Port = 465;
 
                 $mail->setFrom('trinitashomeforcontemplation@gmail.com', 'Trinitas Home For Contemplation');
-                $mail->addAddress($email, $first_name);
+                $mail->addAddress($email, $full_name_org);
 
                 $mail->addAttachment($pdfPath, $pdfFilename);
 
                 $mail->Subject = 'Reservation Confirmation';
                 $mail->isHTML(true);
-                $mail->Body = '<p>Dear ' .  $first_name . ',</p><p>Your reservation has been confirmed for the following details:</p><p>Check In: ' . $check_in . '</p><p>Check Out: ' . $check_out . '</p><p>Payment Method: ' . $payment_method . '</p><p>See attached for reservation details.</p><p>See you soon!</p>';
+                $mail->Body = '<p>Dear ' .  $full_name_org . ',</p><p>Your reservation has been confirmed for the following details:</p><p>Check In: ' . $check_in . '</p><p>Check Out: ' . $check_out . '</p><p>Payment Method: ' . $payment_method . '</p><p>See attached for reservation details.</p><p>See you soon!</p>';
 
                 $mail->send();
                 echo '<script>

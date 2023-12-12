@@ -11,7 +11,7 @@ try {
                 a.appoint_id AS id, 
                 a.user_id, 
                 a.first_name, 
-                a.last_name, 
+                a.last_name,
                 a.appoint_sched_date AS date, 
                 a.appoint_sched_time AS time
             FROM appointment_record a
@@ -25,8 +25,8 @@ try {
                 'reception' AS type,
                 r.reception_id AS id, 
                 r.user_id, 
-                r.first_name, 
-                r.last_name, 
+                r.full_name_org, 
+                '' AS last_name,
                 r.check_in AS date, 
                 r.check_out AS time
             FROM reception_reservation_record r
@@ -40,8 +40,8 @@ try {
                 'retreat' AS type,
                 r.retreat_id AS id, 
                 r.user_id, 
-                r.first_name, 
-                r.last_name, 
+                r.full_name_org, 
+                '' AS last_name,
                 r.check_in AS date, 
                 r.check_out AS time
             FROM retreat_reservation_record r
@@ -55,8 +55,8 @@ try {
                 'recollection' AS type,
                 r.recollection_id AS id, 
                 r.user_id, 
-                r.first_name, 
-                r.last_name, 
+                r.full_name_org, 
+                '' AS last_name,
                 r.check_in AS date, 
                 r.check_out AS time
             FROM recollection_reservation_record r
@@ -70,8 +70,8 @@ try {
                 'seminar' AS type,
                 r.seminar_id AS id, 
                 r.user_id, 
-                r.first_name, 
-                r.last_name, 
+                r.full_name_org, 
+                '' AS last_name,
                 r.check_in AS date, 
                 r.check_out AS time
             FROM seminar_reservation_record r
@@ -85,8 +85,8 @@ try {
                 'training' AS type,
                 r.training_id AS id, 
                 r.user_id, 
-                r.first_name, 
-                r.last_name, 
+                r.full_name_org, 
+                '' AS last_name,
                 r.check_in AS date, 
                 r.check_out AS time
             FROM training_reservation_record r

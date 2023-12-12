@@ -21,7 +21,6 @@ $(document).ready(function () {
     });
 
     function updateImagePreview(input) {
-        console.log("updateImagePreview called");
         var $previewImgDiv = $(".preview-img");
 
         if (input.files.length > 0) {
@@ -99,7 +98,6 @@ $(document).ready(function () {
             processData: false,
             contentType: false,
             success: function (response) {
-                console.log('message posted');
                 inputField.value = "";
                 resetImagePreview();
                 updateChat();
@@ -144,21 +142,18 @@ $(document).ready(function () {
     }
 
         function markLatestMessageAsRead() {
-            console.log("markLatestMessageAsRead called");
             const latestMessage = document.querySelector(".chat:last-child");
             if (latestMessage) {
                 const messageIdElement = latestMessage.querySelector(".message-id");
                 if (messageIdElement) {
                     const messageId = messageIdElement.value;
                     if (messageId) {
-                        console.log("Message ID:", messageId);
         
                         $.ajax({
                             url: 'mark_latest_message_as_read.php',
                             type: 'POST',
                             data: { message_id: messageId },
                             success: function (response) {
-                                console.log('Message marked as read');
                             },
                             error: function (jqXHR, textStatus, errorThrown) {
                                 console.error('An error occurred:', errorThrown);

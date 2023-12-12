@@ -41,8 +41,7 @@ for ($i = 0; $i < 9; $i++) {
 $transact = substr(str_shuffle($letters), 0, 5) . substr(str_shuffle($numbers), 0, 5);
 
 if (isset($_POST['submit'])) {
-    $first_name = $_POST['first_name'];
-    $last_name = $_POST['last_name'];
+    $full_name_org = $_POST['full_name_org'];
     $contact = $_POST['contact_no'];
     $guest = $_POST['guest_count'];
     $dateto = $_POST['date_to'];
@@ -52,8 +51,7 @@ if (isset($_POST['submit'])) {
 
     $sql = "INSERT INTO `$table` (
                     `user_id`,
-                    `first_name`,
-                    `last_name`,
+                    `full_name_org`,
                     `contact_no`,
                     `guest`,
                     `check_in`,
@@ -65,8 +63,7 @@ if (isset($_POST['submit'])) {
                     `timestamp`
                 ) VALUES (
                     '$user_id',
-                    '$first_name',
-                    '$last_name',
+                    '$full_name_org',
                     '$contact',
                     '$guest',
                     '$datefrom',
@@ -129,23 +126,9 @@ if (isset($_POST['submit'])) {
                                 <p class="message">Input details about your reservation</p>
                                 <p class="service-name">You have selected <?php echo $package; ?> with a price of ₱<?php echo $price; ?>.</p>
                                 <div class="reserve-flex">
-                                    <?php
-
-                                    $sql = "SELECT *
-                    FROM users WHERE user_id = '$user_id'";
-                                    $stmt = $conn->prepare($sql);
-                                    $stmt->execute();
-                                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-                                    ?>
                                     <label>
-                                        <input required="" placeholder="" type="text" class="input" name="first_name" value="<?php echo $row['first_name']; ?>">
-                                        <span>Firstname</span>
-                                    </label>
-
-                                    <label>
-                                        <input required="" placeholder="" type="text" class="input" name="last_name" value="<?php echo $row['last_name']; ?>">
-                                        <span>Lastname</span>
+                                        <input required="" placeholder="" type="text" class="input" name="full_name_org">
+                                        <span>Full Name/Org</span>
                                     </label>
                                 </div>
                                 <div class="reserve-flex">

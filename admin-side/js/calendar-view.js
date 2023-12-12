@@ -150,6 +150,7 @@ document.addEventListener("DOMContentLoaded", function () {
             renderCalendar();
         });
     });
+    
     function displayUserDetails(data) {
         const serviceViewerContent = document.querySelector('.service-viewer-content');
         serviceViewerContent.innerHTML = '';
